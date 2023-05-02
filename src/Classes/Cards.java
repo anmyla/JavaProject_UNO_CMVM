@@ -1,62 +1,76 @@
 package Classes;
 
+import java.util.Objects;
 
-//This Class defines the cards to be used in the game.
-//This is where we declare and initialize the cards and their corresponding value, color, and points
 public class Cards {
-
-    private String cardValue = "";
-    private String cardColor = "";
-    private String card= "";
-
-
-    protected static String[] faceValue = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "X", "<->", "+2", "+4", "JC", "JC+4"};
-    protected static String[] colorValue = {"R", "G", "B", "Y", ""};
-    protected static int[] points = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 20, 50};
+    private final String cardValue;
+    private final String cardColor;
+    private int cardPoints;
+    private final static String[] faceValueCollections = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "X", "<->", "+2", "+4", "JC", "JC+4"};
+    private final static String[] colorValueCollections = {"R", "G", "B", "Y", ""};
+    private final static int[] pointsCollections = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 20, 50};
 
 
-    public Cards(String[] faceValue, String[] colorValue, int[] points) {
-        this.cardValue = card;
-        this.faceValue = faceValue;
-        this.colorValue = colorValue;
-        this.points = points;
+    public Cards(String cardColor, String cardValue, int cardPoints) {
+        this.cardColor = cardColor;
+        this.cardValue = cardValue;
+        this.cardPoints = cardPoints;
     }
 
-    public Cards(String cardValue, String faceValue, int points) {
-
+    public Cards(String cardValue, String cardColor) {
+        this.cardValue = cardValue;
+        this.cardColor = cardColor;
     }
 
-
-    public static int[] getPoints() {
-        return points;
+    public Cards() {
+        this.cardColor = "";
+        this.cardValue = "";
+        this.cardPoints = 0;
     }
 
-    public static String[] getFaceValue() {
-        return faceValue;
+    public static int[] getPointsCollections() {
+        return pointsCollections;
     }
 
-    public static String[] getColorValue() {
-        return colorValue;
+    public static String[] getFaceValueCollections() {
+        return faceValueCollections;
     }
 
-    public String getValue() {
-        for (String value : faceValue) {
-            cardValue = value;
-        }
+    public static String[] getColorValueCollections() {
+        return colorValueCollections;
+    }
+
+    public String getCardValue() {
         return cardValue;
     }
 
-    public String getColor() {
-        for (String color : colorValue) {
-            cardColor = color;
-        }
+    public String getCardColor() {
         return cardColor;
     }
 
-    public String getCard(){
-        card = getCard() + getValue();
-        return card;
+    public int getCardPoints() {
+        return cardPoints;
     }
 
+    public String getCard() {
+        return cardColor + cardValue;
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(cardColor, cardValue, cardPoints);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Cards card = (Cards) obj;
+        return Objects.equals(cardColor, card.cardColor) && Objects.equals(cardValue, card.cardValue);
+    }
+
+    @Override
+    public String toString() {
+        return cardValue + cardColor;
+    }
 }
