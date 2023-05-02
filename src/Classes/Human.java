@@ -10,8 +10,4 @@ public class Human extends Player {
         super(name);
     }
 
-    @Override
-    public void printCards() {
-        // automatically created
-    }
 }

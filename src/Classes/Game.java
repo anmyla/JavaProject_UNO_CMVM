@@ -47,7 +47,6 @@ public class Game {
             player.setPlayerPoints(0);
             player.setPlayerInitialCards(cardDeck.distributeInitialCards());
         }
-
     }
 
 
