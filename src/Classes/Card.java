@@ -1,8 +1,6 @@
 package Classes;
 
-import java.util.Objects;
-
-public class Cards {
+public class Card {
     private final String cardValue;
     private final String cardColor;
     private int cardPoints;
@@ -11,18 +9,18 @@ public class Cards {
     private final static int[] pointsCollections = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 20, 50};
 
 
-    public Cards(String cardColor, String cardValue, int cardPoints) {
+    public Card(String cardColor, String cardValue, int cardPoints) {
         this.cardColor = cardColor;
         this.cardValue = cardValue;
         this.cardPoints = cardPoints;
     }
 
-    public Cards(String cardValue, String cardColor) {
+    public Card(String cardValue, String cardColor) {
         this.cardValue = cardValue;
         this.cardColor = cardColor;
     }
 
-    public Cards() {
+    public Card() {
         this.cardColor = "";
         this.cardValue = "";
         this.cardPoints = 0;
@@ -56,21 +54,10 @@ public class Cards {
         return cardColor + cardValue;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(cardColor, cardValue, cardPoints);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Cards card = (Cards) obj;
-        return Objects.equals(cardColor, card.cardColor) && Objects.equals(cardValue, card.cardValue);
-    }
 
     @Override
     public String toString() {
         return cardValue + cardColor;
     }
 }
+
