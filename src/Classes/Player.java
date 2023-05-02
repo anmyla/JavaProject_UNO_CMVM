@@ -44,6 +44,4 @@ public abstract class Player {
         return playerPoints;
     }
 
-
-    public abstract void printCards();
 }

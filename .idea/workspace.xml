@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f2f20e9a-d884-4206-aac0-91694e66c491" name="Changes" comment="print/checkDeck();&#10;shuffleDeck();&#10;Player, Human class attempt">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/Bot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Bot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/Cards.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Card.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/Deck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Deck.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/Human.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Human.java" afterDir="false" />
+    <list default="true" id="f2f20e9a-d884-4206-aac0-91694e66c491" name="Changes" comment="fill deck, shuffle, set 4 human players, distribute initial player cards --- working methods but need polishing">
       <change beforePath="$PROJECT_DIR$/src/Classes/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/Temp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Temp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,7 +83,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683008393822</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="fill deck, shuffle, set 4 human players, distribute initial player cards --- working methods but need polishing">
+      <created>1683054978247</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1683054978247</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -112,6 +112,7 @@
     <MESSAGE value="declared and initialized Cards" />
     <MESSAGE value="filled initial deck with this method: initialDeck() in Class Deck" />
     <MESSAGE value="print/checkDeck();&#10;shuffleDeck();&#10;Player, Human class attempt" />
-    <option name="LAST_COMMIT_MESSAGE" value="print/checkDeck();&#10;shuffleDeck();&#10;Player, Human class attempt" />
+    <MESSAGE value="fill deck, shuffle, set 4 human players, distribute initial player cards --- working methods but need polishing" />
+    <option name="LAST_COMMIT_MESSAGE" value="fill deck, shuffle, set 4 human players, distribute initial player cards --- working methods but need polishing" />
   </component>
 </project>
