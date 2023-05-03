@@ -5,28 +5,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Game {
-    static List<Player> players = new ArrayList<>();
+    List<Player> players = new ArrayList<>();
     Deck cardDeck = new Deck(108);
+    Deck discardDeck = new Deck(108);
 
-    public Game(List<Player> players) {
-        this.players = players;
-    }
-
-    public static List<Player> getPlayers() {
-        return players;
-    }
-
-    public static void addPlayers(Player player) {
-        players.add(player);
-    }
-
-    private static List<String> playerNames() {
-        List<String> names = new ArrayList<>();
-        for (Player player : players) {
-            names.add(player.getName());
-        }
-        return names;
-    }
 
     public void setUpPlayers(int humanPlayers) {
         //Just human players for now. A simple method to collect player names and add it to the List<Players>
@@ -48,9 +30,13 @@ public class Game {
             player.setPlayerInitialCards(cardDeck.distributeInitialCards());
         }
     }
+//
+//    public void layOneInitialCard() {
+//        discardDeck.add(cardDeck.get(cardDeck.size() - 1));
+//        discardDeck.remove(cardDeck.size() - 1);
+//    }
 
-
-    public static void printPlayer() {
+    public  void printPlayer() {
         //Just to check players and their cards
         for (Player player : players) {
             System.out.print(player.toString());

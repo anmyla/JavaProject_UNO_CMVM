@@ -1,5 +1,7 @@
 package Classes;
 
+import jdk.swing.interop.SwingInterOpUtils;
+
 //Created this temporary Class to test random functions
 public class Temp {
     public static void main(String[] args) {
@@ -17,13 +19,17 @@ public class Temp {
         System.out.println();
 
         System.out.println("\n 3. SETTING UP HUMAN PLAYERS");
-        Game newGame = new Game(Game.getPlayers()); // Creating a new game
+        Game newGame = new Game(); // Creating a new game
         newGame.setUpPlayers(4); // setting up human players
         System.out.println();
 
         System.out.println("\n 3. DISTRIBUTE INITIAL PLAYER CARDS");
         newGame.distributeInitialCardsToPlayers(); //distributes initial cards to players
         newGame.printPlayer(); // print to check if player have 7 cards each.
+        System.out.println();
+
+        System.out.println("\n 4. PRINTED TO CHECK IF THE DISTRIBUTED CARDS ARE REMOVED FROM THE DECK");
+        newCardDeck.printDeck();
     }
 }
 

@@ -18,10 +18,6 @@ public abstract class Player {
         this.playerPoints = 0;
     }
 
-    public List<Card> getPlayerInitialCards() {
-        return this.playerInitialCards;
-    }
-
     public String getName() {
         return name;
     }
