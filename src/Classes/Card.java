@@ -1,5 +1,7 @@
 package Classes;
 
+import java.util.ArrayList;
+import java.util.List;
 public class Card {
     private final String cardValue;
     private final String cardColor;

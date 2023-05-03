@@ -1,8 +1,6 @@
 package Classes;
 
 import java.util.*;
-import java.util.List;
-import java.util.ArrayList;
 
 public class Deck {
     public static List<Card> cardDeck;
@@ -14,6 +12,7 @@ public class Deck {
     public List<Card> getCardDeck() {
         return cardDeck;
     }
+
 
     public List<Card> initialDeck() { // this method will fill e fresh card deck
         String[] faceValue = Card.getFaceValueCollections(); //(length = 16)
@@ -57,5 +56,14 @@ public class Deck {
         return playerInitialCards;
     }
 
+//    public void addCardToDiscardDeck(Card discarded) {
+//        List<Card> discardDeck = new ArrayList<>();
+//        discardDeck.add(discarded);
+//    }
+    public void removeFromCardDeck() {
+        cardDeck.remove(0);
+    }
+
 
 }
+

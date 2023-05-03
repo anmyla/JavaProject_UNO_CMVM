@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f2f20e9a-d884-4206-aac0-91694e66c491" name="Changes" comment="filled initial deck with this method: initialDeck() in Class Deck">
+    <list default="true" id="f2f20e9a-d884-4206-aac0-91694e66c491" name="Changes" comment="status after initial check from instructor">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/Bot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Bot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Classes/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Card.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Classes/Deck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Deck.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Classes/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/Human.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Human.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Classes/Temp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Temp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +42,14 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;
   }
 }</component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="Projekt1_CMVM" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Temp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Classes.Temp" />
       <module name="Projekt1_CMVM" />
@@ -61,6 +65,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
         <item itemvalue="Application.Temp" />
       </list>
     </recent_temporary>
@@ -74,6 +79,7 @@
       <option name="presentableId" value="Default" />
       <updated>1682578573820</updated>
       <workItem from="1682578575550" duration="11986000" />
+      <workItem from="1683102129684" duration="10062000" />
     </task>
     <task id="LOCAL-00001" summary="test commit">
       <created>1682578662016</created>
@@ -124,7 +130,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683055222086</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="status after initial check from instructor">
+      <created>1683101379513</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1683101379513</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -147,6 +160,7 @@
     <MESSAGE value="filled initial deck with this method: initialDeck() in Class Deck" />
     <MESSAGE value="print/checkDeck();&#10;shuffleDeck();&#10;Player, Human class attempt" />
     <MESSAGE value="fill deck, shuffle, set 4 human players, distribute initial player cards --- working methods but need polishing" />
-    <option name="LAST_COMMIT_MESSAGE" value="fill deck, shuffle, set 4 human players, distribute initial player cards --- working methods but need polishing" />
+    <MESSAGE value="status after initial check from instructor" />
+    <option name="LAST_COMMIT_MESSAGE" value="status after initial check from instructor" />
   </component>
 </project>
