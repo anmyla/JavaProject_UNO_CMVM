@@ -39,14 +39,17 @@ public class Temp {
         System.out.println("\n ---------LAY ONE INITIAL CARD------------------");
         firstGame.layFirstCard();
         firstGame.printDiscardDeck();
-        System.out.println();
-        theCardDeck.printDeck();
 
         System.out.println();
         firstGame.playerToPlay();
         firstGame.acceptPlayersInput();
         firstGame.printPlayer();
         firstGame.printDiscardDeck();
+        firstGame.playerToPlay();
+        firstGame.acceptPlayersInput();
+        firstGame.printPlayer();
+        firstGame.printDiscardDeck();
+
 
     }
 }
