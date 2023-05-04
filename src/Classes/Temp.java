@@ -8,42 +8,47 @@ import java.util.List;
 public class Temp {
     public static void main(String[] args) {
 
-        Deck newCardDeck = new Deck(108);
-        newCardDeck.initialDeck(); // filled up a new card deck
+        Deck theCardDeck = new Deck(108);
+        theCardDeck.initialDeck(); // filled up a new card deck
 
         System.out.println("\n 1. FILL THE DECK WITH CARDS");
-        newCardDeck.printDeck(); // just to check the cards in the new deck
-        newCardDeck.shuffleDeck(); // shuffle the cards;
+        theCardDeck.printDeck(); // just to check the cards in the new deck
+        theCardDeck.shuffleDeck(); // shuffle the cards;
         System.out.println();
 
         System.out.println("\n 2. NOW THE DECK HAVE BEEN SHUFFLED ");
-        newCardDeck.printDeck(); // print the deck once more to check if the shuffle method worked.
+        theCardDeck.printDeck(); // print the deck once more to check if the shuffle method worked.
         System.out.println();
 
         System.out.println("\n 3. SETTING UP HUMAN PLAYERS");
-        Game newGame = new Game(); // Creating a new game
-        newGame.setUpPlayers(4); // setting up human players
+        Game firstGame = new Game(); // Creating a new game
+        firstGame.setUpPlayers(4); // setting up human players
         System.out.println();
 
         System.out.println("\n 4. DISTRIBUTE INITIAL PLAYER CARDS");
-        newGame.distributeInitialCardsToPlayers(); //distributes initial cards to players
-        newGame.printPlayer(); // print to check if player have 7 cards each.
+        firstGame.distributeInitialCardsToPlayers(); //distributes initial cards to players
+        firstGame.printPlayer(); // print to check if player have 7 cards each.
         System.out.println();
 
         System.out.println("\n 5. PRINTED TO CHECK IF THE DISTRIBUTED CARDS ARE REMOVED FROM THE DECK");
-        newCardDeck.printDeck();
+        theCardDeck.printDeck();
 
-        List<Card> discardDeck = newGame.getDiscardDeck();
+        List<Card> discardDeck = firstGame.getDiscardDeck();
 
         System.out.println();
         System.out.println("\n ---------LAY ONE INITIAL CARD------------------");
-        newGame.layFirstCard();
-        newGame.printDiscardDeck();
+        firstGame.layFirstCard();
+        firstGame.printDiscardDeck();
         System.out.println();
-        newCardDeck.printDeck();
+        theCardDeck.printDeck();
 
-
+        System.out.println();
+        firstGame.playerToPlay();
+        firstGame.acceptPlayersInput();
+        firstGame.printPlayer();
+        firstGame.printDiscardDeck();
 
     }
 }
+
 

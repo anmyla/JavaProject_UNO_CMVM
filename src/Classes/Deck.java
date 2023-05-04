@@ -56,10 +56,6 @@ public class Deck {
         return playerInitialCards;
     }
 
-//    public void addCardToDiscardDeck(Card discarded) {
-//        List<Card> discardDeck = new ArrayList<>();
-//        discardDeck.add(discarded);
-//    }
     public void removeFromCardDeck() {
         cardDeck.remove(0);
     }

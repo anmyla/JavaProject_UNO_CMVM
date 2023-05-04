@@ -1,15 +1,18 @@
 package Classes;
 
 import java.util.List;
+import java.util.Scanner;
 
 public abstract class Player {
     private String name;
     private int playerPoints;
-    private List<Card> playerInitialCards;
+    protected List<Card> playersHand; //Player's own set of cards
+
+    private boolean turn;
 
     public Player(String name, List<Card> playerInitialCards) {
         this.name = name;
-        this.playerInitialCards = playerInitialCards;
+        this.playersHand = playerInitialCards;
         this.playerPoints = 0;
     }
 
@@ -27,13 +30,13 @@ public abstract class Player {
         this.playerPoints = playerPoints;
     }
 
-    public void setPlayerInitialCards(List<Card> playerInitialCards) {
-        this.playerInitialCards = playerInitialCards;
+    public void setPlayersHand(List<Card> playersHand) {
+        this.playersHand = playersHand;
     }
 
     @Override
     public String toString() {
-        return name + playerInitialCards;
+        return name + playersHand;
     }
 
     public int getPlayerPoints() {
@@ -41,4 +44,24 @@ public abstract class Player {
     }
 
 
+
+    public Card playerEntersCardToPlay() {
+        Scanner cardInput = new Scanner(System.in);
+        System.out.println("ENTER CARD COLOR:");
+        String cardColor = cardInput.nextLine();
+        System.out.print("ENTER CARD VALUE:");
+        String cardValue = cardInput.nextLine();
+        Card cardToPlay = new Card(cardColor,cardValue);
+        System.out.println(cardToPlay.toString());
+        return cardToPlay;
+    }
+
+    //this method will remove the card that is played from the playersHand
+    public void removeFromPlayersHand(Card c) {
+        playersHand.remove(c);
+    }
+
+
 }
+
+

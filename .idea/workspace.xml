@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f2f20e9a-d884-4206-aac0-91694e66c491" name="Changes" comment="status after initial check from instructor">
+    <list default="true" id="f2f20e9a-d884-4206-aac0-91694e66c491" name="Changes" comment="layInitialCard Method : works!">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Classes/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Card.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Classes/Deck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Deck.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Classes/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Classes/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Classes/Temp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Temp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -42,7 +43,7 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;
   }
 }</component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="Application.Temp">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="Projekt1_CMVM" />
@@ -65,8 +66,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main" />
         <item itemvalue="Application.Temp" />
+        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
@@ -79,7 +80,9 @@
       <option name="presentableId" value="Default" />
       <updated>1682578573820</updated>
       <workItem from="1682578575550" duration="11986000" />
-      <workItem from="1683102129684" duration="10062000" />
+      <workItem from="1683102129684" duration="10163000" />
+      <workItem from="1683187687335" duration="6181000" />
+      <workItem from="1683196334122" duration="8191000" />
     </task>
     <task id="LOCAL-00001" summary="test commit">
       <created>1682578662016</created>
@@ -137,7 +140,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683101379513</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="layInitialCard Method : works!">
+      <created>1683121933901</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1683121933901</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -161,6 +171,18 @@
     <MESSAGE value="print/checkDeck();&#10;shuffleDeck();&#10;Player, Human class attempt" />
     <MESSAGE value="fill deck, shuffle, set 4 human players, distribute initial player cards --- working methods but need polishing" />
     <MESSAGE value="status after initial check from instructor" />
-    <option name="LAST_COMMIT_MESSAGE" value="status after initial check from instructor" />
+    <MESSAGE value="layInitialCard Method : works!" />
+    <option name="LAST_COMMIT_MESSAGE" value="layInitialCard Method : works!" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Classes/Temp.java</url>
+          <line>45</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
