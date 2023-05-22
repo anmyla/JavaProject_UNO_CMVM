@@ -25,7 +25,6 @@ public abstract class Player {
         return name;
     }
 
-
     public void setPlayerPoints(int playerPoints) {
         this.playerPoints = playerPoints;
     }
@@ -43,13 +42,11 @@ public abstract class Player {
         return playerPoints;
     }
 
-
-
     public Card playerEntersCardToPlay() {
         Scanner cardInput = new Scanner(System.in);
-        System.out.println("ENTER CARD COLOR:");
+        System.out.println("ENTER CARD COLOR:"); //Player chooses a card color (R,B,Y,G, J)
         String cardColor = cardInput.nextLine();
-        System.out.print("ENTER CARD VALUE:");
+        System.out.print("ENTER CARD VALUE:"); //Player chooses a value (1,2,3, <->, etc.)
         String cardValue = cardInput.nextLine();
         Card cardToPlay = new Card(cardColor,cardValue);
         System.out.println(cardToPlay.toString());

@@ -1,17 +1,18 @@
 package Classes;
 
 import java.io.PrintStream;
+import java.util.List;
 import java.util.Scanner;
+
+import static Classes.Game.*;
 
 public class App {
     private final Scanner input;
     private final PrintStream output;
     private boolean exit = false;
     private int figureNr;
-//    private Figure figure;
-
+    //private Figure figure;
     public int size;
-
     // Konstruktor
     // input wird verwendet um Daten vom Benutzer einzulesen (verwendet scanner)
     // output wird verwendet um Text auf der Konsole auszugeben (verwendet sysout)
@@ -27,22 +28,33 @@ public class App {
         printState();
 
         while (!exit) {
-            readUserInput();
+            readUserInput(Game.currentPlayer());
             updateState();
             printState();
         }
     }
 
     private void initialize() {
-        //TODO: Initialisierungen hier durchführen
+        Deck theCardDeck = new Deck(108);
+        theCardDeck.initialDeck(); // filled up a new card deck
+        theCardDeck.shuffleDeck(); // shuffle the cards;
+
+        Game firstGame = new Game(); // Creating a new game
+        firstGame.setUpPlayers(4); // setting up human players
+
+        firstGame.distributeInitialCardsToPlayers(); //distributes initial cards to players
+        firstGame.printPlayer(); // printing each player's 7 cards (initial player's hand) on the console.
+
+        List<Card> discardDeck = firstGame.getDiscardDeck(); //creating a discard deck
+        firstGame.layFirstCard(); // laying the first card on the discard deck
+        System.out.println("LET THE GAMES BEGIN!!!");
+        firstGame.printDiscardDeck(); //printing the discard deck on the console.
     }
 
-    private void readUserInput() {
-        //TODO: Alle Eingaben der Benutzer einlesen
-//        inputFigure();
-//        if (figureNr != 0) {
-//            inputSize();
-//        }
+    private void readUserInput(Player player) {
+        playerToPlay(); // alert the players: whose turn it is to play
+        acceptPlayersInput(); // current player inputs card
+        printDiscardDeck(); // print the discard deck on the console.
     }
 
     private void updateState() {

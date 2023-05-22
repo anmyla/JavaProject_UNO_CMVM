@@ -38,9 +38,10 @@ public class Temp {
         System.out.println();
         System.out.println("\n ---------LAY ONE INITIAL CARD------------------");
         firstGame.layFirstCard();
-        firstGame.printDiscardDeck();
+        firstGame.printDiscardDeck(); //show discard deck on the console
 
         System.out.println();
+
         firstGame.playerToPlay();
         firstGame.acceptPlayersInput();
         firstGame.printPlayer();

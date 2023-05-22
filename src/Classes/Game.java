@@ -2,12 +2,15 @@ package Classes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Game {
-    List<Player> players = new ArrayList<>();
+    static List<Player> players = new ArrayList<>();
     Deck cardDeck = new Deck(108);
-    List<Card> discardDeck = new ArrayList<>();
+    static List<Card> discardDeck = new ArrayList<>();
+    private static int turn = chooseFirstPlayer();
+    private static boolean isClockwise = true;
 
 
     public void setUpPlayers(int humanPlayers) {
@@ -34,8 +37,7 @@ public class Game {
     }
 
 
-    public void printPlayer() {
-        //Just to check players and their cards
+    public static void printPlayer() {//print the players and their cards on the console
         for (Player player : players) {
             System.out.print(player.toString());
             System.out.println();
@@ -51,53 +53,91 @@ public class Game {
         cardDeck.removeFromCardDeck();
     }
 
-    public int nextTurn() { //*** this method is working
-        int currentPlayerIndex = 0; // start with the first player
-        Card currentCard = discardDeck.get(discardDeck.size() - 1); // get the current card from the discard deck...
-        if (discardDeck.size() == 1) {
-            currentPlayerIndex = 0;
-        }
-        else if (currentCard.getCardValue().equals("<->")) {         // If the current card is "reverse", the previous player should play
-            currentPlayerIndex--;
-            if (currentPlayerIndex < 0) {
-                currentPlayerIndex = players.size() - 1;
-            }
-        } else if (currentCard.getCardValue().equals("X")) {   // If the current card is "block", the next player skips a turn
-            currentPlayerIndex++;
-            if (currentPlayerIndex >= players.size()) {
-                currentPlayerIndex = 0;
-            }
-            currentPlayerIndex++;
-            if (currentPlayerIndex >= players.size()) {
-                currentPlayerIndex = 0;
-            }
-        } else { // If the current card is a regular card, the next player should play
-            currentPlayerIndex++;
-            if (currentPlayerIndex >= players.size()) {
-                currentPlayerIndex = 0;
-            }
-        }
-        return currentPlayerIndex;
+    public static int chooseFirstPlayer() { //Randomly choose the player that will play first.
+        Random firstPlayer = new Random();
+        return firstPlayer.nextInt(3);
     }
 
-    public Player currentPlayer() {
+    public static int getTurn() { //get the current player's index
+        return turn;
+    }
+
+    public static void setTurn(int playerIndex) { //set the current player's index
+        turn = playerIndex;
+    }
+
+    public static int nextTurn() { //THIS IS A TEMPORARY METHOD!! WILL BE DELETED ONCE WE HAVE THE CHECKS
+        Card currentCard = discardDeck.get(discardDeck.size() - 1); // get the current card from the discard deck...
+
+        if (discardDeck.size() == 1) {
+            turn = 0;
+        }
+        if (currentCard.getCardValue().equals("<->")) {
+            // If isClockwise is true, the previous player should play
+            if (isClockwise) {
+                if (turn == 0) {
+                    turn = 3;
+                } else {
+                    turn--;
+                }
+                isClockwise = false;
+            } else if (isClockwise == false) {
+                if (turn == 3) {
+                    turn = 0;
+                } else {
+                    turn++;
+                }
+                isClockwise = true;
+            }
+        } else if (currentCard.getCardValue().equals("X")) {
+            if (isClockwise) {
+                if (turn >= 3) {
+                    turn = (turn - 3) + 1;
+                } else {
+                    turn = turn + 2;
+                }
+            } else if (isClockwise == false) {
+                if (turn <= 0) {
+                    turn = 3;
+                    turn--;
+                } else {
+                    turn = turn - 2;
+                }
+            }
+        }
+        else {
+            // If the current card is a regular card, the next player should play
+            if (isClockwise) {
+            turn++;
+            }
+            else {
+                turn--;
+            }
+            if (turn >= players.size()) {
+                turn = 0;
+            }
+        }
+        return turn;
+    }
+
+    public static Player currentPlayer() {
         Player currentPlayer = players.get(nextTurn());
         return currentPlayer;
     }
 
-    public void playerToPlay() {
+    public static void playerToPlay() { // alerting player that it is their turn to play.
         Player currentPlayer = currentPlayer();
-        System.out.println(currentPlayer.toString() + " it's your turn to play.");
+        System.out.println("\n" + currentPlayer.toString() + " it's your turn to play!");
     }
 
-    public void acceptPlayersInput() { //this method will take one Card from the player's initialCards and add it to the DISCARD DECK.
+    public static void acceptPlayersInput() { //this method will take one Card from the player's initialCards and add it to the DISCARD DECK.
         Player currentPlayer = currentPlayer();
         Card playedCard = currentPlayer.playerEntersCardToPlay();
         discardDeck.add(playedCard);
         currentPlayer.removeFromPlayersHand(playedCard);
     }
 
-    public void printDiscardDeck() {  // this method will print the cards in the DISCARD DECK
+    public static void printDiscardDeck() {  // this method will print the cards in the DISCARD DECK
         for (Card card : discardDeck) {
             System.out.print(card + ", ");
         }

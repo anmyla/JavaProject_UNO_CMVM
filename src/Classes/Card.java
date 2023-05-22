@@ -64,6 +64,13 @@ public class Card {
         return cardValue + cardColor;
     }
 
+
+    // Here, we override the equals(). With this method, we can compare two Card objects for
+    // equality based on the values of their cardValue and cardColor fields.
+    // This is particularly useful when we need to perform equality checks
+    // or use objects in data structures that rely on equality, such as HashMap, HashSet,
+    // or when using objects as keys in a Map.
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
