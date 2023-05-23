@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f2f20e9a-d884-4206-aac0-91694e66c491" name="Changes" comment="1. Created the fff methos in Game Class: nextTurn(), currentPlayer(), playerToPlay(), acceptPlayerInput()   2. Created the ff method in Player Class: playerEnterCardToPlay(), removeFromPlayersHand()">
+    <list default="true" id="f2f20e9a-d884-4206-aac0-91694e66c491" name="Changes" comment="Rules for Reverse, Skip, an dNormal cards">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Classes/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Card.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/Deck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Deck.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Classes/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Classes/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Player.java" afterDir="false" />
     </list>
@@ -156,7 +154,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683204916891</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Rules for Reverse, Skip, an dNormal cards">
+      <created>1684842035355</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1684842035355</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -182,7 +187,8 @@
     <MESSAGE value="status after initial check from instructor" />
     <MESSAGE value="layInitialCard Method : works!" />
     <MESSAGE value="1. Created the fff methos in Game Class: nextTurn(), currentPlayer(), playerToPlay(), acceptPlayerInput()   2. Created the ff method in Player Class: playerEnterCardToPlay(), removeFromPlayersHand()" />
-    <option name="LAST_COMMIT_MESSAGE" value="1. Created the fff methos in Game Class: nextTurn(), currentPlayer(), playerToPlay(), acceptPlayerInput()   2. Created the ff method in Player Class: playerEnterCardToPlay(), removeFromPlayersHand()" />
+    <MESSAGE value="Rules for Reverse, Skip, an dNormal cards" />
+    <option name="LAST_COMMIT_MESSAGE" value="Rules for Reverse, Skip, an dNormal cards" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -209,15 +215,6 @@
             <option name="WATCH_EXIT" value="false" />
           </properties>
           <option name="timeStamp" value="7" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/Classes/Game.java</url>
-          <line>147</line>
-          <properties class="Classes.Game" method="isCardSkip">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

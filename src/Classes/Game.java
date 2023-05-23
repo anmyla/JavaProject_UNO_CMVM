@@ -95,7 +95,7 @@ public class Game {
         }
     }
 
-    public static void checkCard() { // this a method that checks the current card played, implements rules, and return the next player
+    public static void checkNextTurn() { // this a method that checks the current card played, implements rules, and return the next player
         Card currentCard = discardDeck.get(0);
 
         if (currentCard.getCardValue().equals("<->")) {
@@ -103,11 +103,11 @@ public class Game {
         } else if (currentCard.getCardValue().equals("X")) {
             isCardSkip();
         } else if (currentCard.getCardValue().equals("+2")) {
-            isCardTakeTwo();
+            isCardNormal(); // same rule when choosing the next player like isCardNormal()
         } else if (currentCard.getCardValue().equals("+4")) {
-            isCardTakeFour();
+            isCardNormal(); // same rule when choosing the next player like isCardNormal()
         } else if (currentCard.getCardValue().equals("C")) {
-            isCardJokerColor();
+            isCardNormal(); // same rule when choosing the next player like isCardNormal()
         }
         else {
             isCardNormal();
@@ -174,16 +174,6 @@ public class Game {
         return currentPlayerIndex;
     }
 
-    public static int isCardJokerColor() {
-        int currentPlayerIndex = getTurn();
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Please enter a color " + currentPlayer().getName() + ": ");
-        String enteredColor = scanner.next();
-        currentPlayerIndex++;
-
-        setTurn(currentPlayerIndex);
-        return currentPlayerIndex;
-    }
     public static int isCardNormal() {
         int currentPlayerIndex = getTurn();
 
@@ -209,4 +199,14 @@ public class Game {
         setTurn(currentPlayerIndex);
         return currentPlayerIndex;
     }
+
+    public static void isCardJokerColor() {
+        int currentPlayerIndex = getTurn();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please enter a color " + currentPlayer().getName() + ": ");
+        String enteredColor = scanner.next();
+    }
+
+
+
 }

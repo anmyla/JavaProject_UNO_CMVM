@@ -10,6 +10,10 @@ public abstract class Player {
 
     private boolean turn;
 
+    private boolean joker = false;
+
+    private String newColor;
+
     public Player(String name, List<Card> playerInitialCards) {
         this.name = name;
         this.playersHand = playerInitialCards;
@@ -33,6 +37,21 @@ public abstract class Player {
         this.playersHand = playersHand;
     }
 
+    public boolean isJoker() {
+        return joker;
+    }
+
+    public String getNewColor() {
+        return newColor;
+    }
+
+    public void setJoker(boolean joker) {
+        this.joker = joker;
+    }
+    public void setNewColor(String newColor) {
+        this.newColor = newColor;
+    }
+
     @Override
     public String toString() {
         return name + playersHand;
@@ -49,6 +68,16 @@ public abstract class Player {
         System.out.println("ENTER CARD VALUE:"); //Player chooses a value (1,2,3, <->, etc.)
         String cardValue = cardInput.nextLine();
         Card cardToPlay = new Card(cardColor,cardValue);
+
+        if (cardToPlay.getCardValue().equals("C")) {
+            System.out.println("What Color should we play next? (R, G, B, Y) :");
+            joker = true;
+            newColor= cardInput.nextLine();
+            setNewColor(newColor);
+        }
+        else {
+            joker = false;
+        }
         System.out.println(cardToPlay.toString());
         return cardToPlay;
     }

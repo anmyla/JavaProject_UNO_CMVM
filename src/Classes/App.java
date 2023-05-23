@@ -55,7 +55,7 @@ public class App {
         playerToPlay(); // alert the players: whose turn it is to play
         acceptPlayersInput(); // current player inputs card
         printDiscardDeck(); // print the discard deck on the console.
-        checkCard();
+        checkNextTurn();
     }
 
     private void updateState() {
