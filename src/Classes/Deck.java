@@ -2,6 +2,8 @@ package Classes;
 
 import java.util.*;
 
+import static Classes.Game.currentPlayer;
+
 public class Deck {
     public static List<Card> cardDeck;
 
@@ -60,6 +62,10 @@ public class Deck {
         cardDeck.remove(0);
     }
 
-
+    public static void drawOneCard() {
+        Player currentPlayer = currentPlayer();
+        currentPlayer.getPlayersHand().add(cardDeck.get(cardDeck.size() - 1));
+        cardDeck.remove(cardDeck.size() - 1);
+    }
 }
 

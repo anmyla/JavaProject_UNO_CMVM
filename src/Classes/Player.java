@@ -1,5 +1,7 @@
 package Classes;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -10,9 +12,7 @@ public abstract class Player {
 
     private boolean turn;
 
-    private boolean joker = false;
 
-    private String newColor;
 
     private Card playedCard;
 
@@ -35,23 +35,12 @@ public abstract class Player {
         this.playerPoints = playerPoints;
     }
 
+    public List<Card> getPlayersHand() {
+        return playersHand;
+    }
+
     public void setPlayersHand(List<Card> playersHand) {
         this.playersHand = playersHand;
-    }
-
-    public boolean isJoker() {
-        return joker;
-    }
-
-    public String getNewColor() {
-        return newColor;
-    }
-
-    public void setJoker(boolean joker) {
-        this.joker = joker;
-    }
-    public void setNewColor(String newColor) {
-        this.newColor = newColor;
     }
 
     public Card getPlayedCard() {
@@ -72,25 +61,31 @@ public abstract class Player {
     }
 
     public Card playerEntersCardToPlay() {
+        String[] validCardValues = Card.getFaceValueCollections();
+        List<String> validCardValuesList = new ArrayList<>(Arrays.asList(validCardValues));
+
+        String[] validCardColors = Card.getColorValueCollections();
+        List<String> validCardColorList = new ArrayList<>(Arrays.asList(validCardColors));
+
         Scanner cardInput = new Scanner(System.in);
-        System.out.println("ENTER CARD COLOR:"); //Player chooses a card color (R,B,Y,G, J)
+
+        System.out.println("ENTER CARD COLOR (R, B, G, Y, J):"); //Player chooses a card color (R,B,Y,G, J)
         String cardColor = cardInput.nextLine();
+        while (!validCardColorList.contains(cardColor)) {
+            System.out.println("Your CARD COLOR input is invalid. Please choose one (R, B, G, Y, or J): ");
+            cardColor = cardInput.nextLine();
+        }
+
         System.out.println("ENTER CARD VALUE:"); //Player chooses a value (1,2,3, <->, etc.)
         String cardValue = cardInput.nextLine();
-        Card cardToPlay = new Card(cardColor,cardValue);
+        while (!validCardValuesList.contains(cardValue)) {
+            System.out.println("Your CARD VALUE input is invalid. Please choose one (0, 1 , 2 , 3 , 4 , 5 ,6 , 7 , 8 , 9 , X , <-> , +2, +4, C, or C+4)");
+            cardColor = cardInput.nextLine();
+        }
 
-        if (cardToPlay.getCardValue().equals("C")) {
-            System.out.println("What Color should we play next? (R, G, B, Y) :");
-            joker = true;
-            newColor= cardInput.nextLine();
-            setNewColor(newColor);
-            setJoker(true);
-        }
-        else {
-            joker = false;
-            setJoker(false);
-        }
-        System.out.println(cardToPlay.toString());
+        Card cardToPlay = new Card(cardColor, cardValue);
+        Game.isCardJokerColor();
+
         setPlayedCard(cardToPlay);
         return cardToPlay;
     }

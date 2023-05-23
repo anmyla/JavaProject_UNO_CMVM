@@ -46,14 +46,16 @@ public class App {
         firstGame.printPlayer(); // printing each player's 7 cards (initial player's hand) on the console.
 
         List<Card> discardDeck = firstGame.getDiscardDeck(); //creating a discard deck
+
         firstGame.layFirstCard(); // laying the first card on the discard deck
+
         System.out.println("LET THE GAMES BEGIN!!!");
         firstGame.printDiscardDeck(); //printing the discard deck on the console.
     }
 
     private void readUserInput(Player player) {
         playerToPlay(); // alert the players: whose turn it is to play
-        currentPlayer().playerEntersCardToPlay();
+        playOrPass();
         while (!isPlayedCardValid()) {
             System.out.println("Your input is invalid. Try again!");
             currentPlayer().playerEntersCardToPlay();
