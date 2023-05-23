@@ -79,7 +79,7 @@ public class Game {
 
     public static void acceptPlayersInput() { //this method will take one Card from the player's initialCards and add it to the DISCARD DECK.
         Player currentPlayer = currentPlayer();
-        Card playedCard = currentPlayer.playerEntersCardToPlay();
+        Card playedCard = currentPlayer.getPlayedCard();
         discardDeck.add(playedCard);
         currentPlayer.removeFromPlayersHand(playedCard);
     }
@@ -207,6 +207,22 @@ public class Game {
         String enteredColor = scanner.next();
     }
 
+    public static boolean isPlayedCardValid () {
+        boolean isValid = false;
+        Card cardToCheck = currentPlayer().getPlayedCard();
+
+        if(!currentPlayer().isJoker())
+        if(cardToCheck.getCardColor().equals(discardDeck.get(0).getCardColor()) || cardToCheck.getCardValue().equals(discardDeck.get(0).getCardValue())) {
+            isValid = true;
+        }
+        else if (cardToCheck.getCardColor().equals(currentPlayer().getNewColor())) {
+                isValid = true;
+            }
+        else {
+            isValid = false;
+        }
+        return isValid;
+    }
 
 
 }

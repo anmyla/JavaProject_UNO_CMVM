@@ -53,7 +53,13 @@ public class App {
 
     private void readUserInput(Player player) {
         playerToPlay(); // alert the players: whose turn it is to play
+        currentPlayer().playerEntersCardToPlay();
+        while (!isPlayedCardValid()) {
+            System.out.println("Your input is invalid. Try again!");
+            currentPlayer().playerEntersCardToPlay();
+        }
         acceptPlayersInput(); // current player inputs card
+        isPlayedCardValid(); // check if played card is valid:
         printDiscardDeck(); // print the discard deck on the console.
         checkNextTurn();
     }

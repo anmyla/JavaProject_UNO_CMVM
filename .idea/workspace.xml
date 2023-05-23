@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f2f20e9a-d884-4206-aac0-91694e66c491" name="Changes" comment="Rules for Reverse, Skip, an dNormal cards">
+    <list default="true" id="f2f20e9a-d884-4206-aac0-91694e66c491" name="Changes" comment="trying to make the rules for isCardColorJoker">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Classes/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Classes/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Game.java" afterDir="false" />
@@ -161,7 +161,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684842035355</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="trying to make the rules for isCardColorJoker">
+      <created>1684843216864</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1684843216864</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -188,24 +195,16 @@
     <MESSAGE value="layInitialCard Method : works!" />
     <MESSAGE value="1. Created the fff methos in Game Class: nextTurn(), currentPlayer(), playerToPlay(), acceptPlayerInput()   2. Created the ff method in Player Class: playerEnterCardToPlay(), removeFromPlayersHand()" />
     <MESSAGE value="Rules for Reverse, Skip, an dNormal cards" />
-    <option name="LAST_COMMIT_MESSAGE" value="Rules for Reverse, Skip, an dNormal cards" />
+    <MESSAGE value="trying to make the rules for isCardColorJoker" />
+    <option name="LAST_COMMIT_MESSAGE" value="trying to make the rules for isCardColorJoker" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Classes/App.java</url>
-          <line>57</line>
+          <line>63</line>
           <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/Classes/App.java</url>
-          <line>25</line>
-          <properties class="Classes.App" method="Run">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/Classes/Game.java</url>

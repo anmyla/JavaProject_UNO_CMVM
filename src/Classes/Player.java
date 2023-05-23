@@ -14,6 +14,8 @@ public abstract class Player {
 
     private String newColor;
 
+    private Card playedCard;
+
     public Player(String name, List<Card> playerInitialCards) {
         this.name = name;
         this.playersHand = playerInitialCards;
@@ -52,6 +54,14 @@ public abstract class Player {
         this.newColor = newColor;
     }
 
+    public Card getPlayedCard() {
+        return playedCard;
+    }
+
+    public void setPlayedCard(Card playedCard) {
+        this.playedCard = playedCard;
+    }
+
     @Override
     public String toString() {
         return name + playersHand;
@@ -74,11 +84,14 @@ public abstract class Player {
             joker = true;
             newColor= cardInput.nextLine();
             setNewColor(newColor);
+            setJoker(true);
         }
         else {
             joker = false;
+            setJoker(false);
         }
         System.out.println(cardToPlay.toString());
+        setPlayedCard(cardToPlay);
         return cardToPlay;
     }
 
