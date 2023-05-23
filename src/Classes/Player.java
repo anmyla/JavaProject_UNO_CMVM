@@ -46,7 +46,7 @@ public abstract class Player {
         Scanner cardInput = new Scanner(System.in);
         System.out.println("ENTER CARD COLOR:"); //Player chooses a card color (R,B,Y,G, J)
         String cardColor = cardInput.nextLine();
-        System.out.print("ENTER CARD VALUE:"); //Player chooses a value (1,2,3, <->, etc.)
+        System.out.println("ENTER CARD VALUE:"); //Player chooses a value (1,2,3, <->, etc.)
         String cardValue = cardInput.nextLine();
         Card cardToPlay = new Card(cardColor,cardValue);
         System.out.println(cardToPlay.toString());

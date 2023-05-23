@@ -19,9 +19,10 @@ public class Card {
         this.cardPoints = cardPoints;
     }
 
-    public Card(String cardValue, String cardColor) {
-        this.cardValue = cardValue;
+    public Card(String cardColor, String cardValue) {
         this.cardColor = cardColor;
+        this.cardValue = cardValue;
+
     }
 
     public Card() {
@@ -61,7 +62,7 @@ public class Card {
 
     @Override
     public String toString() {
-        return cardValue + cardColor;
+        return getCard();
     }
 
 

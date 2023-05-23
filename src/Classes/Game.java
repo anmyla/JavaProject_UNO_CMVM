@@ -1,14 +1,11 @@
 package Classes;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Game {
-    static List<Player> players = new ArrayList<>();
-    Deck cardDeck = new Deck(108);
-    static List<Card> discardDeck = new ArrayList<>();
+    private static List<Player> players = new ArrayList<>();
+    private Deck cardDeck = new Deck(108);
+    private static List<Card> discardDeck = new ArrayList<>();
     private static int turn = chooseFirstPlayer();
     private static boolean isClockwise = true;
 
@@ -64,64 +61,14 @@ public class Game {
 
     public static void setTurn(int playerIndex) { //set the current player's index
         turn = playerIndex;
+
     }
 
-    public static int nextTurn() { //THIS IS A TEMPORARY METHOD!! WILL BE DELETED ONCE WE HAVE THE CHECKS
-        Card currentCard = discardDeck.get(discardDeck.size() - 1); // get the current card from the discard deck...
-
-        if (discardDeck.size() == 1) {
-            turn = 0;
-        }
-        if (currentCard.getCardValue().equals("<->")) {
-            // If isClockwise is true, the previous player should play
-            if (isClockwise) {
-                if (turn == 0) {
-                    turn = 3;
-                } else {
-                    turn--;
-                }
-                isClockwise = false;
-            } else if (isClockwise == false) {
-                if (turn == 3) {
-                    turn = 0;
-                } else {
-                    turn++;
-                }
-                isClockwise = true;
-            }
-        } else if (currentCard.getCardValue().equals("X")) {
-            if (isClockwise) {
-                if (turn >= 3) {
-                    turn = (turn - 3) + 1;
-                } else {
-                    turn = turn + 2;
-                }
-            } else if (isClockwise == false) {
-                if (turn <= 0) {
-                    turn = 3;
-                    turn--;
-                } else {
-                    turn = turn - 2;
-                }
-            }
-        }
-        else {
-            // If the current card is a regular card, the next player should play
-            if (isClockwise) {
-            turn++;
-            }
-            else {
-                turn--;
-            }
-            if (turn >= players.size()) {
-                turn = 0;
-            }
-        }
-        return turn;
-    }
+//    public static int nextTurn() { //THIS IS A TEMPORARY METHOD!! WILL BE DELETED ONCE WE HAVE THE CHECKS
+//    }
 
     public static Player currentPlayer() {
-        Player currentPlayer = players.get(nextTurn());
+        Player currentPlayer = players.get(getTurn());
         return currentPlayer;
     }
 
@@ -138,8 +85,128 @@ public class Game {
     }
 
     public static void printDiscardDeck() {  // this method will print the cards in the DISCARD DECK
+        System.out.println
+
+                ("DISCARD DECK: ");
+        Collections.reverse(discardDeck);
+
         for (Card card : discardDeck) {
             System.out.print(card + ", ");
         }
+    }
+
+    public static void checkCard() { // this a method that checks the current card played, implements rules, and return the next player
+        Card currentCard = discardDeck.get(0);
+
+        if (currentCard.getCardValue().equals("<->")) {
+            isCardIsReverse();
+        } else if (currentCard.getCardValue().equals("X")) {
+            isCardSkip();
+        } else if (currentCard.getCardValue().equals("+2")) {
+            isCardTakeTwo();
+        } else if (currentCard.getCardValue().equals("+4")) {
+            isCardTakeFour();
+        } else if (currentCard.getCardValue().equals("C")) {
+            isCardJokerColor();
+        }
+        else {
+            isCardNormal();
+        }
+    }
+    public static int isCardIsReverse() { //This method is to decide who has the next turn when the card "<->" is played
+        int currentPlayerIndex = getTurn();
+
+        if (currentPlayerIndex == 0) {
+            if (isClockwise) {
+                currentPlayerIndex = 3;
+                isClockwise = false;
+            } else {
+                currentPlayerIndex = 1;
+                isClockwise = true;
+            }
+        } else if (currentPlayerIndex == 3) {
+            if (isClockwise) {
+                currentPlayerIndex = 2;
+                isClockwise = false;
+            } else {
+                currentPlayerIndex = 0;
+                isClockwise = true;
+            }
+        } else {
+            if (isClockwise) {
+                currentPlayerIndex--;
+                isClockwise = false;
+            } else {
+                currentPlayerIndex++;
+                isClockwise = true;
+            }
+        }
+        setTurn(currentPlayerIndex);
+        return currentPlayerIndex;
+    }
+
+    public static int isCardSkip() { //This method is to decide who has the next turn when the card "X" is played
+        int currentPlayerIndex = getTurn();
+
+            if (currentPlayerIndex == 0) {
+                currentPlayerIndex = 2;
+            } else if (currentPlayerIndex == 1) {
+                currentPlayerIndex = 3;
+
+            } else if (currentPlayerIndex == 2) {
+                currentPlayerIndex = 0;
+
+            } else if (currentPlayerIndex == 3) {
+                currentPlayerIndex = 1;
+
+            }
+        setTurn(currentPlayerIndex);
+        return currentPlayerIndex;
+    }
+
+    public static int isCardTakeTwo() {
+        int currentPlayerIndex = getTurn();
+        return currentPlayerIndex;
+    }
+
+    public static int isCardTakeFour() {
+        int currentPlayerIndex = getTurn();
+        return currentPlayerIndex;
+    }
+
+    public static int isCardJokerColor() {
+        int currentPlayerIndex = getTurn();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please enter a color " + currentPlayer().getName() + ": ");
+        String enteredColor = scanner.next();
+        currentPlayerIndex++;
+
+        setTurn(currentPlayerIndex);
+        return currentPlayerIndex;
+    }
+    public static int isCardNormal() {
+        int currentPlayerIndex = getTurn();
+
+        if (currentPlayerIndex == 0) {
+            if (isClockwise) {
+                currentPlayerIndex++;
+            } else {
+                currentPlayerIndex = 3;
+            }
+        } else if (currentPlayerIndex == 3) {
+            if (isClockwise) {
+                currentPlayerIndex = 0;
+            } else {
+                currentPlayerIndex = 2;
+            }
+        } else {
+            if (isClockwise) {
+                currentPlayerIndex++;
+            } else {
+                currentPlayerIndex--;
+            }
+        }
+        setTurn(currentPlayerIndex);
+        return currentPlayerIndex;
     }
 }
