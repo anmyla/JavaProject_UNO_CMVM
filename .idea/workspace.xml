@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f2f20e9a-d884-4206-aac0-91694e66c491" name="Changes" comment="trying to make the rules for isCardColorJoker">
+    <list default="true" id="f2f20e9a-d884-4206-aac0-91694e66c491" name="Changes" comment="attempts to do check on played cards">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Classes/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/Deck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Deck.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Classes/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Classes/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Player.java" afterDir="false" />
     </list>
@@ -204,12 +203,39 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/Classes/Game.java</url>
-          <line>256</line>
+          <line>270</line>
           <properties class="Classes.Game" method="playerHasCardToPlay">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
           <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/Classes/Game.java</url>
+          <line>327</line>
+          <properties class="Classes.Game" method="playerEntersCardToPlay">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/Classes/App.java</url>
+          <line>55</line>
+          <properties class="Classes.App" method="readUserInput">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/Classes/Game.java</url>
+          <line>123</line>
+          <properties class="Classes.Game" method="checkNextTurn">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="14" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

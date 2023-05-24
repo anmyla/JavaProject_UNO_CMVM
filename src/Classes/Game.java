@@ -7,15 +7,19 @@ import static Classes.Deck.drawOneCard;
 
 public class Game {
     private static List<Player> players = new ArrayList<>();
-    private Deck cardDeck = new Deck(108);
+    private static Deck cardDeck = new Deck(108);
     private static List<Card> discardDeck = new ArrayList<>();
     private static int turn = chooseFirstPlayer();
     private static boolean isClockwise = true;
-    private static boolean isJoker = false;
-    private static String newColor;
+    static boolean isJoker = false;
+    static String newColor;
+
+    static boolean cardValid;
+
+    static boolean pass = false;
 
 
-    public void setUpPlayers(int humanPlayers) {
+    public static void setUpPlayers(int humanPlayers) {
         //Just human players for now. A simple method to collect player names and add it to the List<Players>
         Scanner playerInput = new Scanner(System.in);
 
@@ -27,7 +31,7 @@ public class Game {
         }
     }
 
-    public void distributeInitialCardsToPlayers() {
+    public static void distributeInitialCardsToPlayers() {
         cardDeck.initialDeck();
         cardDeck.shuffleDeck();
 //        System.out.println();
@@ -68,7 +72,7 @@ public class Game {
         turn = playerIndex;
     }
 
-    public boolean isJoker() {
+    public static boolean isJoker() {
         return isJoker;
     }
 
@@ -76,12 +80,16 @@ public class Game {
         this.isJoker = joker;
     }
 
-    public String getNewColor() {
+    public static String getNewColor() {
         return newColor;
     }
 
     public void setNewColor(String newColor) {
         this.newColor = newColor;
+    }
+
+    public static boolean isCardValid() {
+        return cardValid;
     }
 
     public static Player currentPlayer() {
@@ -99,6 +107,7 @@ public class Game {
         Card playedCard = currentPlayer.getPlayedCard();
         discardDeck.add(playedCard);
         currentPlayer.removeFromPlayersHand(playedCard);
+        currentPlayer.toString();
     }
 
     public static void printDiscardDeck() {  // this method will print the cards in the DISCARD DECK
@@ -108,14 +117,16 @@ public class Game {
         Collections.reverse(discardDeck);
 
         for (Card card : discardDeck) {
-            System.out.print(card + ", ");
+            System.out.print(card +  ", ");
         }
     }
 
     public static void checkNextTurn() { // this a method that checks the current card played, implements rules, and return the next player
         Card currentCard = discardDeck.get(0);
-
-        if (currentCard.getCardValue().equals("<->")) {
+        if (pass){
+            isCardNormal();
+        }
+        else if (currentCard.getCardValue().equals("<->")) {
             isCardIsReverse();
         } else if (currentCard.getCardValue().equals("X")) {
             isCardSkip();
@@ -220,68 +231,75 @@ public class Game {
     public static void isCardJokerColor() {
         int currentPlayerIndex = getTurn();
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Please enter a color " + currentPlayer().getName() + ": ");
+        System.out.println(currentPlayer().getName() + ", please enter a color: ");
         String enteredColor = scanner.next();
     }
 
     public static boolean isPlayedCardValid() {
-        boolean isValid = false;
-        Card cardToCheck = currentPlayer().getPlayedCard();
+        Player currentPlayer = currentPlayer();
+        Card cardToCheck = currentPlayer.getPlayedCard();
 
-        if (cardToCheck.getCardColor().equals(discardDeck.get(0).getCardColor()) || cardToCheck.getCardValue().equals(discardDeck.get(0).getCardValue())) {
-            isValid = true;
-        } else if (cardToCheck.getCardColor().equals("C")) {
-            isValid = true;
-        } else {
-            isValid = false;
+        if (cardToCheck == null) {
+            checkNextTurn();
         }
-        return isValid;
+        else if (cardToCheck.getCardColor().equals(discardDeck.get(0).getCardColor()) || cardToCheck.getCardValue().equals(discardDeck.get(0).getCardValue())) {
+            cardValid = true;
+        } else if (cardToCheck.getCardColor().equals("C")) {
+            cardValid = true;
+        } else {
+            cardValid = false;
+        }
+        return cardValid;
     }
 
-    public void isCardJoker() {
+    public static void isCardJoker() {
+        Player currentPlayer = currentPlayer();
+        Card playedCard = currentPlayer.getPlayedCard();
         Scanner newColorInput = new Scanner(System.in);
 
-        if (currentPlayer().getPlayedCard().getCardValue().equals("C")) {
+        if (playedCard.getCardValue().equals("C")) {
             isJoker = true;
             System.out.println("What Color should we play next? (R, G, B, Y) :");
             newColor = newColorInput.nextLine();
-            setNewColor(newColor);
-            setJoker(true);
+
         } else {
             isJoker = false;
-            setJoker(false);
         }
-        System.out.println(currentPlayer().getPlayedCard().toString());
+        System.out.println(playedCard.toString());
     }
 
     public static boolean playerHasCardToPlay() {
         Player currentPlayer = currentPlayer();
         boolean hasCardToPlay = false;
+        String newColor = getNewColor();
         String currentDiscardCardColor = discardDeck.get(discardDeck.size()-1).getCardColor();
         String currentDiscardCardValue = discardDeck.get(discardDeck.size()-1).getCardValue();
+        String checkCardColor;
+        String checkCardValue;
 
         for (Card card : currentPlayer.playersHand) {
-            if (card.getCardColor().equals(currentDiscardCardColor)) {
+            checkCardColor = card.getCardColor();
+            checkCardValue = card.getCardValue();
+            if (checkCardColor.equals(currentDiscardCardColor)) {
                 hasCardToPlay = true;
                 break;
             }
-            else if (card.getCardValue().equals(currentDiscardCardValue)) {
+            else if (checkCardValue.equals(currentDiscardCardValue)) {
                 hasCardToPlay = true;
-                    break;
+                break;
             }
             else if(currentDiscardCardColor.equals(newColor) ) {
                 hasCardToPlay = true;
+                break;
             }
             else {
                 hasCardToPlay = false;
-                break;
             }
         }
         return hasCardToPlay;
     }
 
-    public static void playOrPass() {
-        Player currentPlayer = currentPlayer();
+    public static boolean playOrPass() {
         Scanner playerInput = new Scanner(System.in);
         if (playerHasCardToPlay()) {
             System.out.println(currentPlayer().getName() + ", will you play(Y) or pass(N)?" );
@@ -295,15 +313,56 @@ public class Game {
             if (passOrPlay.equals("n")) {
                 System.out.println("Understood. You may chose to pass but you must draw a card");
                 drawOneCard();
-            }
-            else {
-                currentPlayer.playerEntersCardToPlay();
+                pass = true;
             }
         }
         else {
             System.out.println("Looks like you don't have a card to play this round");
             System.out.println("Sorry but you have to draw a card!");
             drawOneCard();
+            pass = true;
+        }
+        return pass;
+    }
+
+    public static Card playerEntersCardToPlay() {
+        Player currentPlayer = currentPlayer();
+        String[] validCardValues = Card.getFaceValueCollections();
+        List<String> validCardValuesList = new ArrayList<>(Arrays.asList(validCardValues));
+
+        String[] validCardColors = Card.getColorValueCollections();
+        List<String> validCardColorList = new ArrayList<>(Arrays.asList(validCardColors));
+
+        Scanner cardInput = new Scanner(System.in);
+
+        System.out.println("ENTER CARD COLOR (R, B, G, Y, J):"); //Player chooses a card color (R,B,Y,G, J)
+        String cardColor = cardInput.nextLine();
+        while (!validCardColorList.contains(cardColor)) {
+            System.out.println("Your CARD COLOR input is invalid. Please choose one (R, B, G, Y, or J): ");
+            cardColor = cardInput.nextLine();
+        }
+
+        System.out.println("ENTER CARD VALUE:"); //Player chooses a value (1,2,3, <->, etc.)
+        String cardValue = cardInput.nextLine();
+        while (!validCardValuesList.contains(cardValue)) {
+            System.out.println("Your CARD VALUE input is invalid. Please choose one (0, 1 , 2 , 3 , 4 , 5 ,6 , 7 , 8 , 9 , X , <-> , +2, +4, C, or C+4)");
+            cardColor = cardInput.nextLine();
+        }
+
+        Card cardToPlay = new Card(cardColor, cardValue);
+        currentPlayer.setPlayedCard(cardToPlay);
+        isCardJoker();
+
+        return cardToPlay;
+    }
+
+    public static void currentPlayersTurn() {
+        Player currentPlayer = currentPlayer();
+        if (!playOrPass()) {
+            playerEntersCardToPlay();
+        }
+        else {
+            checkNextTurn();
         }
     }
 }
