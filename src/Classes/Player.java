@@ -1,8 +1,5 @@
 package Classes;
 
-import java.sql.SQLOutput;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -18,7 +15,7 @@ public abstract class Player {
 
     private boolean turn;
     private Card playedCard;
-    static boolean pass = false;
+    static boolean play = true;
 
     public Player(String name, List<Card> playerInitialCards) {
         this.name = name;
@@ -43,12 +40,12 @@ public abstract class Player {
         return playersHand;
     }
 
-    public static boolean isPass() {
-        return pass;
+    public static boolean isPlay() {
+        return play;
     }
 
-    public static void setPass(boolean pass) {
-        Player.pass = pass;
+    public static void setPlay(boolean play) {
+        Player.play = play;
     }
 
     public void setPlayersHand(List<Card> playersHand) {
@@ -79,40 +76,21 @@ public abstract class Player {
 
     public static boolean playOrPass() {
         Player currentPlayer = currentPlayer();
-        Scanner playerInput = new Scanner(System.in);
-        if (playerHasCardToPlay()) {
-            System.out.println(currentPlayer().getName() + ", will you play(Y) or pass(N)?" );
-            String toPlayOrPass = playerInput.nextLine().toLowerCase();
-
-            while (!toPlayOrPass.equals("y") && !toPlayOrPass.equals("n")) {
-                System.out.println("Invalid input. Please enter 'Y' for play or 'N' for pass: ");
-                toPlayOrPass = playerInput.nextLine().toLowerCase();
-            }
-
-            if (toPlayOrPass.equals("n")) {
-                System.out.println("Understood. You may chose to pass but you must draw a card");
-                drawOneCard();
-                System.out.println("Here's your updated Cards!");
-                System.out.println(currentPlayer.toString());
-                pass = true;
-            }
-            else {
-                pass = false;
-            }
-        }
-        else {
-            System.out.println(currentPlayer.getName()+ ", it looks like you don't have a card to play this round");
+        if (!playerHasCardToPlay()) {
+            System.out.println(currentPlayer.getName() + ", it looks like you don't have a card to play this round");
             System.out.println("Sorry but you have to draw a card!");
             drawOneCard();
             System.out.println("Here's your updated Cards!");
             System.out.println(currentPlayer.toString());
-            pass = true;
+            play = false;
         }
-        setPass(pass);
-        return pass;
+        else {
+            play = true;
+        }
+        setPlay(play);
+        return play;
     }
 
 
 }
-
 

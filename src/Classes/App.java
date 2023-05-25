@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import static Classes.Game.*;
-import static Classes.Player.isPass;
+import static Classes.Player.isPlay;
 import static Classes.Player.playOrPass;
 
 public class App {
@@ -60,17 +60,18 @@ public class App {
         if (!isCardValid()) {
             playOrPass();
             currentPlayersTurn();
-            if(!isPass()) { //player DO NOT pass
+            if(isPlay()) { //player DO NOT pass
                 isPlayedCardValid();
             }
         }
-        if(!isPass()) {  //player DO NOT pass
+        if(isCardValid()) {  //player DO NOT pass
         acceptPlayersInput(); // current player inputs card
         }
     }
 
     private void updateState() {
         checkNextTurn();
+        printDiscardDeck();
     }
 
     private void printState() {
