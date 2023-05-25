@@ -17,8 +17,6 @@ public class Game {
     static boolean cardValid;
 
 
-
-
     public static void setUpPlayers(int humanPlayers) {
         //Just human players for now. A simple method to collect player names and add it to the List<Players>
         Scanner playerInput = new Scanner(System.in);
@@ -114,16 +112,15 @@ public class Game {
     public static void printDiscardDeck() {  // this method will print the cards in the DISCARD DECK
         System.out.println("DISCARD DECK: ");
         for (Card card : discardDeck) {
-            System.out.print(card +  ", ");
+            System.out.print(card + ", ");
         }
     }
 
     public static void checkNextTurn() { // this a method that checks the current card played, implements rules, and return the next player
         Card currentCard = discardDeck.get(0);
-        if (!isPlay()){ //the players does NOT have card to pay
+        if (!isPlay()) { //the players does NOT have card to pay
             isCardNormal();
-        }
-        else if (currentCard.getCardValue().equals("<->")) {
+        } else if (currentCard.getCardValue().equals("<->")) {
             isCardIsReverse();
         } else if (currentCard.getCardValue().equals("X")) {
             isCardSkip();
@@ -189,15 +186,6 @@ public class Game {
         return currentPlayerIndex;
     }
 
-    public static int isCardTakeTwo() {
-        int currentPlayerIndex = getTurn();
-        return currentPlayerIndex;
-    }
-
-    public static int isCardTakeFour() {
-        int currentPlayerIndex = getTurn();
-        return currentPlayerIndex;
-    }
 
     public static int isCardNormal() {
         int currentPlayerIndex = getTurn();
@@ -251,8 +239,7 @@ public class Game {
                 System.out.println("Here's your updated Cards!");
                 System.out.println(currentPlayer.toString());
             }
-        }
-        else {
+        } else {
             cardValid = false;
             System.out.println(currentPlayer.getName() + " you just made an invalid moved!");
             System.out.println("Sorry, but you have to draw a card!");
@@ -284,8 +271,8 @@ public class Game {
         Player currentPlayer = currentPlayer();
         boolean hasCardToPlay = false;
         String newColor = getNewColor();
-        String currentDiscardCardColor = discardDeck.get(discardDeck.size()-1).getCardColor();
-        String currentDiscardCardValue = discardDeck.get(discardDeck.size()-1).getCardValue();
+        String currentDiscardCardColor = discardDeck.get(discardDeck.size() - 1).getCardColor();
+        String currentDiscardCardValue = discardDeck.get(discardDeck.size() - 1).getCardValue();
         String checkCardColor;
         String checkCardValue;
 
@@ -295,16 +282,13 @@ public class Game {
             if (checkCardColor.equals(currentDiscardCardColor)) {
                 hasCardToPlay = true;
                 break;
-            }
-            else if (checkCardValue.equals(currentDiscardCardValue)) {
+            } else if (checkCardValue.equals(currentDiscardCardValue)) {
                 hasCardToPlay = true;
                 break;
-            }
-            else if(currentDiscardCardColor.equals(newColor) ) {
+            } else if (currentDiscardCardColor.equals(newColor)) {
                 hasCardToPlay = true;
                 break;
-            }
-            else {
+            } else {
                 hasCardToPlay = false;
             }
         }
@@ -345,10 +329,18 @@ public class Game {
 
     public static void currentPlayersTurn() {
         Player currentPlayer = currentPlayer();
-        if (!isPlay()) {
-            checkNextTurn();
+        Card cardToCheck = discardDeck.get(0);
+
+        if(cardToCheck.getCardValue().equals("+2")){
+            isCardTakeTwo();
         }
-        else {
+
+        if(cardToCheck.getCardValue().equals("+4")){
+            isCardTakeFour();
+        }
+        if (!isPlay() && (cardToCheck.getCardValue().equals("+2"))) {
+            checkNextTurn();
+        } else {
             playerEntersCardToPlay();
             currentPlayer.setPlay(true); //RESET this boolean to default value
         }
@@ -367,20 +359,39 @@ public class Game {
         for (Card card : currentPlayer.playersHand) {
             playedCardColor = card.getCardColor();
             playedCardValue = card.getCardValue();
-            if (playedCardColor.equals(currentPlayerCardColor)) {
+            if (playedCardColor.equals(currentPlayerCardColor)  && playedCardValue.equals(currentPlayerCardValue)) {
                 doIHaveThisCard = true;
-                break;
-            }
-            else if (playedCardValue.equals(currentPlayerCardValue)) {
-                doIHaveThisCard = true;
-                break;
-            }
-
-            else {
+            } else {
                 doIHaveThisCard = false;
             }
         }
         return doIHaveThisCard;
     }
+    public static void isCardTakeTwo() {
+        Player currentPlayer = currentPlayer();
+        Card cardToCheck = discardDeck.get(0);
+        if (cardToCheck.getCardValue().equals("+2")) {
+            System.out.println("You have to take 2 cards!");
+            drawOneCard();
+            drawOneCard();
+            System.out.println("Here is your updated cards");
+            System.out.println(currentPlayer.toString());
+        }
+    }
+
+    public static void isCardTakeFour() {
+        Player currentPlayer = currentPlayer();
+        Card cardToCheck = discardDeck.get(0);
+        if (cardToCheck.getCardValue().equals("+4")) {
+            System.out.println("You have to take 4 cards!");
+            drawOneCard();
+            drawOneCard();
+            drawOneCard();
+            drawOneCard();
+            System.out.println("Here is your updated cards");
+            System.out.println(currentPlayer.toString());
+        }
+    }
 }
+
 

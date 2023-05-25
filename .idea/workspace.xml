@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f2f20e9a-d884-4206-aac0-91694e66c491" name="Changes" comment="attempts to do check on played cards">
+    <list default="true" id="f2f20e9a-d884-4206-aac0-91694e66c491" name="Changes" comment="move validity check">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Classes/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Player.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,7 +166,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684843216864</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="move validity check">
+      <created>1685004466864</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1685004466864</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -196,14 +201,15 @@
     <MESSAGE value="1. Created the fff methos in Game Class: nextTurn(), currentPlayer(), playerToPlay(), acceptPlayerInput()   2. Created the ff method in Player Class: playerEnterCardToPlay(), removeFromPlayersHand()" />
     <MESSAGE value="Rules for Reverse, Skip, an dNormal cards" />
     <MESSAGE value="trying to make the rules for isCardColorJoker" />
-    <option name="LAST_COMMIT_MESSAGE" value="trying to make the rules for isCardColorJoker" />
+    <MESSAGE value="move validity check" />
+    <option name="LAST_COMMIT_MESSAGE" value="move validity check" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/Classes/Game.java</url>
-          <line>282</line>
+          <line>269</line>
           <properties class="Classes.Game" method="playerHasCardToPlay">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
@@ -212,7 +218,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/Classes/Game.java</url>
-          <line>314</line>
+          <line>298</line>
           <properties class="Classes.Game" method="playerEntersCardToPlay">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
@@ -221,7 +227,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/Classes/Game.java</url>
-          <line>120</line>
+          <line>118</line>
           <properties class="Classes.Game" method="checkNextTurn">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
@@ -230,7 +236,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/Classes/Game.java</url>
-          <line>104</line>
+          <line>102</line>
           <properties class="Classes.Game" method="acceptPlayersInput">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
