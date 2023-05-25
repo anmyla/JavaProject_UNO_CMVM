@@ -74,6 +74,10 @@ public class Game {
         return isJoker;
     }
 
+    public static void setCardValid(boolean cardValid) {
+        Game.cardValid = cardValid;
+    }
+
     public void setJoker(boolean joker) {
         this.isJoker = joker;
     }
@@ -106,7 +110,7 @@ public class Game {
         discardDeck.add(0, playedCard);
         currentPlayer.removeFromPlayersHand(playedCard);
         System.out.println(currentPlayer.toString());
-        cardValid = false; //IMPORTANT! Reset the value after accepting player's played card.
+        setCardValid(false); //IMPORTANT! Reset the value after accepting player's played card.
     }
 
     public static void printDiscardDeck() {  // this method will print the cards in the DISCARD DECK
@@ -225,29 +229,30 @@ public class Game {
         Card cardToCheck = currentPlayer.getPlayedCard();
 
         if (hasPlayerThisCardInHand()) {
-            if (cardToCheck == null) { //current player did not play a card yet
-                checkNextTurn();
-            } else if (cardToCheck.getCardColor().equals(discardDeck.get(0).getCardColor()) || cardToCheck.getCardValue().equals(discardDeck.get(0).getCardValue())) {
-                cardValid = true;
-            } else if (cardToCheck.getCardColor().equals("C")) {
-                cardValid = true;
+//            if (cardToCheck == null) { //current player did not play a card yet
+//                checkNextTurn();
+            if (cardToCheck.getCardColor().equals("C")) {
+                setCardValid(true);
+            }
+            else if (cardToCheck.getCardColor().equals(discardDeck.get(0).getCardColor()) || cardToCheck.getCardValue().equals(discardDeck.get(0).getCardValue())) {
+                setCardValid(true);
             } else {
-                cardValid = false;
                 System.out.println(currentPlayer.getName() + " you just made an invalid moved!");
-                System.out.println("Sorry, but you have to draw a card!");
+                System.out.println("Sorry, but you have to draw a card! HERE I WAS");
                 drawOneCard();
                 System.out.println("Here's your updated Cards!");
                 System.out.println(currentPlayer.toString());
+                setCardValid(false);
             }
         } else {
-            cardValid = false;
             System.out.println(currentPlayer.getName() + " you just made an invalid moved!");
-            System.out.println("Sorry, but you have to draw a card!");
+            System.out.println("Sorry, but you have to draw a card! HOOOOOOOOOOOOO");
             drawOneCard();
             System.out.println("Here's your updated Cards!");
             System.out.println(currentPlayer.toString());
+            setCardValid(false);
         }
-        return cardValid;
+        return isCardValid();
     }
 
     public static void isCardJoker() {
@@ -331,11 +336,11 @@ public class Game {
         Player currentPlayer = currentPlayer();
         Card cardToCheck = discardDeck.get(0);
 
-        if(cardToCheck.getCardValue().equals("+2")){
+        if (cardToCheck.getCardValue().equals("+2")) {
             isCardTakeTwo();
         }
 
-        if(cardToCheck.getCardValue().equals("+4")){
+        if (cardToCheck.getCardValue().equals("+4")) {
             isCardTakeFour();
         }
         if (!isPlay() && (cardToCheck.getCardValue().equals("+2"))) {
@@ -359,14 +364,16 @@ public class Game {
         for (Card card : currentPlayer.playersHand) {
             playedCardColor = card.getCardColor();
             playedCardValue = card.getCardValue();
-            if (playedCardColor.equals(currentPlayerCardColor)  && playedCardValue.equals(currentPlayerCardValue)) {
+            if (playedCardColor.equals(currentPlayerCardColor) && playedCardValue.equals(currentPlayerCardValue)) {
                 doIHaveThisCard = true;
+                break;
             } else {
                 doIHaveThisCard = false;
             }
         }
         return doIHaveThisCard;
     }
+
     public static void isCardTakeTwo() {
         Player currentPlayer = currentPlayer();
         Card cardToCheck = discardDeck.get(0);

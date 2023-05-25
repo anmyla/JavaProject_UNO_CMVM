@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f2f20e9a-d884-4206-aac0-91694e66c491" name="Changes" comment="move validity check">
+    <list default="true" id="f2f20e9a-d884-4206-aac0-91694e66c491" name="Changes" comment="still working on cardValidity">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Classes/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Game.java" afterDir="false" />
     </list>
@@ -173,7 +173,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685004466864</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="still working on cardValidity">
+      <created>1685008469684</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1685008469684</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -202,14 +209,15 @@
     <MESSAGE value="Rules for Reverse, Skip, an dNormal cards" />
     <MESSAGE value="trying to make the rules for isCardColorJoker" />
     <MESSAGE value="move validity check" />
-    <option name="LAST_COMMIT_MESSAGE" value="move validity check" />
+    <MESSAGE value="still working on cardValidity" />
+    <option name="LAST_COMMIT_MESSAGE" value="still working on cardValidity" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/Classes/Game.java</url>
-          <line>269</line>
+          <line>274</line>
           <properties class="Classes.Game" method="playerHasCardToPlay">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
@@ -218,7 +226,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/Classes/Game.java</url>
-          <line>298</line>
+          <line>303</line>
           <properties class="Classes.Game" method="playerEntersCardToPlay">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
@@ -227,7 +235,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/Classes/Game.java</url>
-          <line>118</line>
+          <line>122</line>
           <properties class="Classes.Game" method="checkNextTurn">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
@@ -236,7 +244,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/Classes/Game.java</url>
-          <line>102</line>
+          <line>106</line>
           <properties class="Classes.Game" method="acceptPlayersInput">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
