@@ -203,7 +203,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/Classes/Game.java</url>
-          <line>270</line>
+          <line>273</line>
           <properties class="Classes.Game" method="playerHasCardToPlay">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
@@ -212,7 +212,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/Classes/Game.java</url>
-          <line>327</line>
+          <line>305</line>
           <properties class="Classes.Game" method="playerEntersCardToPlay">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
@@ -221,7 +221,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/Classes/App.java</url>
-          <line>55</line>
+          <line>57</line>
           <properties class="Classes.App" method="readUserInput">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
@@ -230,12 +230,21 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/Classes/Game.java</url>
-          <line>123</line>
+          <line>126</line>
           <properties class="Classes.Game" method="checkNextTurn">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
           <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/Classes/Game.java</url>
+          <line>106</line>
+          <properties class="Classes.Game" method="acceptPlayersInput">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="15" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

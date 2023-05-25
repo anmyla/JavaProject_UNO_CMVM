@@ -1,9 +1,14 @@
 package Classes;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+
+import static Classes.Deck.drawOneCard;
+import static Classes.Game.currentPlayer;
+import static Classes.Game.playerHasCardToPlay;
 
 
 public abstract class Player {
@@ -13,6 +18,7 @@ public abstract class Player {
 
     private boolean turn;
     private Card playedCard;
+    static boolean pass = false;
 
     public Player(String name, List<Card> playerInitialCards) {
         this.name = name;
@@ -37,6 +43,14 @@ public abstract class Player {
         return playersHand;
     }
 
+    public static boolean isPass() {
+        return pass;
+    }
+
+    public static void setPass(boolean pass) {
+        Player.pass = pass;
+    }
+
     public void setPlayersHand(List<Card> playersHand) {
         this.playersHand = playersHand;
     }
@@ -58,39 +72,44 @@ public abstract class Player {
         return playerPoints;
     }
 
-//    public Card playerEntersCardToPlay() {
-//        String[] validCardValues = Card.getFaceValueCollections();
-//        List<String> validCardValuesList = new ArrayList<>(Arrays.asList(validCardValues));
-//
-//        String[] validCardColors = Card.getColorValueCollections();
-//        List<String> validCardColorList = new ArrayList<>(Arrays.asList(validCardColors));
-//
-//        Scanner cardInput = new Scanner(System.in);
-//
-//        System.out.println("ENTER CARD COLOR (R, B, G, Y, J):"); //Player chooses a card color (R,B,Y,G, J)
-//        String cardColor = cardInput.nextLine();
-//        while (!validCardColorList.contains(cardColor)) {
-//            System.out.println("Your CARD COLOR input is invalid. Please choose one (R, B, G, Y, or J): ");
-//            cardColor = cardInput.nextLine();
-//        }
-//
-//        System.out.println("ENTER CARD VALUE:"); //Player chooses a value (1,2,3, <->, etc.)
-//        String cardValue = cardInput.nextLine();
-//        while (!validCardValuesList.contains(cardValue)) {
-//            System.out.println("Your CARD VALUE input is invalid. Please choose one (0, 1 , 2 , 3 , 4 , 5 ,6 , 7 , 8 , 9 , X , <-> , +2, +4, C, or C+4)");
-//            cardColor = cardInput.nextLine();
-//        }
-//
-//        Card cardToPlay = new Card(cardColor, cardValue);
-//        isCardJoker();
-//
-//        setPlayedCard(cardToPlay);
-//        return cardToPlay;
-//    }
-
     //this method will remove the card that is played from the playersHand
     public void removeFromPlayersHand(Card c) {
         playersHand.remove(c);
+    }
+
+    public static boolean playOrPass() {
+        Player currentPlayer = currentPlayer();
+        Scanner playerInput = new Scanner(System.in);
+        if (playerHasCardToPlay()) {
+            System.out.println(currentPlayer().getName() + ", will you play(Y) or pass(N)?" );
+            String toPlayOrPass = playerInput.nextLine().toLowerCase();
+
+            while (!toPlayOrPass.equals("y") && !toPlayOrPass.equals("n")) {
+                System.out.println("Invalid input. Please enter 'Y' for play or 'N' for pass: ");
+                toPlayOrPass = playerInput.nextLine().toLowerCase();
+            }
+
+            if (toPlayOrPass.equals("n")) {
+                System.out.println("Understood. You may chose to pass but you must draw a card");
+                drawOneCard();
+                System.out.println("Here's your updated Cards!");
+                System.out.println(currentPlayer.toString());
+                pass = true;
+            }
+            else {
+                pass = false;
+            }
+        }
+        else {
+            System.out.println(currentPlayer.getName()+ ", it looks like you don't have a card to play this round");
+            System.out.println("Sorry but you have to draw a card!");
+            drawOneCard();
+            System.out.println("Here's your updated Cards!");
+            System.out.println(currentPlayer.toString());
+            pass = true;
+        }
+        setPass(pass);
+        return pass;
     }
 
 

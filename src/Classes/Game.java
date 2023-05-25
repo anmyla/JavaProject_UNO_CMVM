@@ -4,6 +4,8 @@ import java.sql.SQLOutput;
 import java.util.*;
 
 import static Classes.Deck.drawOneCard;
+import static Classes.Player.isPass;
+import static Classes.Player.playOrPass;
 
 public class Game {
     private static List<Player> players = new ArrayList<>();
@@ -16,7 +18,7 @@ public class Game {
 
     static boolean cardValid;
 
-    static boolean pass = false;
+
 
 
     public static void setUpPlayers(int humanPlayers) {
@@ -107,7 +109,8 @@ public class Game {
         Card playedCard = currentPlayer.getPlayedCard();
         discardDeck.add(playedCard);
         currentPlayer.removeFromPlayersHand(playedCard);
-        currentPlayer.toString();
+        System.out.println(currentPlayer.toString());
+        cardValid = false; //IMPORTANT! Reset the value after accepting player's played card.
     }
 
     public static void printDiscardDeck() {  // this method will print the cards in the DISCARD DECK
@@ -123,7 +126,7 @@ public class Game {
 
     public static void checkNextTurn() { // this a method that checks the current card played, implements rules, and return the next player
         Card currentCard = discardDeck.get(0);
-        if (pass){
+        if (isPass()){
             isCardNormal();
         }
         else if (currentCard.getCardValue().equals("<->")) {
@@ -299,31 +302,6 @@ public class Game {
         return hasCardToPlay;
     }
 
-    public static boolean playOrPass() {
-        Scanner playerInput = new Scanner(System.in);
-        if (playerHasCardToPlay()) {
-            System.out.println(currentPlayer().getName() + ", will you play(Y) or pass(N)?" );
-            String passOrPlay = playerInput.nextLine().toLowerCase();
-
-            while (!passOrPlay.equals("y") && !passOrPlay.equals("n")) {
-                System.out.println("Invalid input. Please enter 'Y' for play or 'N' for pass: ");
-                passOrPlay = playerInput.nextLine().toLowerCase();
-            }
-
-            if (passOrPlay.equals("n")) {
-                System.out.println("Understood. You may chose to pass but you must draw a card");
-                drawOneCard();
-                pass = true;
-            }
-        }
-        else {
-            System.out.println("Looks like you don't have a card to play this round");
-            System.out.println("Sorry but you have to draw a card!");
-            drawOneCard();
-            pass = true;
-        }
-        return pass;
-    }
 
     public static Card playerEntersCardToPlay() {
         Player currentPlayer = currentPlayer();
@@ -358,11 +336,12 @@ public class Game {
 
     public static void currentPlayersTurn() {
         Player currentPlayer = currentPlayer();
-        if (!playOrPass()) {
-            playerEntersCardToPlay();
+        if (isPass()) {
+            checkNextTurn();
         }
         else {
-            checkNextTurn();
+            playerEntersCardToPlay();
+            currentPlayer.setPass(true); //RESET this boolean to default value
         }
     }
 }

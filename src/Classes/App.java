@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Scanner;
 
 import static Classes.Game.*;
+import static Classes.Player.isPass;
+import static Classes.Player.playOrPass;
 
 public class App {
     private final Scanner input;
@@ -55,26 +57,24 @@ public class App {
 
     private void readUserInput(Player player) {
         playerToPlay(); // alert the players: whose turn it is to play
-        while (!isCardValid()) {
+        if (!isCardValid()) {
+            playOrPass();
             currentPlayersTurn();
-            isPlayedCardValid();
+            if(!isPass()) { //player DO NOT pass
+                isPlayedCardValid();
+            }
         }
+        if(!isPass()) {  //player DO NOT pass
         acceptPlayersInput(); // current player inputs card
-        checkNextTurn();
+        }
     }
 
     private void updateState() {
-        //TODO: Benutzereingaben verarbeiten
-
+        checkNextTurn();
     }
 
     private void printState() {
         //TODO: Ausgabe des aktuellen Zustands
-//        if (exit == true) {
-//            System.out.println("Goodbye!");
-//        } else if (figure != null) {
-//            output.println(figure);
-//        }
     }
 
 }
