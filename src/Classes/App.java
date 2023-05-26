@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 import static Classes.Game.*;
 import static Classes.Player.isPlay;
-import static Classes.Player.playOrPass;
+import static Classes.Player.canPlay;
 
 public class App {
     private final Scanner input;
@@ -15,6 +15,7 @@ public class App {
     private int figureNr;
     //private Figure figure;
     public int size;
+
     // Konstruktor
     // input wird verwendet um Daten vom Benutzer einzulesen (verwendet scanner)
     // output wird verwendet um Text auf der Konsole auszugeben (verwendet sysout)
@@ -53,21 +54,22 @@ public class App {
 
         System.out.println("LET THE GAMES BEGIN!!!");
         firstGame.printDiscardDeck(); //printing the discard deck on the console.
+        chooseFirstPlayer();
     }
 
     private void readUserInput(Player player) {
         playerToPlay(); // alert the players: whose turn it is to play
         if (!isCardValid()) {
-            playOrPass();
+            canPlay();
             currentPlayersTurn();
-            if(isPlay()) { //player DO NOT pass
-                isPlayedCardValid();
+            if (isPlay()) { //player DO NOT pass
+                if (isPlayedCardValid()) {
+                    acceptPlayersInput();
+                }
             }
         }
-        if(isCardValid()) {  //player DO NOT pass
-        acceptPlayersInput(); // current player inputs card
-        }
     }
+
 
     private void updateState() {
         checkNextTurn();

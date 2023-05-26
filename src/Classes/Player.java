@@ -1,7 +1,6 @@
 package Classes;
 
 import java.util.List;
-import java.util.Scanner;
 
 import static Classes.Deck.drawOneCard;
 import static Classes.Game.currentPlayer;
@@ -74,7 +73,7 @@ public abstract class Player {
         playersHand.remove(c);
     }
 
-    public static boolean playOrPass() {
+    public static boolean canPlay() {
         Player currentPlayer = currentPlayer();
         if (!playerHasCardToPlay()) {
             System.out.println(currentPlayer.getName() + ", it looks like you don't have a card to play this round");
