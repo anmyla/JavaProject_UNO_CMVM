@@ -9,12 +9,12 @@ import static Classes.Game.playerHasCardToPlay;
 
 
 public abstract class Player {
-    private static String name;
-    private static int playerPoints;
-    protected static List<Card> playersHand; //Player's own set of cards
+    private String name;
+    private int playerPoints;
+    protected List<Card> playersHand; //Player's own set of cards
 
-    private static boolean turn;
-    private static Card playedCard;
+    private boolean turn;
+    private Card playedCard;
     static boolean play = true;
 
     public Player(String name, List<Card> playerInitialCards) {
@@ -48,29 +48,29 @@ public abstract class Player {
         Player.play = play;
     }
 
-    public static void setPlayersHand(List<Card> playersHand) {
-        playersHand = playersHand;
+    public void setPlayersHand(List<Card> playersHand) {
+        this.playersHand = playersHand;
     }
 
-    public static Card getPlayedCard() {
+    public Card getPlayedCard() {
         return playedCard;
     }
 
-    public static void setPlayedCard(Card playedCard) {
-        playedCard = playedCard;
+    public void setPlayedCard(Card playedCard) {
+        this.playedCard = playedCard;
     }
 
     @Override
-    public  String toString() {
+    public String toString() {
         return name + playersHand;
     }
 
-    public static int getPlayerPoints() {
+    public int getPlayerPoints() {
         return playerPoints;
     }
 
     //this method will remove the card that is played from the playersHand
-    public static void removeFromPlayersHand(Card c) {
+    public void removeFromPlayersHand(Card c) {
         playersHand.remove(c);
     }
 

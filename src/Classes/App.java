@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Scanner;
 
 import static Classes.Game.*;
-import static Classes.Player.*;
-import static Classes.Player.*;
+import static Classes.Player.isPlay;
+import static Classes.Player.playOrPass;
 
 public class App {
     private final Scanner input;
@@ -30,7 +30,7 @@ public class App {
         printState();
 
         while (!exit) {
-            readUserInput(currentPlayer());
+            readUserInput(Game.currentPlayer());
             updateState();
             printState();
         }
@@ -42,17 +42,17 @@ public class App {
         theCardDeck.shuffleDeck(); // shuffle the cards;
 
         Game firstGame = new Game(); // Creating a new game
-        setUpPlayers(4); // setting up human players
+        firstGame.setUpPlayers(4); // setting up human players
 
-        distributeInitialCardsToPlayers(); //distributes initial cards to players
-        printPlayer(); // printing each player's 7 cards (initial player's hand) on the console.
+        firstGame.distributeInitialCardsToPlayers(); //distributes initial cards to players
+        firstGame.printPlayer(); // printing each player's 7 cards (initial player's hand) on the console.
 
         List<Card> discardDeck = firstGame.getDiscardDeck(); //creating a discard deck
 
         firstGame.layFirstCard(); // laying the first card on the discard deck
 
         System.out.println("LET THE GAMES BEGIN!!!");
-        printDiscardDeck(); //printing the discard deck on the console.
+        firstGame.printDiscardDeck(); //printing the discard deck on the console.
     }
 
     private void readUserInput(Player player) {
