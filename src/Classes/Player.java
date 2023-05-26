@@ -82,13 +82,18 @@ public abstract class Player {
             drawOneCard();
             System.out.println("Here's your updated Cards!");
             System.out.println(currentPlayer.toString());
-            play = false;
+            if (!playerHasCardToPlay()) {
+                System.out.println("Oh no, you STILL do not have a card to play!");
+                setPlay(false);
+            }
+            else {
+                setPlay(true);
+            }
         }
         else {
-            play = true;
+            setPlay(true);
         }
-        setPlay(play);
-        return play;
+        return isPlay();
     }
 
 

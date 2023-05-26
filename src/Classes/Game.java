@@ -13,9 +13,45 @@ public class Game {
     private static boolean isClockwise = true;
     static boolean isJoker = false;
     static String newColor;
-
     static boolean cardValid;
+    static boolean hasCardToPlay;
 
+
+    public static int getTurn() { //get the current player's index
+        return turn;
+    }
+    public static void setTurn(int playerIndex) { //set the current player's index
+        turn = playerIndex;
+    }
+    public static boolean isJoker() {
+        return isJoker;
+    }
+    public void setJoker(boolean joker) {
+        this.isJoker = joker;
+    }
+    public static void setCardValid(boolean cardValid) {
+        cardValid = cardValid;
+    }
+    public static String getNewColor() {
+        return newColor;
+    }
+    public static void setNewColor(String newColor) {
+        newColor = newColor;
+    }
+    public static boolean isCardValid() {
+        return cardValid;
+    }
+    public static boolean isHasCardToPlay() {
+        return hasCardToPlay;
+    }
+    public static void setHasCardToPlay(boolean hasCardToPlay) {
+        hasCardToPlay = hasCardToPlay;
+    }
+
+    public static Player currentPlayer() {
+        Player currentPlayer = players.get(getTurn());
+        return currentPlayer;
+    }
 
     public static void setUpPlayers(int humanPlayers) {
         //Just human players for now. A simple method to collect player names and add it to the List<Players>
@@ -32,8 +68,7 @@ public class Game {
     public static void distributeInitialCardsToPlayers() {
         cardDeck.initialDeck();
         cardDeck.shuffleDeck();
-//        System.out.println();
-//        cardDeck.printDeck();
+
         for (Player player : players) {
             player.setPlayerPoints(0);
             player.setPlayersHand(cardDeck.distributeInitialCards());
@@ -62,43 +97,6 @@ public class Game {
         return firstPlayer.nextInt(3);
     }
 
-    public static int getTurn() { //get the current player's index
-        return turn;
-    }
-
-    public static void setTurn(int playerIndex) { //set the current player's index
-        turn = playerIndex;
-    }
-
-    public static boolean isJoker() {
-        return isJoker;
-    }
-
-    public static void setCardValid(boolean cardValid) {
-        Game.cardValid = cardValid;
-    }
-
-    public void setJoker(boolean joker) {
-        this.isJoker = joker;
-    }
-
-    public static String getNewColor() {
-        return newColor;
-    }
-
-    public void setNewColor(String newColor) {
-        this.newColor = newColor;
-    }
-
-    public static boolean isCardValid() {
-        return cardValid;
-    }
-
-    public static Player currentPlayer() {
-        Player currentPlayer = players.get(getTurn());
-        return currentPlayer;
-    }
-
     public static void playerToPlay() { // alerting player that it is their turn to play.
         Player currentPlayer = currentPlayer();
         System.out.println("\n" + currentPlayer.toString() + " it's your turn to play!");
@@ -122,7 +120,7 @@ public class Game {
 
     public static void checkNextTurn() { // this a method that checks the current card played, implements rules, and return the next player
         Card currentCard = discardDeck.get(0);
-        if (!isPlay()) { //the players does NOT have card to pay
+        if (!isPlay()) { //the player does NOT have card to pay
             isCardNormal();
         } else if (currentCard.getCardValue().equals("<->")) {
             isCardIsReverse();
@@ -217,20 +215,12 @@ public class Game {
         return currentPlayerIndex;
     }
 
-    public static void isCardJokerColor() {
-        int currentPlayerIndex = getTurn();
-        Scanner scanner = new Scanner(System.in);
-        System.out.println(currentPlayer().getName() + ", please enter a color: ");
-        String enteredColor = scanner.next();
-    }
 
     public static boolean isPlayedCardValid() {
         Player currentPlayer = currentPlayer();
         Card cardToCheck = currentPlayer.getPlayedCard();
 
         if (hasPlayerThisCardInHand()) {
-//            if (cardToCheck == null) { //current player did not play a card yet
-//                checkNextTurn();
             if (cardToCheck.getCardColor().equals("C")) {
                 setCardValid(true);
             }
@@ -238,7 +228,7 @@ public class Game {
                 setCardValid(true);
             } else {
                 System.out.println(currentPlayer.getName() + " you just made an invalid moved!");
-                System.out.println("Sorry, but you have to draw a card! HERE I WAS");
+                System.out.println("Sorry, but you have to draw a card! PLAYER PLACED A WRONG CARD");
                 drawOneCard();
                 System.out.println("Here's your updated Cards!");
                 System.out.println(currentPlayer.toString());
@@ -246,7 +236,7 @@ public class Game {
             }
         } else {
             System.out.println(currentPlayer.getName() + " you just made an invalid moved!");
-            System.out.println("Sorry, but you have to draw a card! HOOOOOOOOOOOOO");
+            System.out.println("Sorry, but you have to draw a card! PLAYER DOES NOT HAVE THE CARD");
             drawOneCard();
             System.out.println("Here's your updated Cards!");
             System.out.println(currentPlayer.toString());
@@ -267,14 +257,39 @@ public class Game {
 
         } else {
             isJoker = false;
-            newColor = null;
+            setNewColor(null);
         }
-        System.out.println(playedCard.toString());
+        System.out.println(playedCard.toString() + " NEW COLOR: " + getNewColor());
+    }
+
+    public static void isCardTakeTwo() {
+        Player currentPlayer = currentPlayer();
+        Card cardToCheck = discardDeck.get(0);
+        if (cardToCheck.getCardValue().equals("+2")) {
+            System.out.println("You have to take 2 cards!");
+            drawOneCard();
+            drawOneCard();
+            System.out.println("Here is your updated cards");
+            System.out.println(currentPlayer.toString());
+        }
+    }
+
+    public static void isCardTakeFour() {
+        Player currentPlayer = currentPlayer();
+        Card cardToCheck = discardDeck.get(0);
+        if (cardToCheck.getCardValue().equals("+4")) {
+            System.out.println("You have to take 4 cards!");
+            drawOneCard();
+            drawOneCard();
+            drawOneCard();
+            drawOneCard();
+            System.out.println("Here is your updated cards");
+            System.out.println(currentPlayer.toString());
+        }
     }
 
     public static boolean playerHasCardToPlay() {
         Player currentPlayer = currentPlayer();
-        boolean hasCardToPlay = false;
         String newColor = getNewColor();
         String currentDiscardCardColor = discardDeck.get(discardDeck.size() - 1).getCardColor();
         String currentDiscardCardValue = discardDeck.get(discardDeck.size() - 1).getCardValue();
@@ -284,20 +299,24 @@ public class Game {
         for (Card card : currentPlayer.playersHand) {
             checkCardColor = card.getCardColor();
             checkCardValue = card.getCardValue();
-            if (checkCardColor.equals(currentDiscardCardColor)) {
-                hasCardToPlay = true;
+
+            if(card.getCardColor().equals("J")){
+                setHasCardToPlay(true);
+                break;
+            } else if (checkCardColor.equals(currentDiscardCardColor)) {
+                setHasCardToPlay(true);
                 break;
             } else if (checkCardValue.equals(currentDiscardCardValue)) {
-                hasCardToPlay = true;
+                setHasCardToPlay(true);
                 break;
             } else if (currentDiscardCardColor.equals(newColor)) {
-                hasCardToPlay = true;
+                setHasCardToPlay(true);
                 break;
             } else {
-                hasCardToPlay = false;
+                setHasCardToPlay(false);
             }
         }
-        return hasCardToPlay;
+        return isHasCardToPlay();
     }
 
 
@@ -332,7 +351,7 @@ public class Game {
         return cardToPlay;
     }
 
-    public static void currentPlayersTurn() {
+    public static void currentPlayersTurn() { //this method will decide who's turn it is based on what's on the discard Deck
         Player currentPlayer = currentPlayer();
         Card cardToCheck = discardDeck.get(0);
 
@@ -372,32 +391,6 @@ public class Game {
             }
         }
         return doIHaveThisCard;
-    }
-
-    public static void isCardTakeTwo() {
-        Player currentPlayer = currentPlayer();
-        Card cardToCheck = discardDeck.get(0);
-        if (cardToCheck.getCardValue().equals("+2")) {
-            System.out.println("You have to take 2 cards!");
-            drawOneCard();
-            drawOneCard();
-            System.out.println("Here is your updated cards");
-            System.out.println(currentPlayer.toString());
-        }
-    }
-
-    public static void isCardTakeFour() {
-        Player currentPlayer = currentPlayer();
-        Card cardToCheck = discardDeck.get(0);
-        if (cardToCheck.getCardValue().equals("+4")) {
-            System.out.println("You have to take 4 cards!");
-            drawOneCard();
-            drawOneCard();
-            drawOneCard();
-            drawOneCard();
-            System.out.println("Here is your updated cards");
-            System.out.println(currentPlayer.toString());
-        }
     }
 }
 
