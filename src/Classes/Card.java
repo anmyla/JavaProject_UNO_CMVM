@@ -48,7 +48,7 @@ public class Card {
     }
 
     public String getCardColor() {
-        return cardColor;
+          return cardColor;
     }
 
     public int getCardPoints() {

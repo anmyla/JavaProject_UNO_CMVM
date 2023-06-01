@@ -2,7 +2,7 @@ package Classes;
 
 import java.util.*;
 
-import static Classes.Game.currentPlayer;
+import static Classes.Game.*;
 
 public class Deck {
     public static List<Card> cardDeck;
@@ -67,5 +67,35 @@ public class Deck {
         currentPlayer.getPlayersHand().add(cardDeck.get(cardDeck.size() - 1));
         cardDeck.remove(cardDeck.size() - 1);
     }
+
+    public static void previousPlayerDrawsFourCardsWhenChallengeTrue() {
+        Player previousPlayer = players.get(getTurn() -1);
+        previousPlayer.getPlayersHand().add(cardDeck.get(cardDeck.size() - 1));
+        cardDeck.remove(cardDeck.size() - 1);
+        previousPlayer.getPlayersHand().add(cardDeck.get(cardDeck.size() - 1));
+        cardDeck.remove(cardDeck.size() - 1);
+        previousPlayer.getPlayersHand().add(cardDeck.get(cardDeck.size() - 1));
+        cardDeck.remove(cardDeck.size() - 1);
+        previousPlayer.getPlayersHand().add(cardDeck.get(cardDeck.size() - 1));
+        cardDeck.remove(cardDeck.size() - 1);
+    }
+
+    public static void currentPlayerDrawsSixCardsWhenChallengeFalse() {
+        Player currentPlayer = currentPlayer();
+        currentPlayer.getPlayersHand().add(cardDeck.get(cardDeck.size() - 1));
+        cardDeck.remove(cardDeck.size() - 1);
+        currentPlayer.getPlayersHand().add(cardDeck.get(cardDeck.size() - 1));
+        cardDeck.remove(cardDeck.size() - 1);
+        currentPlayer.getPlayersHand().add(cardDeck.get(cardDeck.size() - 1));
+        cardDeck.remove(cardDeck.size() - 1);
+        currentPlayer.getPlayersHand().add(cardDeck.get(cardDeck.size() - 1));
+        cardDeck.remove(cardDeck.size() - 1);
+        currentPlayer.getPlayersHand().add(cardDeck.get(cardDeck.size() - 1));
+        cardDeck.remove(cardDeck.size() - 1);
+        currentPlayer.getPlayersHand().add(cardDeck.get(cardDeck.size() - 1));
+        cardDeck.remove(cardDeck.size() - 1);
+    }
+
+
 }
 
