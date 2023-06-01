@@ -15,7 +15,7 @@ public class Game {
     static String newColor;
     static boolean cardValid;
     static boolean hasCardToPlay;
-    static boolean challenge;
+    static boolean challengeWon = true;
 
     public static final String RED = "\u001B[31m";
     public static final String RESET = "\u001B[0m";
@@ -50,7 +50,7 @@ public class Game {
 
 
     public static void setNewColor(String newColor) {
-        newColor = newColor;
+        Game.newColor = newColor;
     }
 
 
@@ -62,12 +62,12 @@ public class Game {
         Game.hasCardToPlay = hasCardToPlay;
     }
 
-    public static boolean isChallenge() {
-        return challenge;
+    public static boolean isChallengeWon() {
+        return challengeWon;
     }
 
-    public static void setChallenge(boolean challenge) {
-        Game.challenge = challenge;
+    public static void setChallengeWon(boolean challengeWon) {
+        Game.challengeWon = challengeWon;
     }
 
     public static Player currentPlayer() {
@@ -130,7 +130,8 @@ public class Game {
             String randomValue = colorListArray[randomIndex];
 
             setNewColor(randomValue);
-            System.out.println("The Next color to be played is : " + randomValue);
+            System.out.println("\nThe Next color to be played is : " + randomValue);
+            addTempCard();
 
             Random firstPlayer = new Random();
             turn = firstPlayer.nextInt(3);
@@ -154,6 +155,9 @@ public class Game {
         discardDeck.add(0, playedCard);
         currentPlayer.removeFromPlayersHand(playedCard);
         System.out.println(currentPlayer.toString());
+        if (discardDeck.get(1).getCardValue().equals("Color")) {
+            discardDeck.remove(discardDeck.get(1));
+        }
         setCardValid(false); //IMPORTANT! Reset the value after accepting player's played card.
     }
 
@@ -341,23 +345,23 @@ public class Game {
         Player currentPlayer = currentPlayer();
         String currentDiscardCardColor = discardDeck.get(0).getCardColor();
         String currentDiscardCardValue = discardDeck.get(0).getCardValue();
-        String checkCardColor;
-        String checkCardValue;
+        String playerCardColor;
+        String playerCardValue;
 
         for (Card card : currentPlayer.playersHand) {
-            checkCardColor = card.getCardColor();
-            checkCardValue = card.getCardValue();
+            playerCardColor = card.getCardColor();
+            playerCardValue = card.getCardValue();
 
-            if (checkCardColor.equals("J")) {
+            if (playerCardColor.equals("J")) {
                 setHasCardToPlay(true);
                 break;
-            } else if (checkCardColor.equals(newColor)) {
+            } else if (playerCardColor.equals(newColor)) {
                 setHasCardToPlay(true);
                 break;
-            } else if (checkCardColor.equals(currentDiscardCardColor)) {
+            } else if (playerCardColor.equals(currentDiscardCardColor)) {
                 setHasCardToPlay(true);
                 break;
-            } else if (checkCardValue.equals(currentDiscardCardValue)) {
+            } else if (playerCardValue.equals(currentDiscardCardValue)) {
                 setHasCardToPlay(true);
                 break;
             } else {
@@ -401,6 +405,7 @@ public class Game {
     }
 
     public static void currentPlayersTurn() { //this method will decide who's turn it is based on what's on the discard Deck
+        setChallengeWon(true); //this resets the default value.
         Player currentPlayer = currentPlayer();
         Card cardToCheck = discardDeck.get(0);
 
@@ -408,8 +413,7 @@ public class Game {
             if (cardToCheck.getCardValue().equals("+2")) {
                 isCardTakeTwo();
                 playerEntersCardToPlay();
-            }
-            else if (cardToCheck.getCardValue().equals("C+4")) {
+            } else if (cardToCheck.getCardValue().equals("C+4") && discardDeck.get(1) != null) {
                 String answer;
                 Scanner challenge = new Scanner(System.in);
                 System.out.println("Do you like to challenge the previous player? (Y/N)");
@@ -419,31 +423,31 @@ public class Game {
                     answer = challenge.nextLine();
                 }
                 if (answer.equals("Y")) {
-                    isChallenged();
-                    if (isChallenge()) {
+                    if (isChallenged()) {
+                        setChallengeWon(true); //game will continue
+                        System.out.println(currentPlayer.toString() + "you may play!");
+                        addTempCard();
+                        printDiscardDeck();
                         playerEntersCardToPlay();
+                    } else {
+                        System.out.println("Sorry " + currentPlayer.getName() + " your challenge backfired!");// game starts with the next player
+                        setChallengeWon(false);
+                        addTempCard();
                     }
-                    else {
-                        checkNextTurn();
-                        Player nextPlayer = currentPlayer();
-                        System.out.println(nextPlayer + "it's your turn to play");
-                        playerEntersCardToPlay();
-                    }
-                } else {
-                    isCardTakeFour();
-                    playerEntersCardToPlay();
                 }
-
-            }
-            else {
+            } else if (cardToCheck.getCardValue().equals("C+4") && discardDeck.get(1) == null) {
+                isCardTakeFour();
                 playerEntersCardToPlay();
-            }
-        }
-        else if (!isPlay() && (cardToCheck.getCardValue().equals("+2"))) {
+            } else
+                playerEntersCardToPlay();
+        } else if (!isPlay() && (cardToCheck.getCardValue().equals("C+4"))) {
+            isCardTakeFour();
+        } else if (!isPlay() && (cardToCheck.getCardValue().equals("+2"))) {
             isCardTakeTwo();
         } else {
-            System.out.println("You have to pass this turn because you still dont have a card to play!");
+            System.out.println("You have to pass this turn because you still don't have a card to play!");
         }
+
     }
 
 
@@ -470,8 +474,58 @@ public class Game {
         return doIHaveThisCard;
     }
 
+    public static Player getPreviousPlayer() {
+        int currentPlayerIndex = getTurn();
+        if (currentPlayerIndex == 0) {
+            if (isClockwise) {
+                currentPlayerIndex = 3;
+            } else {
+                currentPlayerIndex++;
+            }
+        } else if (currentPlayerIndex == 3) {
+            if (isClockwise) {
+                currentPlayerIndex = 2;
+            } else {
+                currentPlayerIndex = 4;
+            }
+        } else {
+            if (isClockwise) {
+                currentPlayerIndex--;
+            } else {
+                currentPlayerIndex++;
+            }
+        }
+        Player previousPlayer = players.get(currentPlayerIndex);
+        return previousPlayer;
+    }
+
+    public static Player getNextPlayer() {
+        int currentPlayerIndex = getTurn();
+        if (currentPlayerIndex == 0) {
+            if (isClockwise) {
+                currentPlayerIndex++;
+            } else {
+                currentPlayerIndex = 3;
+            }
+        } else if (currentPlayerIndex == 3) {
+            if (isClockwise) {
+                currentPlayerIndex = 4;
+            } else {
+                currentPlayerIndex = 0;
+            }
+        } else {
+            if (isClockwise) {
+                currentPlayerIndex++;
+            } else {
+                currentPlayerIndex--;
+            }
+        }
+        Player nextPlayer = players.get(currentPlayerIndex);
+        return nextPlayer;
+    }
+
     public static boolean isChallenged() {
-        Player previousPlayer = players.get(getTurn() - 1);
+        Player previousPlayer = getPreviousPlayer();
         Player currentPlayer = currentPlayer();
 
         List<Card> previousPlayerHand = previousPlayer.playersHand;
@@ -481,30 +535,28 @@ public class Game {
         for (Card card : previousPlayerHand) {
             if (card.getCardColor().equals(cardToCheck.getCardColor()) || card.getCardValue().equals(cardToCheck.getCardValue())) {
                 hasOtherCardsToPlay = true;
-                setChallenge(hasOtherCardsToPlay);
             } else {
                 hasOtherCardsToPlay = false;
-                setChallenge(hasOtherCardsToPlay);
             }
         }
 
         if (hasOtherCardsToPlay) {
             previousPlayerDrawsFourCardsWhenChallengeTrue();
-            System.out.println("Sorry! " + previousPlayer.getName() + ", you have to take 4 cards");
+            System.out.println("Oops! " + previousPlayer.getName() + ", you have to take 4 cards!");
             System.out.println(previousPlayer.toString());
         } else {
             currentPlayerDrawsSixCardsWhenChallengeFalse();
-            System.out.println("Sorry, " + currentPlayer.getName() + " you have to take 6 cards");
+            System.out.println("OH NO! " + currentPlayer.getName() + " you have to take 6 cards!");
             System.out.println(currentPlayer.toString());
         }
-
-        setChallenge(hasOtherCardsToPlay);
         return hasOtherCardsToPlay;
     }
 
-    public void whoPlaysAfterChallenge(){
-
+    public static void addTempCard() {
+        Card dummyCard = new Card(getNewColor(), "Color");
+        discardDeck.add(0, dummyCard);
     }
+
 }
 
 

@@ -75,6 +75,7 @@ public abstract class Player {
 
     public static boolean canPlay() {
         Player currentPlayer = currentPlayer();
+        boolean canPlay = false;
         if (!playerHasCardToPlay()) {
             System.out.println(currentPlayer.getName() + ", it looks like you don't have a card to play this round");
             System.out.println("Sorry but you have to draw a card!");
@@ -83,16 +84,17 @@ public abstract class Player {
             System.out.println(currentPlayer.toString());
             if (!playerHasCardToPlay()) {
                 System.out.println("Oh no, you STILL do not have a card to play!");
-                setPlay(false);
+                canPlay = false;
             }
             else {
-                setPlay(true);
+                canPlay = true;
             }
         }
         else {
-            setPlay(true);
+            canPlay = true;
         }
-        return isPlay();
+        setPlay(canPlay);
+        return canPlay;
     }
 
 

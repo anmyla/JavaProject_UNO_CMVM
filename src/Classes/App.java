@@ -62,7 +62,7 @@ public class App {
         if (!isCardValid()) {
             canPlay();
             currentPlayersTurn();
-            if (isPlay()) { //player DO NOT pass
+            if (isPlay() && isChallengeWon()) { //player DO NOT pass
                 if (isPlayedCardValid()) {
                     acceptPlayersInput();
                 }

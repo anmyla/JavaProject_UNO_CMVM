@@ -69,31 +69,19 @@ public class Deck {
     }
 
     public static void previousPlayerDrawsFourCardsWhenChallengeTrue() {
-        Player previousPlayer = players.get(getTurn() -1);
-        previousPlayer.getPlayersHand().add(cardDeck.get(cardDeck.size() - 1));
-        cardDeck.remove(cardDeck.size() - 1);
-        previousPlayer.getPlayersHand().add(cardDeck.get(cardDeck.size() - 1));
-        cardDeck.remove(cardDeck.size() - 1);
-        previousPlayer.getPlayersHand().add(cardDeck.get(cardDeck.size() - 1));
-        cardDeck.remove(cardDeck.size() - 1);
-        previousPlayer.getPlayersHand().add(cardDeck.get(cardDeck.size() - 1));
-        cardDeck.remove(cardDeck.size() - 1);
+        Player previousPlayer = getPreviousPlayer();
+        for (int i = 0; i < 4; i++) {
+            previousPlayer.getPlayersHand().add(cardDeck.get(cardDeck.size() - 1));
+            cardDeck.remove(cardDeck.size() - 1);
+        }
     }
 
     public static void currentPlayerDrawsSixCardsWhenChallengeFalse() {
         Player currentPlayer = currentPlayer();
-        currentPlayer.getPlayersHand().add(cardDeck.get(cardDeck.size() - 1));
-        cardDeck.remove(cardDeck.size() - 1);
-        currentPlayer.getPlayersHand().add(cardDeck.get(cardDeck.size() - 1));
-        cardDeck.remove(cardDeck.size() - 1);
-        currentPlayer.getPlayersHand().add(cardDeck.get(cardDeck.size() - 1));
-        cardDeck.remove(cardDeck.size() - 1);
-        currentPlayer.getPlayersHand().add(cardDeck.get(cardDeck.size() - 1));
-        cardDeck.remove(cardDeck.size() - 1);
-        currentPlayer.getPlayersHand().add(cardDeck.get(cardDeck.size() - 1));
-        cardDeck.remove(cardDeck.size() - 1);
-        currentPlayer.getPlayersHand().add(cardDeck.get(cardDeck.size() - 1));
-        cardDeck.remove(cardDeck.size() - 1);
+        for (int i = 0; i < 6; i++) {
+            currentPlayer.getPlayersHand().add(cardDeck.get(cardDeck.size() - 1));
+            cardDeck.remove(cardDeck.size() - 1);
+        }
     }
 
 
