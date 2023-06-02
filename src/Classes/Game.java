@@ -388,7 +388,7 @@ public class Game {
         String[] validCardColors = Card.getColorValueCollections();
         List<String> validCardColorList = new ArrayList<>(Arrays.asList(validCardColors));
 
-        if(currentPlayer instanceof Human) {
+        if (currentPlayer instanceof Human) {
             System.out.println("ENTER CARD COLOR (R, B, G, Y, J):"); //Player chooses a card color (R,B,Y,G, J)
             cardColor = input.nextLine();
             while (!validCardColorList.contains(cardColor)) {
@@ -574,14 +574,14 @@ public class Game {
         String name;
 
         for (int i = 0; i < bots; i++) {
-           temp = random.nextInt(botNames.length);
-           name = botNames[temp];
-           players.add(new Bot(name));
+            temp = random.nextInt(botNames.length);
+            name = botNames[temp];
+            players.add(new Bot(name));
         }
     }
 
-    protected static void setPlayers(){
-        System.out.println("How many Bots you want to play with? (0-4): " );
+    protected static void setPlayers() {
+        System.out.println("How many Bots you want to play with? (0-4): ");
         int answer = input.nextInt();
 
         while (answer > 4) {
@@ -595,10 +595,8 @@ public class Game {
         } else {
             System.out.println("No Bots in this game.");
         }
-
         int totalPlayers = 4 - answer;
         setUpHumanPlayers(totalPlayers);
-
     }
 
     public static Card botMakesMove() {
