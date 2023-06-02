@@ -3,8 +3,7 @@ package Classes;
 import java.util.List;
 
 import static Classes.Deck.drawOneCard;
-import static Classes.Game.currentPlayer;
-import static Classes.Game.playerHasCardToPlay;
+import static Classes.Game.*;
 
 
 public abstract class Player {
@@ -61,7 +60,7 @@ public abstract class Player {
 
     @Override
     public String toString() {
-        return name + playersHand;
+        return (GREEN + name + playersHand + RESET);
     }
 
     public int getPlayerPoints() {

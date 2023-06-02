@@ -18,7 +18,10 @@ public class Game {
     static boolean challengeWon = true;
 
     public static final String RED = "\u001B[31m";
+    public static final String GREEN = "\u001B[38;2;67;185;135m";
     public static final String RESET = "\u001B[0m";
+
+    protected static Scanner input = new Scanner(System.in);
 
     public static int getTurn() { //get the current player's index
         return turn;
@@ -75,14 +78,15 @@ public class Game {
         return currentPlayer;
     }
 
-    public static void setUpPlayers(int humanPlayers) {
-        //Just human players for now. A simple method to collect player names and add it to the List<Players>
-        Scanner playerInput = new Scanner(System.in);
-
+    public static void setUpHumanPlayers(int humanPlayers) { //method to collect names for Human Players and add these to player's list
         for (int i = 0; i < humanPlayers; i++) {
             System.out.println("Please enter a name for PLAYER " + (i + 1) + ": ");
-            String name = playerInput.nextLine();
+            String name = input.nextLine();
 
+            while (players.contains(name) || name.isEmpty()) {
+                System.out.println("This field cannot be empty and name must be unique. Please enter name: ");
+                name = input.nextLine();
+            }
             players.add(new Human(name));
         }
     }
@@ -109,7 +113,7 @@ public class Game {
         return this.discardDeck;
     }
 
-    public void layFirstCard() {  //this method will take one Card from the DECK and add it to the DISCARD DECK to start the game.
+    public static void layFirstCard() {  //this method will take one Card from the DECK and add it to the DISCARD DECK to start the game.
         discardDeck.add(cardDeck.getCardDeck().get(0));
         cardDeck.removeFromCardDeck();
 
@@ -146,7 +150,7 @@ public class Game {
 
     public static void playerToPlay() { // alerting player that it is their turn to play.
         Player currentPlayer = currentPlayer();
-        System.out.println("\n" + currentPlayer.toString() + " it's your turn to play!");
+        System.out.println(GREEN + "\n" + currentPlayer.toString() + " it's your turn to play!" + RESET);
     }
 
     public static void acceptPlayersInput() { //this method will take one Card from the player's initialCards and add it to the DISCARD DECK.
@@ -300,12 +304,12 @@ public class Game {
     public static void isCardJoker() {
         Player currentPlayer = currentPlayer();
         Card playedCard = currentPlayer.getPlayedCard();
-        Scanner newColorInput = new Scanner(System.in);
+
 
         if (playedCard.getCardValue().equals("C") || playedCard.getCardValue().equals("C+4")) {
             isJoker = true;
             System.out.println("What Color should we play next? (R, G, B, Y) :");
-            newColor = newColorInput.nextLine();
+            newColor = input.nextLine();
             System.out.println(playedCard.toString() + " NEW COLOR: " + getNewColor());
 
         } else {
@@ -377,27 +381,33 @@ public class Game {
         Player currentPlayer = currentPlayer();
         String[] validCardValues = Card.getFaceValueCollections();
         List<String> validCardValuesList = new ArrayList<>(Arrays.asList(validCardValues));
+        Card cardToPlay = null;
+        String cardColor;
+        String cardValue;
 
         String[] validCardColors = Card.getColorValueCollections();
         List<String> validCardColorList = new ArrayList<>(Arrays.asList(validCardColors));
 
-        Scanner cardInput = new Scanner(System.in);
+        if(currentPlayer instanceof Human) {
+            System.out.println("ENTER CARD COLOR (R, B, G, Y, J):"); //Player chooses a card color (R,B,Y,G, J)
+            cardColor = input.nextLine();
+            while (!validCardColorList.contains(cardColor)) {
+                System.out.println("Your CARD COLOR input is invalid. Please choose one (R, B, G, Y, or J): ");
+                cardColor = input.nextLine();
+            }
 
-        System.out.println("ENTER CARD COLOR (R, B, G, Y, J):"); //Player chooses a card color (R,B,Y,G, J)
-        String cardColor = cardInput.nextLine();
-        while (!validCardColorList.contains(cardColor)) {
-            System.out.println("Your CARD COLOR input is invalid. Please choose one (R, B, G, Y, or J): ");
-            cardColor = cardInput.nextLine();
+            System.out.println("ENTER CARD VALUE:"); //Player chooses a value (1,2,3, <->, etc.)
+            cardValue = input.nextLine();
+            while (!validCardValuesList.contains(cardValue)) {
+                System.out.println("Your CARD VALUE input is invalid. Please choose one (0, 1 , 2 , 3 , 4 , 5 ,6 , 7 , 8 , 9 , X , <-> , +2, +4, C, or C+4)");
+                cardValue = input.nextLine();
+            }
+            cardToPlay = new Card(cardColor, cardValue);
+
+        } else {
+            cardToPlay = botMakesMove();
         }
 
-        System.out.println("ENTER CARD VALUE:"); //Player chooses a value (1,2,3, <->, etc.)
-        String cardValue = cardInput.nextLine();
-        while (!validCardValuesList.contains(cardValue)) {
-            System.out.println("Your CARD VALUE input is invalid. Please choose one (0, 1 , 2 , 3 , 4 , 5 ,6 , 7 , 8 , 9 , X , <-> , +2, +4, C, or C+4)");
-            cardValue = cardInput.nextLine();
-        }
-
-        Card cardToPlay = new Card(cardColor, cardValue);
         currentPlayer.setPlayedCard(cardToPlay);
         isCardJoker();
 
@@ -415,12 +425,11 @@ public class Game {
                 playerEntersCardToPlay();
             } else if (cardToCheck.getCardValue().equals("C+4") && discardDeck.get(1) != null) {
                 String answer;
-                Scanner challenge = new Scanner(System.in);
                 System.out.println("Do you like to challenge the previous player? (Y/N)");
-                answer = challenge.nextLine();
+                answer = input.nextLine();
                 while (!(answer.equals("Y") || answer.equals("N"))) {
                     System.out.println("Your input is invalid. Please put int Y or N: ");
-                    answer = challenge.nextLine();
+                    answer = input.nextLine();
                 }
                 if (answer.equals("Y")) {
                     if (isChallenged()) {
@@ -557,6 +566,54 @@ public class Game {
         discardDeck.add(0, dummyCard);
     }
 
+    //-------------------------------------------------------------------------------------------------------------------------------------------
+    public static void addBotsToPlayersList(int bots) { //method to collect names for Bot Players and add these to player's list
+        String[] botNames = {"Bot_Ariel", "Bot_SnowWhite", "Bot_Rapunzel", "Bot_Cinderella", "Bot_Elsa", "Bot_Mulan"};
+        Random random = new Random();
+        int temp;
+        String name;
+
+        for (int i = 0; i < bots; i++) {
+           temp = random.nextInt(botNames.length);
+           name = botNames[temp];
+           players.add(new Bot(name));
+        }
+    }
+
+    protected static void setPlayers(){
+        System.out.println("How many Bots you want to play with? (0-4): " );
+        int answer = input.nextInt();
+
+        while (answer > 4) {
+            System.out.println("You can only have a maximum for 4 Bots! Enter the number of Bots again (0-4) :  ");
+            answer = input.nextInt();
+        }
+
+        if (answer > 0 && answer <= 4) {
+            addBotsToPlayersList(answer);
+            System.out.println("Ok, the bots are added!");
+        } else {
+            System.out.println("No Bots in this game.");
+        }
+
+        int totalPlayers = 4 - answer;
+        setUpHumanPlayers(totalPlayers);
+
+    }
+
+    public static Card botMakesMove() {
+        Player currentPlayer = currentPlayer();
+        List<Card> botsCard = currentPlayer.playersHand;
+        Card cardToCheck = discardDeck.get(0);
+        Card validCardToPlay = null;
+
+        for (Card card : botsCard) {
+            if (card.getCardColor().equals(cardToCheck.getCardColor()) || card.getCardValue().equals(cardToCheck.getCardValue())) {
+                validCardToPlay = card;
+            }
+        }
+        return validCardToPlay;
+    }
 }
 
 

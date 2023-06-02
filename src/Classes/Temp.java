@@ -22,7 +22,7 @@ public class Temp {
 
         System.out.println("\n 3. SETTING UP HUMAN PLAYERS");
         Game firstGame = new Game(); // Creating a new game
-        firstGame.setUpPlayers(4); // setting up human players
+        firstGame.setUpHumanPlayers(4); // setting up human players
         System.out.println();
 
         System.out.println("\n 4. DISTRIBUTE INITIAL PLAYER CARDS");

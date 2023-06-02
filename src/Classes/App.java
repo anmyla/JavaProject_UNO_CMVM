@@ -43,17 +43,17 @@ public class App {
         theCardDeck.shuffleDeck(); // shuffle the cards;
 
         Game firstGame = new Game(); // Creating a new game
-        firstGame.setUpPlayers(4); // setting up human players
+        setPlayers(); // setting up human players
 
-        firstGame.distributeInitialCardsToPlayers(); //distributes initial cards to players
-        firstGame.printPlayer(); // printing each player's 7 cards (initial player's hand) on the console.
+        distributeInitialCardsToPlayers(); //distributes initial cards to players
+        printPlayer(); // printing each player's 7 cards (initial player's hand) on the console.
 
         List<Card> discardDeck = firstGame.getDiscardDeck(); //creating a discard deck
 
-        firstGame.layFirstCard(); // laying the first card on the discard deck
+        layFirstCard(); // laying the first card on the discard deck
 
         System.out.println("LET THE GAMES BEGIN!!!");
-        firstGame.printDiscardDeck(); //printing the discard deck on the console.
+        printDiscardDeck(); //printing the discard deck on the console.
         chooseFirstPlayer();
     }
 
