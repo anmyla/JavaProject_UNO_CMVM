@@ -8,7 +8,7 @@ import static Classes.Player.isPlay;
 public class Game {
     static List<Player> players = new ArrayList<>();
     private static Deck cardDeck = new Deck(108);
-    private static List<Card> discardDeck = new ArrayList<>();
+    protected static List<Card> discardDeck = new ArrayList<>();
     private static int turn;
     private static boolean isClockwise = true;
     static boolean isJoker = false;
@@ -22,6 +22,9 @@ public class Game {
     public static final String RESET = "\u001B[0m";
 
     protected static Scanner input = new Scanner(System.in);
+    protected static Random random = new Random();
+
+
 
     public static int getTurn() { //get the current player's index
         return turn;
@@ -128,7 +131,6 @@ public class Game {
             checkNextTurn();
         } else if (firstCard.getCardColor().equals("J")) {
             String[] colorListArray = Card.getColorValueCollections();
-            Random random = new Random();
             int randomIndex = random.nextInt(colorListArray.length - 2);
             // Retrieve the random value from the array
             String randomValue = colorListArray[randomIndex];
@@ -158,7 +160,6 @@ public class Game {
         Card playedCard = currentPlayer.getPlayedCard();
         discardDeck.add(0, playedCard);
         currentPlayer.removeFromPlayersHand(playedCard);
-        System.out.println(currentPlayer.toString());
         if (discardDeck.get(1).getCardValue().equals("Color")) {
             discardDeck.remove(discardDeck.get(1));
         }
@@ -305,17 +306,31 @@ public class Game {
         Player currentPlayer = currentPlayer();
         Card playedCard = currentPlayer.getPlayedCard();
 
+        if(currentPlayer instanceof Human) {
+            if (playedCard.getCardValue().equals("C") || playedCard.getCardValue().equals("C+4")) {
+                isJoker = true;
+                System.out.println("What Color should we play next? (R, G, B, Y) :");
+                newColor = input.nextLine();
+                System.out.println(playedCard.toString() + " NEW COLOR: " + getNewColor());
 
-        if (playedCard.getCardValue().equals("C") || playedCard.getCardValue().equals("C+4")) {
-            isJoker = true;
-            System.out.println("What Color should we play next? (R, G, B, Y) :");
-            newColor = input.nextLine();
-            System.out.println(playedCard.toString() + " NEW COLOR: " + getNewColor());
+            } else {
+                isJoker = false;
+                setNewColor(null);
+                System.out.println(playedCard.toString());
+            }
+        }
 
-        } else {
-            isJoker = false;
-            setNewColor(null);
-            System.out.println(playedCard.toString());
+        else {
+            if (playedCard.getCardValue().equals("C") || playedCard.getCardValue().equals("C+4")) {
+                isJoker = true;
+                String[] colors = {"R", "Y", "B", "G"};
+                newColor = colors[random.nextInt(colors.length)];
+                System.out.println(playedCard.toString() + " NEW COLOR: " + newColor);
+            } else {
+                isJoker = false;
+                setNewColor(null);
+                System.out.println(playedCard.toString());
+            }
         }
     }
 
@@ -418,18 +433,23 @@ public class Game {
         setChallengeWon(true); //this resets the default value.
         Player currentPlayer = currentPlayer();
         Card cardToCheck = discardDeck.get(0);
+        String answer = null;
 
         if (isPlay()) {
             if (cardToCheck.getCardValue().equals("+2")) {
                 isCardTakeTwo();
                 playerEntersCardToPlay();
             } else if (cardToCheck.getCardValue().equals("C+4") && discardDeck.get(1) != null) {
-                String answer;
-                System.out.println("Do you like to challenge the previous player? (Y/N)");
-                answer = input.nextLine();
-                while (!(answer.equals("Y") || answer.equals("N"))) {
-                    System.out.println("Your input is invalid. Please put int Y or N: ");
+                if (currentPlayer instanceof Human) {
+                    System.out.println("Do you like to challenge the previous player? (Y/N)");
                     answer = input.nextLine();
+                    while (!(answer.equals("Y") || answer.equals("N"))) {
+                        System.out.println("Your input is invalid. Please put int Y or N: ");
+                        answer = input.nextLine();
+                    }
+                } else { // Player is a bot
+                    // Randomly generate an answer for the bot
+                    answer = random.nextBoolean() ? "Y" : "N";
                 }
                 if (answer.equals("Y")) {
                     if (isChallenged()) {
@@ -443,12 +463,16 @@ public class Game {
                         setChallengeWon(false);
                         addTempCard();
                     }
+                } else {
+                    isCardTakeFour();
+                    playerEntersCardToPlay();
                 }
-            } else if (cardToCheck.getCardValue().equals("C+4") && discardDeck.get(1) == null) {
-                isCardTakeFour();
+            } else {
                 playerEntersCardToPlay();
-            } else
-                playerEntersCardToPlay();
+            }
+        } else if (cardToCheck.getCardValue().equals("C+4") && discardDeck.get(1) == null) {
+            isCardTakeFour();
+            playerEntersCardToPlay();
         } else if (!isPlay() && (cardToCheck.getCardValue().equals("C+4"))) {
             isCardTakeFour();
         } else if (!isPlay() && (cardToCheck.getCardValue().equals("+2"))) {
@@ -456,7 +480,6 @@ public class Game {
         } else {
             System.out.println("You have to pass this turn because you still don't have a card to play!");
         }
-
     }
 
 
@@ -566,17 +589,26 @@ public class Game {
         discardDeck.add(0, dummyCard);
     }
 
-    //-------------------------------------------------------------------------------------------------------------------------------------------
-    public static void addBotsToPlayersList(int bots) { //method to collect names for Bot Players and add these to player's list
+    public static void addBotsToPlayersList(int bots) {
         String[] botNames = {"Bot_Ariel", "Bot_SnowWhite", "Bot_Rapunzel", "Bot_Cinderella", "Bot_Elsa", "Bot_Mulan"};
-        Random random = new Random();
-        int temp;
         String name;
 
         for (int i = 0; i < bots; i++) {
-            temp = random.nextInt(botNames.length);
-            name = botNames[temp];
+            boolean nameExists;
+            do {
+                int temp = random.nextInt(botNames.length);
+                name = botNames[temp];
+                nameExists = false;
+
+                for (Player player : players) {
+                    if (player.getName().equals(name)) {
+                        nameExists = true;
+                        break;
+                    }
+                }
+            } while (nameExists);
             players.add(new Bot(name));
+            System.out.println(name + " is added.");
         }
     }
 
@@ -591,7 +623,7 @@ public class Game {
 
         if (answer > 0 && answer <= 4) {
             addBotsToPlayersList(answer);
-            System.out.println("Ok, the bots are added!");
+
         } else {
             System.out.println("No Bots in this game.");
         }
@@ -608,6 +640,14 @@ public class Game {
         for (Card card : botsCard) {
             if (card.getCardColor().equals(cardToCheck.getCardColor()) || card.getCardValue().equals(cardToCheck.getCardValue())) {
                 validCardToPlay = card;
+            }
+        }
+
+        if (validCardToPlay == null) {
+            for (Card card : botsCard) {
+                if (card.getCardColor().equals("J")) {
+                    validCardToPlay = card;
+                }
             }
         }
         return validCardToPlay;

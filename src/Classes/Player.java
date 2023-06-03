@@ -74,6 +74,7 @@ public abstract class Player {
 
     public static boolean canPlay() {
         Player currentPlayer = currentPlayer();
+        Card cardToCheck = discardDeck.get(0);
         boolean canPlay = false;
         if (!playerHasCardToPlay()) {
             System.out.println(currentPlayer.getName() + ", it looks like you don't have a card to play this round");
@@ -84,18 +85,37 @@ public abstract class Player {
             if (!playerHasCardToPlay()) {
                 System.out.println("Oh no, you STILL do not have a card to play!");
                 canPlay = false;
-            }
-            else {
+            } else {
                 canPlay = true;
             }
-        }
-        else {
+        } else if (!isHasCardToPlay() && cardToCheck.getCardValue().equals("+2")) {
+            System.out.println("You have to take 2 cards.");
+            isCardTakeTwo();
+            currentPlayer.playersHand.toString();
+            if (!playerHasCardToPlay()) {
+                System.out.println("Yous still do not have cards to play!");
+                addTempCard();
+                canPlay = false;
+            } else {
+                canPlay = true;
+            }
+        } else if (!isHasCardToPlay() && cardToCheck.getCardValue().equals("+4")) {
+            System.out.println("You have to take 4 cards.");
+            isCardTakeFour();
+            currentPlayer.playersHand.toString();
+            if (!playerHasCardToPlay()) {
+                System.out.println("Yous still do not have cards to play!");
+                addTempCard();
+                canPlay = false;
+            } else {
+                canPlay = true;
+            }
+        } else {
             canPlay = true;
         }
         setPlay(canPlay);
         return canPlay;
     }
-
 
 }
 
