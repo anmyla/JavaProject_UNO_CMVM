@@ -19,6 +19,7 @@ public class Game {
 
     public static final String RED = "\u001B[31m";
     public static final String GREEN = "\u001B[38;2;67;185;135m";
+    public static final String PURPLE = "\u001B[38;2;235;127;229m";
     public static final String RESET = "\u001B[0m";
 
     protected static Scanner input = new Scanner(System.in);
@@ -136,7 +137,6 @@ public class Game {
 
             setNewColor(randomValue);
             System.out.println("\nThe Next color to be played is : " + randomValue);
-            addTempCard();
 
             Random firstPlayer = new Random();
             turn = firstPlayer.nextInt(3);
@@ -169,6 +169,7 @@ public class Game {
     public static void printDiscardDeck() {  // this method will print the cards in the DISCARD DECK
         System.out.println(RED + "DISCARD DECK: ");
         for (Card card : discardDeck) {
+            if(!card.getCardValue().equals("Color"))
             System.out.print(RED + card + ", " + RESET);
         }
     }
@@ -310,13 +311,11 @@ public class Game {
                 System.out.println("What Color should we play next? (R, G, B, Y) :");
                 newColor = input.nextLine();
                 System.out.println(playedCard.toString() + " NEW COLOR: " + getNewColor());
-                addTempCard();
 
         } else {
                 String[] colors = {"R", "Y", "B", "G"};
                 newColor = colors[random.nextInt(colors.length)];
                 System.out.println(playedCard.toString() + " NEW COLOR: " + newColor);
-                addTempCard();
             }
         }
 
@@ -407,6 +406,7 @@ public class Game {
 
         } else {
             cardToPlay = botMakesMove();
+            System.out.println(cardToPlay);
         }
 
         currentPlayer.setPlayedCard(cardToPlay);
@@ -422,6 +422,11 @@ public class Game {
     }
 
     public static void currentPlayersTurn() { //this method will decide who's turn it is based on what's on the discard Deck
+        Card cardToCheck = discardDeck.get(0);
+        if(cardToCheck.getCardColor().equals("J")){
+            addTempCard();
+            System.out.println(PURPLE + discardDeck.get(0).toString() + RESET);
+        }
         if (isPlay()) {
             playerEntersCardToPlay();
         } else {
@@ -604,7 +609,7 @@ public class Game {
         Card cardToCheck = discardDeck.get(0);
         String answer = null;
 
-            setChallengeWon(true); //this resets the default value.
+        setChallengeWon(true); //this resets the default value.
 
         if (cardToCheck.getCardValue().equals("+2")) {
             isCardTakeTwo();
@@ -626,12 +631,9 @@ public class Game {
                     setChallengeWon(true); //game will continue
                     System.out.println("You challenged and you won!");
                     System.out.println(currentPlayer.toString() + "you may continue to play!");
-                    addTempCard();
-                    printDiscardDeck();
                 } else {
                     System.out.println("Sorry " + currentPlayer.getName() + " your challenge backfired!");// game starts with the next player
                     setChallengeWon(false);
-                    addTempCard();
                 }
             } else {
                 System.out.println("You chose not the challenge " + getPreviousPlayer().getName());
