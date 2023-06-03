@@ -25,7 +25,6 @@ public class Game {
     protected static Random random = new Random();
 
 
-
     public static int getTurn() { //get the current player's index
         return turn;
     }
@@ -38,8 +37,8 @@ public class Game {
         return isJoker;
     }
 
-    public void setJoker(boolean joker) {
-        this.isJoker = joker;
+    protected static void setJoker(boolean joker) {
+        isJoker = joker;
     }
 
     public static void setCardValid(boolean cardValid) {
@@ -153,6 +152,7 @@ public class Game {
     public static void playerToPlay() { // alerting player that it is their turn to play.
         Player currentPlayer = currentPlayer();
         System.out.println(GREEN + "\n" + currentPlayer.toString() + " it's your turn to play!" + RESET);
+        takeAdditionalCards();
     }
 
     public static void acceptPlayersInput() { //this method will take one Card from the player's initialCards and add it to the DISCARD DECK.
@@ -302,37 +302,23 @@ public class Game {
         return valid;
     }
 
-    public static void isCardJoker() {
+    public static void setColorIfCardIsJoker() {
         Player currentPlayer = currentPlayer();
         Card playedCard = currentPlayer.getPlayedCard();
 
-        if(currentPlayer instanceof Human) {
-            if (playedCard.getCardValue().equals("C") || playedCard.getCardValue().equals("C+4")) {
-                isJoker = true;
+        if (currentPlayer instanceof Human) {
                 System.out.println("What Color should we play next? (R, G, B, Y) :");
                 newColor = input.nextLine();
                 System.out.println(playedCard.toString() + " NEW COLOR: " + getNewColor());
+                addTempCard();
 
-            } else {
-                isJoker = false;
-                setNewColor(null);
-                System.out.println(playedCard.toString());
-            }
-        }
-
-        else {
-            if (playedCard.getCardValue().equals("C") || playedCard.getCardValue().equals("C+4")) {
-                isJoker = true;
+        } else {
                 String[] colors = {"R", "Y", "B", "G"};
                 newColor = colors[random.nextInt(colors.length)];
                 System.out.println(playedCard.toString() + " NEW COLOR: " + newColor);
-            } else {
-                isJoker = false;
-                setNewColor(null);
-                System.out.println(playedCard.toString());
+                addTempCard();
             }
         }
-    }
 
     public static void isCardTakeTwo() {
         Player currentPlayer = currentPlayer();
@@ -424,59 +410,20 @@ public class Game {
         }
 
         currentPlayer.setPlayedCard(cardToPlay);
-        isCardJoker();
 
+        if (cardToPlay.getCardColor().equals("J")) {
+            setJoker(true);
+            setColorIfCardIsJoker();
+        }
+        else{
+            setNewColor(null);
+        }
         return cardToPlay;
     }
 
     public static void currentPlayersTurn() { //this method will decide who's turn it is based on what's on the discard Deck
-        setChallengeWon(true); //this resets the default value.
-        Player currentPlayer = currentPlayer();
-        Card cardToCheck = discardDeck.get(0);
-        String answer = null;
-
         if (isPlay()) {
-            if (cardToCheck.getCardValue().equals("+2")) {
-                isCardTakeTwo();
-                playerEntersCardToPlay();
-            } else if (cardToCheck.getCardValue().equals("C+4") && discardDeck.get(1) != null) {
-                if (currentPlayer instanceof Human) {
-                    System.out.println("Do you like to challenge the previous player? (Y/N)");
-                    answer = input.nextLine();
-                    while (!(answer.equals("Y") || answer.equals("N"))) {
-                        System.out.println("Your input is invalid. Please put int Y or N: ");
-                        answer = input.nextLine();
-                    }
-                } else { // Player is a bot
-                    // Randomly generate an answer for the bot
-                    answer = random.nextBoolean() ? "Y" : "N";
-                }
-                if (answer.equals("Y")) {
-                    if (isChallenged()) {
-                        setChallengeWon(true); //game will continue
-                        System.out.println(currentPlayer.toString() + "you may play!");
-                        addTempCard();
-                        printDiscardDeck();
-                        playerEntersCardToPlay();
-                    } else {
-                        System.out.println("Sorry " + currentPlayer.getName() + " your challenge backfired!");// game starts with the next player
-                        setChallengeWon(false);
-                        addTempCard();
-                    }
-                } else {
-                    isCardTakeFour();
-                    playerEntersCardToPlay();
-                }
-            } else {
-                playerEntersCardToPlay();
-            }
-        } else if (cardToCheck.getCardValue().equals("C+4") && discardDeck.get(1) == null) {
-            isCardTakeFour();
             playerEntersCardToPlay();
-        } else if (!isPlay() && (cardToCheck.getCardValue().equals("C+4"))) {
-            isCardTakeFour();
-        } else if (!isPlay() && (cardToCheck.getCardValue().equals("+2"))) {
-            isCardTakeTwo();
         } else {
             System.out.println("You have to pass this turn because you still don't have a card to play!");
         }
@@ -518,7 +465,7 @@ public class Game {
             if (isClockwise) {
                 currentPlayerIndex = 2;
             } else {
-                currentPlayerIndex = 4;
+                currentPlayerIndex = 0;
             }
         } else {
             if (isClockwise) {
@@ -541,9 +488,9 @@ public class Game {
             }
         } else if (currentPlayerIndex == 3) {
             if (isClockwise) {
-                currentPlayerIndex = 4;
-            } else {
                 currentPlayerIndex = 0;
+            } else {
+                currentPlayerIndex = 2;
             }
         } else {
             if (isClockwise) {
@@ -573,13 +520,11 @@ public class Game {
         }
 
         if (hasOtherCardsToPlay) {
+            System.out.println("Gotcha! " + previousPlayer.getName() + ", you have to take 4 cards!");
             previousPlayerDrawsFourCardsWhenChallengeTrue();
-            System.out.println("Oops! " + previousPlayer.getName() + ", you have to take 4 cards!");
-            System.out.println(previousPlayer.toString());
         } else {
             currentPlayerDrawsSixCardsWhenChallengeFalse();
             System.out.println("OH NO! " + currentPlayer.getName() + " you have to take 6 cards!");
-            System.out.println(currentPlayer.toString());
         }
         return hasOtherCardsToPlay;
     }
@@ -638,7 +583,7 @@ public class Game {
         Card validCardToPlay = null;
 
         for (Card card : botsCard) {
-            if (card.getCardColor().equals(cardToCheck.getCardColor()) || card.getCardValue().equals(cardToCheck.getCardValue())) {
+            if (card.getCardColor().equals(cardToCheck.getCardColor()) || card.getCardValue().equals(cardToCheck.getCardValue()) || card.getCardColor().equals(newColor)) {
                 validCardToPlay = card;
             }
         }
@@ -651,6 +596,50 @@ public class Game {
             }
         }
         return validCardToPlay;
+    }
+
+    public static void takeAdditionalCards() {
+        Player currentPlayer = currentPlayer();
+        Player previousPlayer = getPreviousPlayer();
+        Card cardToCheck = discardDeck.get(0);
+        String answer = null;
+
+            setChallengeWon(true); //this resets the default value.
+
+        if (cardToCheck.getCardValue().equals("+2")) {
+            isCardTakeTwo();
+        } else if (cardToCheck.getCardValue().equals("C+4") && discardDeck.get(1) != null) {
+            if (currentPlayer instanceof Human) {
+                System.out.println("Do you like to challenge the previous player? (Y/N)");
+                answer = input.nextLine();
+                while (!(answer.equals("Y") || answer.equals("N"))) {
+                    System.out.println("Your input is invalid. Please put int Y or N: ");
+                    answer = input.nextLine();
+                }
+            } else { // Player is a bot
+                // Randomly generate an answer for the bot
+                answer = random.nextBoolean() ? "Y" : "N";
+            }
+            if (answer.equals("Y")) {
+                System.out.println("You chose to challenge " + previousPlayer.getName());
+                if (isChallenged()) {
+                    setChallengeWon(true); //game will continue
+                    System.out.println("You challenged and you won!");
+                    System.out.println(currentPlayer.toString() + "you may continue to play!");
+                    addTempCard();
+                    printDiscardDeck();
+                } else {
+                    System.out.println("Sorry " + currentPlayer.getName() + " your challenge backfired!");// game starts with the next player
+                    setChallengeWon(false);
+                    addTempCard();
+                }
+            } else {
+                System.out.println("You chose not the challenge " + getPreviousPlayer().getName());
+                isCardTakeFour();
+            }
+        } else if (cardToCheck.getCardValue().equals("C+4") && discardDeck.get(1) == null) {
+            isCardTakeFour();
+        }
     }
 }
 
