@@ -11,11 +11,14 @@ public class Game {
     protected static List<Card> discardDeck = new ArrayList<>();
     private static int turn;
     private static boolean isClockwise = true;
-    static boolean isJoker = false;
-    static String newColor;
-    static boolean cardValid;
-    static boolean hasCardToPlay;
-    static boolean challengeWon = true;
+    protected static boolean isJoker = false;
+    protected static String newColor;
+    protected static boolean cardValid;
+    protected static boolean hasCardToPlay;
+    protected static boolean challengeWon = true;
+    protected static boolean exit;
+
+    protected static boolean penaltyGiven;
 
     public static final String RED = "\u001B[31m";
     public static final String GREEN = "\u001B[38;2;67;185;135m";
@@ -74,6 +77,22 @@ public class Game {
 
     public static void setChallengeWon(boolean challengeWon) {
         Game.challengeWon = challengeWon;
+    }
+
+    public static boolean isExit() {
+        return exit;
+    }
+
+    public static void setExit(boolean exit) {
+        Game.exit = exit;
+    }
+
+    public static boolean isPenaltyGiven() {
+        return penaltyGiven;
+    }
+
+    public static void setPenaltyGiven(boolean penaltyGiven) {
+        Game.penaltyGiven = penaltyGiven;
     }
 
     public static Player currentPlayer() {
@@ -169,8 +188,8 @@ public class Game {
     public static void printDiscardDeck() {  // this method will print the cards in the DISCARD DECK
         System.out.println(RED + "DISCARD DECK: ");
         for (Card card : discardDeck) {
-            if(!card.getCardValue().equals("Color"))
-            System.out.print(RED + card + ", " + RESET);
+            if (!card.getCardValue().equals("Color"))
+                System.out.print(RED + card + ", " + RESET);
         }
     }
 
@@ -308,16 +327,16 @@ public class Game {
         Card playedCard = currentPlayer.getPlayedCard();
 
         if (currentPlayer instanceof Human) {
-                System.out.println("What Color should we play next? (R, G, B, Y) :");
-                newColor = input.nextLine();
-                System.out.println(playedCard.toString() + " NEW COLOR: " + getNewColor());
+            System.out.println("What Color should we play next? (R, G, B, Y) :");
+            setNewColor(input.nextLine());
+            System.out.println(playedCard.toString() + " NEW COLOR: " + getNewColor());
 
         } else {
-                String[] colors = {"R", "Y", "B", "G"};
-                newColor = colors[random.nextInt(colors.length)];
-                System.out.println(playedCard.toString() + " NEW COLOR: " + newColor);
-            }
+            String[] colors = {"R", "Y", "B", "G"};
+              setNewColor(colors[random.nextInt(colors.length)]);
+            System.out.println(playedCard.toString() + " NEW COLOR: " + getNewColor());
         }
+    }
 
     public static void isCardTakeTwo() {
         Player currentPlayer = currentPlayer();
@@ -379,34 +398,18 @@ public class Game {
 
     public static Card playerEntersCardToPlay() {
         Player currentPlayer = currentPlayer();
-        String[] validCardValues = Card.getFaceValueCollections();
-        List<String> validCardValuesList = new ArrayList<>(Arrays.asList(validCardValues));
         Card cardToPlay = null;
-        String cardColor;
-        String cardValue;
-
-        String[] validCardColors = Card.getColorValueCollections();
-        List<String> validCardColorList = new ArrayList<>(Arrays.asList(validCardColors));
 
         if (currentPlayer instanceof Human) {
-            System.out.println("ENTER CARD COLOR (R, B, G, Y, J):"); //Player chooses a card color (R,B,Y,G, J)
-            cardColor = input.nextLine();
-            while (!validCardColorList.contains(cardColor)) {
-                System.out.println("Your CARD COLOR input is invalid. Please choose one (R, B, G, Y, or J): ");
-                cardColor = input.nextLine();
-            }
-
-            System.out.println("ENTER CARD VALUE:"); //Player chooses a value (1,2,3, <->, etc.)
-            cardValue = input.nextLine();
-            while (!validCardValuesList.contains(cardValue)) {
-                System.out.println("Your CARD VALUE input is invalid. Please choose one (0, 1 , 2 , 3 , 4 , 5 ,6 , 7 , 8 , 9 , X , <-> , +2, +4, C, or C+4)");
-                cardValue = input.nextLine();
-            }
-            cardToPlay = new Card(cardColor, cardValue);
-
+            cardToPlay = humanMakesMove();
         } else {
             cardToPlay = botMakesMove();
-            System.out.println(cardToPlay);
+            if (currentPlayer.isUno()) {
+                System.out.println(cardToPlay + " UNO");
+            } else {
+                System.out.println(cardToPlay);
+                currentPlayer.setUno(false);
+            }
         }
 
         currentPlayer.setPlayedCard(cardToPlay);
@@ -414,16 +417,18 @@ public class Game {
         if (cardToPlay.getCardColor().equals("J")) {
             setJoker(true);
             setColorIfCardIsJoker();
-        }
-        else{
+        }else {
             setNewColor(null);
+        }
+        if (cardToPlay.getCardValue().equals("C+4") || cardToPlay.getCardValue().equals("+2")) {
+            setPenaltyGiven(false);
         }
         return cardToPlay;
     }
 
     public static void currentPlayersTurn() { //this method will decide who's turn it is based on what's on the discard Deck
         Card cardToCheck = discardDeck.get(0);
-        if(cardToCheck.getCardColor().equals("J")){
+        if (cardToCheck.getCardColor().equals("J")) {
             addTempCard();
             System.out.println(PURPLE + discardDeck.get(0).toString() + RESET);
         }
@@ -532,6 +537,7 @@ public class Game {
             System.out.println("OH NO! " + currentPlayer.getName() + " you have to take 6 cards!");
         }
         return hasOtherCardsToPlay;
+
     }
 
     public static void addTempCard() {
@@ -567,7 +573,7 @@ public class Game {
         int answer = input.nextInt();
 
         while (answer > 4) {
-            System.out.println("You can only have a maximum for 4 Bots! Enter the number of Bots again (0-4) :  ");
+            System.out.println("You can only have a maximum of 4 Bots! Enter the number of Bots again (0-4) :  ");
             answer = input.nextInt();
         }
 
@@ -600,6 +606,14 @@ public class Game {
                 }
             }
         }
+
+        if (validCardToPlay != null && currentPlayer.playersHand.size() == 2) {
+            currentPlayer.setUno(true);
+        }
+        else {
+            currentPlayer.setUno(false);
+        }
+
         return validCardToPlay;
     }
 
@@ -611,37 +625,83 @@ public class Game {
 
         setChallengeWon(true); //this resets the default value.
 
-        if (cardToCheck.getCardValue().equals("+2")) {
-            isCardTakeTwo();
-        } else if (cardToCheck.getCardValue().equals("C+4") && discardDeck.get(1) != null) {
-            if (currentPlayer instanceof Human) {
-                System.out.println("Do you like to challenge the previous player? (Y/N)");
-                answer = input.nextLine();
-                while (!(answer.equals("Y") || answer.equals("N"))) {
-                    System.out.println("Your input is invalid. Please put int Y or N: ");
+        if (!isPenaltyGiven()) {
+            if (cardToCheck.getCardValue().equals("+2")) {
+                isCardTakeTwo();
+                setPenaltyGiven(true);
+            } else if (cardToCheck.getCardValue().equals("C+4") && discardDeck.get(1) != null) {
+                if (currentPlayer instanceof Human) {
+                    System.out.println("Do you like to challenge the previous player? (Y/N)");
                     answer = input.nextLine();
+                    while (!(answer.equals("Y") || answer.equals("N"))) {
+                        System.out.println("Your input is invalid. Please put int Y or N: ");
+                        answer = input.nextLine();
+                    }
+                } else { // Player is a bot
+                    // Randomly generate an answer for the bot
+                    answer = random.nextBoolean() ? "Y" : "N";
                 }
-            } else { // Player is a bot
-                // Randomly generate an answer for the bot
-                answer = random.nextBoolean() ? "Y" : "N";
-            }
-            if (answer.equals("Y")) {
-                System.out.println("You chose to challenge " + previousPlayer.getName());
-                if (isChallenged()) {
-                    setChallengeWon(true); //game will continue
-                    System.out.println("You challenged and you won!");
-                    System.out.println(currentPlayer.toString() + "you may continue to play!");
+                if (answer.equals("Y")) {
+                    System.out.println("You chose to challenge " + previousPlayer.getName());
+                    if (isChallenged()) {
+                        setChallengeWon(true); //game will continue
+                        System.out.println("You challenged " + previousPlayer.getName() + " and you won!");
+                        System.out.println(currentPlayer.toString() + "you may continue to play!");
+                    } else {
+                        System.out.println("Sorry " + currentPlayer.getName() + " your challenge backfired!");// game starts with the next player
+                        setChallengeWon(false);
+                    }
                 } else {
-                    System.out.println("Sorry " + currentPlayer.getName() + " your challenge backfired!");// game starts with the next player
-                    setChallengeWon(false);
+                    System.out.println("You chose not the challenge " + getPreviousPlayer().getName());
+                    isCardTakeFour();
                 }
-            } else {
-                System.out.println("You chose not the challenge " + getPreviousPlayer().getName());
+            } else if (cardToCheck.getCardValue().equals("C+4") && discardDeck.get(1) == null) {
                 isCardTakeFour();
             }
-        } else if (cardToCheck.getCardValue().equals("C+4") && discardDeck.get(1) == null) {
-            isCardTakeFour();
         }
+    }
+
+    public static Card humanMakesMove() {
+        Player currentPlayer = currentPlayer();
+        String[] validCardValues = Card.getFaceValueCollections();
+        List<String> validCardValuesList = new ArrayList<>(Arrays.asList(validCardValues));
+
+        String[] validCardColors = Card.getColorValueCollections();
+        List<String> validCardColorList = new ArrayList<>(Arrays.asList(validCardColors));
+
+        Card cardToPlay;
+        String inputCard;
+        String cardColor = null;
+        String cardValue = null;
+        String call = null;
+
+        System.out.println("WHAT'S YOUR MOVE?:"); // Player enters both color and value
+        inputCard = input.nextLine().toUpperCase();
+
+        cardColor = String.valueOf(inputCard.charAt(0));
+        cardValue = String.valueOf(inputCard.charAt(1));
+
+        while (!validCardColorList.contains(cardColor) || !validCardValuesList.contains(cardValue)) {
+            System.out.println("Sorry, there's no such card. Please enter a valid card: ");
+            inputCard = input.nextLine().toUpperCase();
+            if (inputCard.contains("UNO")) {
+                call = "UNO";
+            }
+            cardColor = String.valueOf(inputCard.charAt(0));
+            cardValue = String.valueOf(inputCard.charAt(1));
+        }
+
+        cardToPlay = new Card(cardColor, cardValue);
+
+        if (cardToPlay != null && inputCard.contains(call)) {
+            if (currentPlayer.playersHand.size() == 2) {
+                currentPlayer.setUno(true);
+            } else {
+                System.out.println("That was a foul call. You have to draw a card!");
+                drawOneCard();
+            }
+        }
+        return cardToPlay;
     }
 }
 

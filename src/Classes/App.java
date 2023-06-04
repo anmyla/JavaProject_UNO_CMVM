@@ -59,10 +59,10 @@ public class App {
 
     private void readUserInput(Player player) {
         playerToPlay(); // alert the players: whose turn it is to play
-        if (!isCardValid()) {
+        if (!isCardValid() && isChallengeWon()) {
             canPlay();
             currentPlayersTurn();
-            if (isPlay() && isChallengeWon()) { //player DO NOT pass
+            if (isPlay()) { //player DO NOT pass
                 if (isPlayedCardValid()) {
                     acceptPlayersInput();
                 }

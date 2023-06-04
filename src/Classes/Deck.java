@@ -82,6 +82,7 @@ public class Deck {
             currentPlayer.getPlayersHand().add(cardDeck.get(cardDeck.size() - 1));
             cardDeck.remove(cardDeck.size() - 1);
         }
+        setPenaltyGiven(true);
     }
 
 

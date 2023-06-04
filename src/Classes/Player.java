@@ -13,7 +13,8 @@ public abstract class Player {
 
     private boolean turn;
     private Card playedCard;
-    static boolean play = true;
+    protected static boolean play = true;
+    protected boolean uno;
 
     public Player(String name, List<Card> playerInitialCards) {
         this.name = name;
@@ -58,6 +59,14 @@ public abstract class Player {
         this.playedCard = playedCard;
     }
 
+    public boolean isUno() {
+        return uno;
+    }
+
+    public void setUno(boolean uno) {
+        this.uno = uno;
+    }
+
     @Override
     public String toString() {
         return (GREEN + name + playersHand + RESET);
@@ -76,6 +85,14 @@ public abstract class Player {
         Player currentPlayer = currentPlayer();
         Card cardToCheck = discardDeck.get(0);
         boolean canPlay = false;
+
+        if (cardToCheck.getCardColor().equals("J")) {
+            addTempCard();
+            System.out.println(PURPLE + discardDeck.get(0).toString() + RESET);
+        }
+
+        cardToCheck = discardDeck.get(0);
+
         if (!playerHasCardToPlay()) {
             System.out.println(currentPlayer.getName() + ", it looks like you don't have a card to play this round");
             System.out.println("Sorry but you have to draw a card!");
@@ -94,7 +111,6 @@ public abstract class Player {
             currentPlayer.playersHand.toString();
             if (!playerHasCardToPlay()) {
                 System.out.println("Yous still do not have cards to play!");
-                addTempCard();
                 canPlay = false;
             } else {
                 canPlay = true;
