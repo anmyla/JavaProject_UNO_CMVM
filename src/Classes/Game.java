@@ -333,7 +333,7 @@ public class Game {
 
         } else {
             String[] colors = {"R", "Y", "B", "G"};
-              setNewColor(colors[random.nextInt(colors.length)]);
+            setNewColor(colors[random.nextInt(colors.length)]);
             System.out.println(playedCard.toString() + " NEW COLOR: " + getNewColor());
         }
     }
@@ -417,7 +417,7 @@ public class Game {
         if (cardToPlay.getCardColor().equals("J")) {
             setJoker(true);
             setColorIfCardIsJoker();
-        }else {
+        } else {
             setNewColor(null);
         }
         if (cardToPlay.getCardValue().equals("C+4") || cardToPlay.getCardValue().equals("+2")) {
@@ -609,8 +609,7 @@ public class Game {
 
         if (validCardToPlay != null && currentPlayer.playersHand.size() == 2) {
             currentPlayer.setUno(true);
-        }
-        else {
+        } else {
             currentPlayer.setUno(false);
         }
 
