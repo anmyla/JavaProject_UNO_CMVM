@@ -5,16 +5,17 @@ import java.util.List;
 import java.util.Scanner;
 
 import static Classes.Game.*;
-import static Classes.Player.isPlay;
-import static Classes.Player.canPlay;
+import static Classes.Player.*;
 
 public class App {
     private final Scanner input;
     private final PrintStream output;
-    private boolean exit = false;
-    private int figureNr;
-    //private Figure figure;
+    private static boolean exit = false;
     public int size;
+
+    public static void setExit(boolean exit) {
+        App.exit = exit;
+    }
 
     // Konstruktor
     // input wird verwendet um Daten vom Benutzer einzulesen (verwendet scanner)
@@ -43,7 +44,7 @@ public class App {
         theCardDeck.shuffleDeck(); // shuffle the cards;
 
         Game firstGame = new Game(); // Creating a new game
-        setPlayers(); // setting up human players
+        setPlayers(); // setting up human/bot players
 
         distributeInitialCardsToPlayers(); //distributes initial cards to players
         printPlayer(); // printing each player's 7 cards (initial player's hand) on the console.
@@ -69,7 +70,6 @@ public class App {
             }
         }
     }
-
 
     private void updateState() {
         checkNextTurn();

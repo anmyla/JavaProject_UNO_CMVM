@@ -2,8 +2,10 @@ package Classes;
 
 import java.util.List;
 
+import static Classes.Bot.botMakesAMove;
 import static Classes.Deck.drawOneCard;
 import static Classes.Game.*;
+import static Classes.Human.humanMakesAMove;
 
 
 public abstract class Player {
@@ -81,6 +83,83 @@ public abstract class Player {
         playersHand.remove(c);
     }
 
+
+    public static boolean playerHasCardToPlay() { //method to check if the player's hand has a valid card to be played
+        Player currentPlayer = currentPlayer();
+        String currentDiscardCardColor = discardDeck.get(0).getCardColor();
+        String currentDiscardCardValue = discardDeck.get(0).getCardValue();
+        String playerCardColor;
+        String playerCardValue;
+
+        for (Card card : currentPlayer.playersHand) {
+            playerCardColor = card.getCardColor();
+            playerCardValue = card.getCardValue();
+
+            if (playerCardColor.equals("J")) {
+                setHasCardToPlay(true);
+                break;
+            } else if (playerCardColor.equals(newColor)) {
+                setHasCardToPlay(true);
+                break;
+            } else if (playerCardColor.equals(currentDiscardCardColor)) {
+                setHasCardToPlay(true);
+                break;
+            } else if (playerCardValue.equals(currentDiscardCardValue)) {
+                setHasCardToPlay(true);
+                break;
+            } else {
+                setHasCardToPlay(false);
+            }
+        }
+        setHasCardToPlay(hasCardToPlay);
+        return isHasCardToPlay();
+    }
+
+    public static void currentPlayersTurn() { //this method will decide who's turn it is based on what's on the discard Deck
+        Card cardToCheck = discardDeck.get(0);
+        if (cardToCheck.getCardColor().equals("J")) {
+            addTempCard();
+            System.out.println(PURPLE + discardDeck.get(0).toString() + RESET);
+        }
+        if (isPlay()) {
+            playerEntersCardToPlay();
+        } else {
+            System.out.println("You have to pass this turn because you still don't have a card to play!");
+        }
+    }
+
+
+    public static Card playerEntersCardToPlay() {
+        Player currentPlayer = currentPlayer();
+        Card cardToPlay = null;
+
+        if (currentPlayer instanceof Human) {
+            cardToPlay = humanMakesAMove();
+        } else {
+            cardToPlay = botMakesAMove();
+            if (currentPlayer.isUno()) {
+                System.out.println(cardToPlay + " UNO");
+            } else {
+                System.out.println(cardToPlay);
+                currentPlayer.setUno(false);
+            }
+        }
+
+        currentPlayer.setPlayedCard(cardToPlay);
+
+        if (cardToPlay.getCardColor().equals("J")) {
+            setJoker(true);
+            setColorIfCardIsJoker();
+        } else {
+            setNewColor(null);
+        }
+        if (cardToPlay.getCardValue().equals("C+4") || cardToPlay.getCardValue().equals("+2")) {
+            setPenaltyGiven(false);
+        }
+        return cardToPlay;
+    }
+
+
     public static boolean canPlay() {
         Player currentPlayer = currentPlayer();
         Card cardToCheck = discardDeck.get(0);
@@ -94,7 +173,7 @@ public abstract class Player {
         cardToCheck = discardDeck.get(0);
 
         if (!playerHasCardToPlay()) {
-            System.out.println(currentPlayer.getName() + ", it looks like you don't have a card to play this round");
+            System.out.println(currentPlayer.getName() + ", it looks like you don't have a card to play this turn.");
             System.out.println("Sorry but you have to draw a card!");
             drawOneCard();
             System.out.println("Here's your updated Cards!");
