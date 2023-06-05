@@ -184,7 +184,7 @@ public abstract class Player {
             }
         } else if (!isHasCardToPlay() && cardToCheck.getCardValue().equals("+2")) {
             System.out.println("You have to take 2 cards.");
-            isCardTakeTwo();
+            cardIsTakeTwo();
             currentPlayer.playersHand.toString();
             if (!playerHasCardToPlay()) {
                 System.out.println("Yous still do not have cards to play!");
@@ -194,7 +194,7 @@ public abstract class Player {
             }
         } else if (!isHasCardToPlay() && cardToCheck.getCardValue().equals("+4")) {
             System.out.println("You have to take 4 cards.");
-            isCardTakeFour();
+            cardIsTakeFour();
             currentPlayer.playersHand.toString();
             if (!playerHasCardToPlay()) {
                 System.out.println("Yous still do not have cards to play!");

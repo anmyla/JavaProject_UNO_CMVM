@@ -290,17 +290,17 @@ public class Game {
     public static void checkNextTurn() { // method that checks the current card played, implements rules, and return the next player
         Card currentCard = discardDeck.get(0);
         if (!isPlay()) { //the player does NOT have card to play
-            isCardNormal();
+            cardIsNormal();
         } else if (currentCard.getCardValue().equals("<->")) {
-            isCardIsReverse();
+            cardIsReverse();
         } else if (currentCard.getCardValue().equals("X")) {
-            isCardSkip();
+            cardIsSkip();
         } else {
-            isCardNormal();
+            cardIsNormal();
         }
     }
 
-    public static int isCardIsReverse() { //This method is to decide who has the next turn when the card "<->" is played
+    public static int cardIsReverse() { //This method is to decide who has the next turn when the card "<->" is played
         int currentPlayerIndex = getTurn();
 
         if (currentPlayerIndex == 0) {
@@ -332,7 +332,7 @@ public class Game {
         return currentPlayerIndex;
     }
 
-    public static int isCardSkip() { //This method is to decide who has the next turn when the card "X" is played
+    public static int cardIsSkip() { //This method is to decide who has the next turn when the card "X" is played
         int currentPlayerIndex = getTurn();
 
         if (currentPlayerIndex == 0) {
@@ -352,7 +352,7 @@ public class Game {
     }
 
 
-    public static int isCardNormal() { //This method is to decide who has the next turn when the "normal" card is played
+    public static int cardIsNormal() { //This method is to decide who has the next turn when the "normal" card is played
         int currentPlayerIndex = getTurn();
 
         if (currentPlayerIndex == 0) {
@@ -423,7 +423,7 @@ public class Game {
         }
     }
 
-    public static void isCardTakeTwo() {
+    public static void cardIsTakeTwo() {
         Player currentPlayer = currentPlayer();
         Card cardToCheck = discardDeck.get(0);
         if (cardToCheck.getCardValue().equals("+2")) {
@@ -435,7 +435,7 @@ public class Game {
         }
     }
 
-    public static void isCardTakeFour() {
+    public static void cardIsTakeFour() {
         Player currentPlayer = currentPlayer();
         Card cardToCheck = discardDeck.get(0);
         if (cardToCheck.getCardValue().equals("C+4")) {
@@ -517,7 +517,7 @@ public class Game {
 
         if (!isPenaltyGiven()) { //check if the penalty of this card has already been given to the previous player so that the current player won't be penalized if true
             if (cardToCheck.getCardValue().equals("+2")) {
-                isCardTakeTwo();
+                cardIsTakeTwo();
                 setPenaltyGiven(true);
             } else if (cardToCheck.getCardValue().equals("C+4") && discardDeck.size() > 1) {
                 if (currentPlayer instanceof Human) {
@@ -543,10 +543,10 @@ public class Game {
                     }
                 } else {
                     System.out.println("You chose not the challenge " + getPreviousPlayer().getName());
-                    isCardTakeFour();
+                    cardIsTakeFour();
                 }
             } else if (cardToCheck.getCardValue().equals("C+4") && discardDeck.size() == 1) {
-                isCardTakeFour();
+                cardIsTakeFour();
             }
         }
     }
