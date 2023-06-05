@@ -659,7 +659,6 @@ public class Game {
             }
         }
     }
-
     public static Card humanMakesMove() {
         Player currentPlayer = currentPlayer();
         String[] validCardValues = Card.getFaceValueCollections();
