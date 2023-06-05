@@ -282,7 +282,7 @@ public class Game {
 
     public static void checkNextTurn() { // method that checks the current card played, implements rules, and return the next player
         Card currentCard = discardDeck.get(0);
-        if (!isPlay()) { //the player does NOT have card to pay
+        if (!isPlay()) { //the player does NOT have card to play
             isCardNormal();
         } else if (currentCard.getCardValue().equals("<->")) {
             isCardIsReverse();
@@ -547,7 +547,7 @@ public class Game {
     public static Player checkWinner() {
         Player winner = currentPlayer();
         if(winner.playersHand.size()== 0) {
-            System.out.println("Congratulations " + currentPlayer().getName() + " you won this round!");
+            System.out.println("Congratulations " + winner.getName() + " you won this round!");
             setExit(true);
         }
         return winner;

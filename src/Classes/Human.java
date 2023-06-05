@@ -23,42 +23,69 @@ public class Human extends Player {
 
         String[] validCardColors = Card.getColorValueCollections();
         List<String> validCardColorList = new ArrayList<>(Arrays.asList(validCardColors));
+        StringBuilder stringBuilder = new StringBuilder();
 
         Scanner input = new Scanner(System.in);
-        Card cardToPlay;
         String inputCard;
         String cardColor = null;
         String cardValue = null;
+        String move = null;
         String call = null;
+
 
         System.out.println("WHAT'S YOUR MOVE?:"); // Player enters both color and value
         inputCard = input.nextLine().toUpperCase();
 
-        cardColor = String.valueOf(inputCard.charAt(0));
-        cardValue = String.valueOf(inputCard.charAt(1));
 
-        while (!validCardColorList.contains(cardColor) || !validCardValuesList.contains(cardValue)) {
-            System.out.println("Sorry, there's no such card. Please enter a valid card: ");
-            inputCard = input.nextLine().toUpperCase();
-            if (inputCard.contains("UNO")) {
-                call = "UNO";
+        if(input.equals("EXIT")) {
+            move = "EXIT";
+        }
+        else if (input.equals("HELP")){
+            move = "HELP";
+        }
+        else{
+            char [] inputArray = inputCard.toCharArray();
+            for (int i = 1; i <= 4; i++) {
+                while (i < inputArray.length || inputArray[i] != ' ') {
+                    stringBuilder.append(inputArray[i]);
+                    i++;
+                }
             }
-            cardColor = String.valueOf(inputCard.charAt(0));
-            cardValue = String.valueOf(inputCard.charAt(1));
+            cardColor = String.valueOf(inputArray[0]);
+            cardValue = stringBuilder.toString();
+
+            while (!validCardColorList.contains(cardColor) || !validCardValuesList.contains(cardValue)) {
+                System.out.println("Sorry, there's no such card. Please enter a valid card: ");
+                inputCard = input.nextLine().toUpperCase();
+                if (inputCard.contains("UNO")) {
+                    call = "UNO";
+                }
+                inputArray = inputCard.toCharArray();
+                for (int i = 1; i <= 4; i++) {
+                    while (i < inputArray.length && inputArray[i] != ' ') {
+                        stringBuilder.append(inputArray[i]);
+                        i++;
+                    }
+                }
+            }
         }
 
-        cardToPlay = new Card(cardColor, cardValue);
+        Card cardToPlay = new Card(cardColor, cardValue);
 
-        if (cardToPlay != null && inputCard.contains(call)) {
-            if (currentPlayer.playersHand.size() == 2) {
+        if(call != null) {
+            if (cardToPlay != null && currentPlayer.playersHand.size() == 2 && call.equals("UNO")) {
                 currentPlayer.setUno(true);
-            } else {
+                System.out.println("UNO!!!!!!!");
+            } else if (cardToPlay != null && currentPlayer.playersHand.size() > 2 && call.equals("UNO")) {
                 System.out.println("That was a foul call. You have to draw a card!");
                 drawOneCard();
+                currentPlayer.setUno(false);
             }
+        }
+        else {
+            currentPlayer.setUno(false);
         }
         return cardToPlay;
     }
-
 }
 
