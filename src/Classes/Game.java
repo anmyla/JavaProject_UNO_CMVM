@@ -21,7 +21,8 @@ public class Game {
 
     public static final String BLUE = "\u001B[38;2;86;119;209m";
     public static final String GREEN = "\u001B[38;2;67;185;135m";
-    public static final String PURPLE = "\u001B[38;2;235;127;229m";
+    public static final String ROSE = "\u001B[38;2;209;86;108m";
+    public static final String SKY = "\u001B[38;2;153;205;240m";
     public static final String RESET = "\u001B[0m";
 
     protected static Scanner input = new Scanner(System.in);
@@ -204,7 +205,7 @@ public class Game {
 
     public static void playerToPlay() { // alerting player that it is their turn to play.
         Player currentPlayer = currentPlayer();
-        System.out.println(GREEN + "\n" + currentPlayer.toString() + " it's your turn to play!" + RESET);
+        System.out.println("\n" + currentPlayer.toString() + " it's your turn to play!");
         takeAdditionalCards();
     }
 
@@ -273,10 +274,16 @@ public class Game {
     }
 
     public static void printDiscardDeck() {  // this method will print the cards in the DISCARD DECK
-        System.out.println(BLUE + "DISCARD DECK: ");
-        for (Card card : discardDeck) {
-            if (!card.getCardValue().equals("Color"))
-                System.out.print(BLUE + card + ", " + RESET);
+        System.out.print(ROSE  + "DISCARD DECK: ");
+
+        Card card = discardDeck.get(0);
+
+        if(card.getCardColor().equals("J") && !getNewColor().equals(null)) {
+            System.out.print(ROSE + discardDeck.get(0) + " New Color: " + getNewColor() + RESET);
+        } else if (!card.getCardValue().equals("Color")) {
+            System.out.print(ROSE + discardDeck.get(0) + RESET);
+        } else {
+            System.out.print(ROSE+ discardDeck.get(1) + " New Color: " + getNewColor() + RESET );
         }
     }
 
@@ -512,7 +519,7 @@ public class Game {
             if (cardToCheck.getCardValue().equals("+2")) {
                 isCardTakeTwo();
                 setPenaltyGiven(true);
-            } else if (cardToCheck.getCardValue().equals("C+4") && discardDeck.get(1) != null) {
+            } else if (cardToCheck.getCardValue().equals("C+4") && discardDeck.size() > 1) {
                 if (currentPlayer instanceof Human) {
                     System.out.println("Do you like to challenge the previous player? (Y/N)");
                     answer = input.nextLine();
@@ -538,7 +545,7 @@ public class Game {
                     System.out.println("You chose not the challenge " + getPreviousPlayer().getName());
                     isCardTakeFour();
                 }
-            } else if (cardToCheck.getCardValue().equals("C+4") && discardDeck.get(1) == null) {
+            } else if (cardToCheck.getCardValue().equals("C+4") && discardDeck.size() == 1) {
                 isCardTakeFour();
             }
         }
@@ -546,7 +553,7 @@ public class Game {
 
     public static Player checkWinner() {
         Player winner = currentPlayer();
-        if(winner.playersHand.size()== 0) {
+        if (winner.playersHand.size() == 0) {
             System.out.println("Congratulations " + winner.getName() + " you won this round!");
             setExit(true);
         }

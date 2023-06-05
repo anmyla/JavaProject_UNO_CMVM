@@ -22,18 +22,18 @@ public class Deck {
         int[] points = Card.getPointsCollections(); // (length = 12)
 
         for (int i = 0; i < colorValue.length - 1; i++) { // 4 Repetitions ColorValue 0 = R, 1 = G, 2 = B, 3 = Y
-            cardDeck.add(new Card(colorValue[i], faceValue[0],  points[0])); // this adds the following cards: ( R0, G0, B0, Y0)
+            cardDeck.add(new Card(colorValue[i], faceValue[0], points[0])); // this adds the following cards: ( R0, G0, B0, Y0)
             for (int j = 1; j < faceValue.length - 4; j++) {   // 11 repetitions
-                cardDeck.add(new Card(colorValue[i], faceValue[j],  points[j])); // this adds the following cards: (1st copy R1 - <->, G1 - <->, B1 - <->, Y1 - <->)
+                cardDeck.add(new Card(colorValue[i], faceValue[j], points[j])); // this adds the following cards: (1st copy R1 - <->, G1 - <->, B1 - <->, Y1 - <->)
                 cardDeck.add(new Card(colorValue[i], faceValue[j], points[j])); // this adds the following cards: (2nd copy R1 - <->, G1 - <->, B1 - <->, Y1 - <->)
             }
             for (int j = faceValue.length - 4; j < faceValue.length - 2; j++) { //2 repetitions
-                cardDeck.add(new Card(colorValue[i], faceValue[12],  points[10])); //this adds the following cards: (1st copy +2)
+                cardDeck.add(new Card(colorValue[i], faceValue[12], points[10])); //this adds the following cards: (1st copy +2)
             }
         }
         for (int i = 0; i < 4; i++) { //4 repetitions for non-colored cards (joker cards)
-            cardDeck.add(new Card(colorValue[4], faceValue[14],  points[points.length - 1])); //this adds the following cards: JC (4 copies)
-            cardDeck.add(new Card( colorValue[4], faceValue[15], points[points.length - 1])); //this adds the following cards: JC+4 (4 copies)
+            cardDeck.add(new Card(colorValue[4], faceValue[14], points[points.length - 1])); //this adds the following cards: JC (4 copies)
+            cardDeck.add(new Card(colorValue[4], faceValue[15], points[points.length - 1])); //this adds the following cards: JC+4 (4 copies)
         }
         return cardDeck;
     }
@@ -64,12 +64,18 @@ public class Deck {
 
     public static void drawOneCard() {
         Player currentPlayer = currentPlayer();
+
+        checkAndRefillCardDeck();
+
         currentPlayer.getPlayersHand().add(cardDeck.get(cardDeck.size() - 1));
         cardDeck.remove(cardDeck.size() - 1);
     }
 
     public static void previousPlayerDrawsFourCardsWhenChallengeTrue() {
         Player previousPlayer = getPreviousPlayer();
+
+        checkAndRefillCardDeck();
+
         for (int i = 0; i < 4; i++) {
             previousPlayer.getPlayersHand().add(cardDeck.get(cardDeck.size() - 1));
             cardDeck.remove(cardDeck.size() - 1);
@@ -78,6 +84,8 @@ public class Deck {
 
     public static void currentPlayerDrawsSixCardsWhenChallengeFalse() {
         Player currentPlayer = currentPlayer();
+            checkAndRefillCardDeck();
+
         for (int i = 0; i < 6; i++) {
             currentPlayer.getPlayersHand().add(cardDeck.get(cardDeck.size() - 1));
             cardDeck.remove(cardDeck.size() - 1);
@@ -85,6 +93,22 @@ public class Deck {
         setPenaltyGiven(true);
     }
 
+    public static void checkAndRefillCardDeck() {
+        if (cardDeck.size() < 10) {
 
+            // Transfer cards from discardDeck to cardDeck (except for the first card)
+            Card firstCard = discardDeck.get(0);
+            for (int i = 1; i < discardDeck.size(); i++) {
+                cardDeck.add(discardDeck.get(i));
+            }
+
+            // Shuffle the cardDeck
+            Collections.shuffle(cardDeck);
+
+            // Clear the discardDeck and add the first card back
+            discardDeck.clear();
+            discardDeck.add(firstCard);
+        }
+    }
 }
 

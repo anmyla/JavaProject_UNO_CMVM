@@ -71,7 +71,7 @@ public abstract class Player {
 
     @Override
     public String toString() {
-        return (GREEN + name + playersHand + RESET);
+        return (SKY + name + "  " + playersHand + RESET);
     }
 
     public int getPlayerPoints() {
@@ -119,7 +119,6 @@ public abstract class Player {
         Card cardToCheck = discardDeck.get(0);
         if (cardToCheck.getCardColor().equals("J")) {
             addTempCard();
-            System.out.println(PURPLE + discardDeck.get(0).toString() + RESET);
         }
         if (isPlay()) {
             playerEntersCardToPlay();
@@ -138,9 +137,9 @@ public abstract class Player {
         } else {
             cardToPlay = botMakesAMove();
             if (currentPlayer.isUno()) {
-                System.out.println(cardToPlay + " UNO");
+                System.out.println("Your move: " + cardToPlay + " UNO");
             } else {
-                System.out.println(cardToPlay);
+                System.out.println("Your move: " + cardToPlay);
                 currentPlayer.setUno(false);
             }
         }
@@ -167,7 +166,6 @@ public abstract class Player {
 
         if (cardToCheck.getCardColor().equals("J")) {
             addTempCard();
-            System.out.println(PURPLE + discardDeck.get(0).toString() + RESET);
         }
 
         cardToCheck = discardDeck.get(0);

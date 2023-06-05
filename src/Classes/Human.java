@@ -1,4 +1,5 @@
 package Classes;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,66 +24,75 @@ public class Human extends Player {
 
         String[] validCardColors = Card.getColorValueCollections();
         List<String> validCardColorList = new ArrayList<>(Arrays.asList(validCardColors));
-        StringBuilder stringBuilder = new StringBuilder();
+
 
         Scanner input = new Scanner(System.in);
-        String inputCard;
+        String inputMove;
         String cardColor = null;
         String cardValue = null;
         String move = null;
         String call = null;
 
 
-        System.out.println("WHAT'S YOUR MOVE?:"); // Player enters both color and value
-        inputCard = input.nextLine().toUpperCase();
+        do {
+            System.out.println("WHAT'S YOUR MOVE?:"); // Player enters both color and value
+            inputMove = input.nextLine().toUpperCase();
 
+            StringBuilder stringBuilder1 = new StringBuilder();
+            StringBuilder stringBuilder2 = new StringBuilder();
 
-        if(input.equals("EXIT")) {
-            move = "EXIT";
-        }
-        else if (input.equals("HELP")){
-            move = "HELP";
-        }
-        else{
-            char [] inputArray = inputCard.toCharArray();
-            for (int i = 1; i <= 4; i++) {
-                while (i < inputArray.length || inputArray[i] != ' ') {
-                    stringBuilder.append(inputArray[i]);
-                    i++;
-                }
-            }
-            cardColor = String.valueOf(inputArray[0]);
-            cardValue = stringBuilder.toString();
+            if (!inputMove.equals("EXIT") && !inputMove.equals("HELP")) {
 
-            while (!validCardColorList.contains(cardColor) || !validCardValuesList.contains(cardValue)) {
-                System.out.println("Sorry, there's no such card. Please enter a valid card: ");
-                inputCard = input.nextLine().toUpperCase();
-                if (inputCard.contains("UNO")) {
-                    call = "UNO";
-                }
-                inputArray = inputCard.toCharArray();
-                for (int i = 1; i <= 4; i++) {
-                    while (i < inputArray.length && inputArray[i] != ' ') {
-                        stringBuilder.append(inputArray[i]);
-                        i++;
+                char[] inputArray = inputMove.toCharArray();
+
+                if (inputArray.length > 1 && inputArray.length < 9) {
+                    for (int i = 1; i < inputArray.length; i++) {
+                        if (inputArray[i] == ' ') {
+                            break; // Exit the loop when a space is encountered
+                        }
+                        stringBuilder1.append(inputArray[i]);
                     }
+
+                    cardColor = String.valueOf(inputArray[0]);
+                    cardValue = stringBuilder1.toString();
+
+                    // Extract the remaining characters after the space
+
+                    for (int i = stringBuilder1.length() + 1; i < inputArray.length; i++) {
+                        stringBuilder2.append(inputArray[i]);
+                    }
+                    call = stringBuilder2.toString();
+                } else {
+                    cardColor = String.valueOf(inputArray[0]);
+                    cardValue = String.valueOf(inputArray[1]);
                 }
+            } else if (inputMove.equals("EXIT")) {
+                System.exit(0); // we still have to make this part
+                move = "EXIT";
+                break;
+
+            } else if (inputMove.equals("HELP")) {
+                move = "HELP"; // we still have to make this part
+                break;
             }
-        }
+
+            if (!validCardColorList.contains(cardColor) || !validCardValuesList.contains(cardValue) && (!inputMove.equals("EXIT") || !inputMove.equals("HELP"))) {
+                System.out.println("There is no such move, please try again!");
+            }
+        } while (!validCardColorList.contains(cardColor) || !validCardValuesList.contains(cardValue) && (!inputMove.equals("EXIT") || !inputMove.equals("HELP")));
 
         Card cardToPlay = new Card(cardColor, cardValue);
 
-        if(call != null) {
+        if (call != null) {
             if (cardToPlay != null && currentPlayer.playersHand.size() == 2 && call.equals("UNO")) {
                 currentPlayer.setUno(true);
-                System.out.println("UNO!!!!!!!");
+                System.out.println(currentPlayer.getName() + " called UNO!");
             } else if (cardToPlay != null && currentPlayer.playersHand.size() > 2 && call.equals("UNO")) {
                 System.out.println("That was a foul call. You have to draw a card!");
                 drawOneCard();
                 currentPlayer.setUno(false);
             }
-        }
-        else {
+        } else {
             currentPlayer.setUno(false);
         }
         return cardToPlay;
