@@ -15,7 +15,7 @@ import java.io.InputStreamReader;
 
 
 //Created this temporary Class to test random functions
-// you can ignore thsi class for the meantime
+// you can ignore this class for the meantime
 
 public class Temp {
     public static void main(String[] args) {

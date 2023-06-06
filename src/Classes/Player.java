@@ -17,6 +17,7 @@ public abstract class Player {
     private Card playedCard;
     protected static boolean play = true;
     protected boolean uno;
+    protected boolean winner;
 
     public Player(String name, List<Card> playerInitialCards) {
         this.name = name;
@@ -67,6 +68,14 @@ public abstract class Player {
 
     public void setUno(boolean uno) {
         this.uno = uno;
+    }
+
+    public boolean isWinner() {
+        return winner;
+    }
+
+    public void setWinner(boolean winner) {
+        this.winner = winner;
     }
 
     @Override

@@ -72,12 +72,16 @@ public class App {
     }
 
     private void updateState() {
-        checkNextTurn();
-        printDiscardDeck();
+        if(checkWinner().isWinner()) {
+            setExit(true);
+        } else {
+            checkNextTurn();
+        }
     }
 
     private void printState() {
-        //TODO: Ausgabe des aktuellen Zustands
+        if (!exit) {
+            printDiscardDeck();
+        }
     }
-
 }

@@ -4,7 +4,7 @@ import java.util.*;
 
 import static Classes.App.setExit;
 import static Classes.Deck.*;
-import static Classes.Player.isPlay;
+import static Classes.Player.*;
 
 public class Game {
     static List<Player> players = new ArrayList<>();
@@ -18,88 +18,81 @@ public class Game {
     protected static boolean hasCardToPlay;
     protected static boolean challengeWon = true;
     protected static boolean penaltyGiven;
-
     public static final String BLUE = "\u001B[38;2;86;119;209m";
-    public static final String GREEN = "\u001B[38;2;67;185;135m";
     public static final String ROSE = "\u001B[38;2;209;86;108m";
     public static final String SKY = "\u001B[38;2;153;205;240m";
     public static final String RESET = "\u001B[0m";
-
     protected static Scanner input = new Scanner(System.in);
     protected static Random random = new Random();
-
     public List<Card> getDiscardDeck() {
         return this.discardDeck;
     }
-
     public static int getTurn() { //get the current player's index
         return turn;
     }
-
     public static void setTurn(int playerIndex) { //set the current player's index
         turn = playerIndex;
     }
-
     public static boolean isJoker() { //is the played card a joker
         return isJoker;
     }
-
     protected static void setJoker(boolean joker) {
         isJoker = joker;
     }
-
     public static void setCardValid(boolean cardValid) {
         cardValid = cardValid;
     }
-
     public static boolean isCardValid() {
         return cardValid;
     }
-
     public static String getNewColor() {
         return newColor;
     }
-
     public static void setNewColor(String newColor) { // if played card isJoker, we can setNewColor
         Game.newColor = newColor;
     }
-
-
     public static boolean isHasCardToPlay() { //player has a valid card to play
         return hasCardToPlay;
     }
-
     public static void setHasCardToPlay(boolean hasCardToPlay) { //set if player has a valid card to play or not
         Game.hasCardToPlay = hasCardToPlay;
     }
-
     public static boolean isChallengeWon() { // true if current player won a challenge against previous player
         return challengeWon;
     }
-
     public static void setChallengeWon(boolean challengeWon) {
         Game.challengeWon = challengeWon;
     }
-
-
     public static boolean isPenaltyGiven() { // true if +2 and +4 cards are already "claimed"
         return penaltyGiven;
     }
-
     public static void setPenaltyGiven(boolean penaltyGiven) {
         Game.penaltyGiven = penaltyGiven;
     }
 
 
     public static void setUpHumanPlayers(int humanPlayers) { //method to collect names for Human Players and add these to player's list
-        for (int i = 0; i < humanPlayers; i++) {
-            System.out.println("Please enter a name for PLAYER " + (i + 1) + ": ");
-            String name = input.nextLine();
+        Scanner inputName = new Scanner(System.in);
 
-            while (players.contains(name) || name.isEmpty()) {
-                System.out.println("This field cannot be empty and name must be unique. Please enter name: ");
-                name = input.nextLine();
-            }
+        for (int i = 0; i < humanPlayers; i++) {
+            String name;
+            boolean nameExists;
+            do {
+                System.out.println("Please enter a name for PLAYER " + (i + 1) + ": ");
+                name = inputName.nextLine();
+                nameExists = false;
+
+                for (Player player : players) {
+                    if (player.getName().equals(name)) {
+                        nameExists = true;
+                        break;
+                    }
+                }
+
+                if (nameExists || name.isEmpty()) {
+                    System.out.println("This field cannot be empty and name must be unique!");
+                }
+            } while (nameExists || name.isEmpty());
             players.add(new Human(name));
         }
     }
@@ -140,12 +133,11 @@ public class Game {
             setUpBotPlayers(answer);
 
         } else {
-            System.out.println("No Bots in this game.");
+            System.out.println("There will be no bots in this game.");
         }
         int totalPlayers = 4 - answer;
         setUpHumanPlayers(totalPlayers);
     }
-
 
     public static void distributeInitialCardsToPlayers() { // each player gets his/her set of cards
         cardDeck.initialDeck();
@@ -168,7 +160,6 @@ public class Game {
     public static void layFirstCard() {  //this method will take one Card from the DECK and add it to the DISCARD DECK to start the game.
         discardDeck.add(cardDeck.getCardDeck().get(0));
         cardDeck.removeFromCardDeck();
-
     }
 
     public static void chooseFirstPlayer() {//Randomly choose the player that will play first.
@@ -194,7 +185,6 @@ public class Game {
         } else {
             Random firstPlayer = new Random();
             turn = firstPlayer.nextInt(3);
-
         }
     }
 
@@ -268,22 +258,20 @@ public class Game {
             discardDeck.remove(discardDeck.get(1));
         }
 
-        checkWinner();
-
         setCardValid(false); //IMPORTANT! Reset the value after accepting player's played card.
     }
 
     public static void printDiscardDeck() {  // this method will print the cards in the DISCARD DECK
-        System.out.print(ROSE  + "DISCARD DECK: ");
+        System.out.print(ROSE + "DISCARD DECK: ");
 
         Card card = discardDeck.get(0);
 
-        if(card.getCardColor().equals("J") && !getNewColor().equals(null)) {
+        if (card.getCardColor().equals("J") && !getNewColor().equals(null)) {
             System.out.print(ROSE + discardDeck.get(0) + " New Color: " + getNewColor() + RESET);
         } else if (!card.getCardValue().equals("Color")) {
             System.out.print(ROSE + discardDeck.get(0) + RESET);
         } else {
-            System.out.print(ROSE+ discardDeck.get(1) + " New Color: " + getNewColor() + RESET );
+            System.out.print(ROSE + discardDeck.get(1) + " New Color: " + getNewColor() + RESET);
         }
     }
 
@@ -350,7 +338,6 @@ public class Game {
         setTurn(currentPlayerIndex);
         return currentPlayerIndex;
     }
-
 
     public static int cardIsNormal() { //This method is to decide who has the next turn when the "normal" card is played
         int currentPlayerIndex = getTurn();
@@ -449,7 +436,6 @@ public class Game {
         }
     }
 
-
     public static boolean hasPlayerThisCardInHand() { //This method will check if the card being played is existing in the player's hand.
         Player currentPlayer = currentPlayer();
         boolean playerHasThisCard = false;
@@ -472,7 +458,6 @@ public class Game {
         }
         return playerHasThisCard;
     }
-
 
     public static boolean isChallenged() {
         Player previousPlayer = getPreviousPlayer();
@@ -498,14 +483,12 @@ public class Game {
             System.out.println("OH NO! " + currentPlayer.getName() + " you have to take 6 cards!");
         }
         return hasOtherCardsToPlay;
-
     }
 
     public static void addTempCard() {
         Card dummyCard = new Card(getNewColor(), "Color");
         discardDeck.add(0, dummyCard);
     }
-
 
     public static void takeAdditionalCards() { //method contains challenge and penalty cards
         Player currentPlayer = currentPlayer();
@@ -555,11 +538,10 @@ public class Game {
         Player winner = currentPlayer();
         if (winner.playersHand.size() == 0) {
             System.out.println("Congratulations " + winner.getName() + " you won this round!");
-            setExit(true);
+            winner.setWinner(true);
         }
         return winner;
     }
-
 }
 
 
