@@ -109,7 +109,7 @@ public class Game {
             String name;
             boolean nameExists;
             do {
-                System.out.println("Please enter a name for PLAYER " + (i + 1) + ": ");
+                System.out.println("Please enter a name for PLAYER " + (players.size() + 1) + ": ");
                 name = inputName.nextLine();
                 nameExists = false;
 
@@ -136,7 +136,7 @@ public class Game {
         for (int i = 0; i < bots; i++) {
             boolean nameExists;
             do {
-                int temp = random.nextInt(botNames.length);
+                int temp = random.nextInt(botNames.length); //automatically choose a random and "unique" name from the botNames[]
                 name = botNames[temp];
                 nameExists = false;
 
@@ -152,7 +152,7 @@ public class Game {
         }
     }
 
-    protected static void setPlayers() {
+    protected static void setPlayers() { // set up players for the round (humans and bots)
         Scanner input = new Scanner(System.in);
         System.out.println("How many Bots you want to play with? (0-4): ");
         int answer = input.nextInt();
@@ -236,7 +236,7 @@ public class Game {
     public static void playerToPlay() { // alerting player that it is their turn to play.
         Player currentPlayer = currentPlayer();
         System.out.println("\n" + currentPlayer.toString() + " it's your turn to play!");
-        takeAdditionalCards();
+        takeAdditionalCards(); // before a player can player, this will check if player has take penalty cards.
     }
 
     public static Player getPreviousPlayer() {
@@ -289,7 +289,7 @@ public class Game {
         return nextPlayer;
     }
 
-    public static void acceptPlayersInput() { //this method will take one Card from the player's initialCards and add it to the DISCARD DECK.
+    public static void acceptPlayersInput() { //this method will take the playedCard from the player's hand and add it to the DISCARD DECK.
         Player currentPlayer = currentPlayer();
         Card playedCard = currentPlayer.getPlayedCard();
         discardDeck.add(0, playedCard);
@@ -297,7 +297,7 @@ public class Game {
         if (discardDeck.get(1).getCardValue().equals("Color")) {
             discardDeck.remove(discardDeck.get(1));
         }
-        setBlocked(false); //reset
+        setBlocked(false); //IMPORTANT! Resets this value after every player's turn.
         setCardValid(false); //IMPORTANT! Reset the value after accepting player's played card.
     }
 
@@ -315,9 +315,9 @@ public class Game {
         }
     }
 
-    public static void checkNextTurn() { // method that checks the current card played, implements rules, and return the next player
+    public static void checkNextTurn() { // method that checks the currentCardPlayed(top of discardDeck pile), implements rules and decides who plays next.
         Card currentCard = discardDeck.get(0);
-        if (!isPlay()) { //the player does NOT have a card to play
+        if (!isPlay()) { //if the player does NOT have a card to play, this will not be implemented
             cardIsNormal();
         } else if (currentCard.getCardValue().equals("<->")) {
             cardIsReverse();
@@ -452,28 +452,27 @@ public class Game {
         }
     }
 
-    public static void cardIsTakeTwo() {
+    public static void cardIsTakeTwo() { //this method implements the penalty if the "+2" card is played.
         Player currentPlayer = currentPlayer();
         Card cardToCheck = discardDeck.get(0);
         if (cardToCheck.getCardValue().equals("+2")) {
             System.out.println("You have to take 2 cards!");
             drawOneCard();
             drawOneCard();
-            System.out.println("Here is your updated cards");
+            System.out.println("Here is your updated hand");
             System.out.println(currentPlayer.toString());
         }
     }
 
-    public static void cardIsTakeFour() {
+    public static void cardIsTakeFour() { //this method implements the penalty if the "+2" card is played.
         Player currentPlayer = currentPlayer();
         Card cardToCheck = discardDeck.get(0);
         if (cardToCheck.getCardValue().equals("C+4")) {
             System.out.println("You have to take 4 cards!");
-            drawOneCard();
-            drawOneCard();
-            drawOneCard();
-            drawOneCard();
-            System.out.println("Here is your updated cards");
+            for (int i = 0; i < 4; i++) {
+                drawOneCard();
+            }
+            System.out.println("Here is your updated hand");
             System.out.println(currentPlayer.toString());
         }
     }
@@ -501,7 +500,7 @@ public class Game {
         return playerHasThisCard;
     }
 
-    public static boolean isChallenged() {
+    public static boolean isChallenged() { //this method is a part of the "challenge mechanism" of the game
         Player previousPlayer = getPreviousPlayer();
         Player currentPlayer = currentPlayer();
 
@@ -527,7 +526,7 @@ public class Game {
         return hasOtherCardsToPlay;
     }
 
-    public static void addTempCard() {
+    public static void addTempCard() { // this method adds a temporary card (that has a colorValue) on the discardDeck whenever a JOKER card is played
         Card dummyCard = new Card(getNewColor(), "Color");
         discardDeck.add(0, dummyCard);
     }
@@ -630,8 +629,6 @@ public class Game {
         return winnerPoints;
     }
 
-    public static void announceWinner() {
-    }
 }
 
 
