@@ -73,6 +73,8 @@ public class App {
 
     private void updateState() {
         if(checkWinner().isWinner()) {
+            System.out.println("Congratulations " + getWinnerOfThisRound().getName() + " you won this round!");
+            System.out.println("You get a total of " + computePoints() + " points this round" );
             setExit(true);
         } else {
             checkNextTurn();

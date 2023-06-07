@@ -18,6 +18,7 @@ public class Game {
     protected static boolean hasCardToPlay;
     protected static boolean challengeWon = true;
     protected static boolean penaltyGiven;
+    protected static Player winnerOfThisRound;
     public static final String BLUE = "\u001B[38;2;86;119;209m";
     public static final String ROSE = "\u001B[38;2;209;86;108m";
     public static final String SKY = "\u001B[38;2;153;205;240m";
@@ -93,6 +94,13 @@ public class Game {
         Game.penaltyGiven = penaltyGiven;
     }
 
+    public static Player getWinnerOfThisRound() {
+        return winnerOfThisRound;
+    }
+
+    public static void setWinnerOfThisRound(Player winnerOfThisRound) {
+        Game.winnerOfThisRound = winnerOfThisRound;
+    }
 
     public static void setUpHumanPlayers(int humanPlayers) { //method to collect names for Human Players and add these to player's list
         Scanner inputName = new Scanner(System.in);
@@ -577,9 +585,9 @@ public class Game {
     public static Player checkWinner() {
         Player winner = currentPlayer();
         if (winner.playersHand.size() == 0) {
-            System.out.println("Congratulations " + winner.getName() + " you won this round!");
             winner.setWinner(true);
         }
+        setWinnerOfThisRound(winner);
         return winner;
     }
 
@@ -602,6 +610,27 @@ public class Game {
         }
         setBlocked(isBlocked);
         return isBlocked;
+    }
+
+    public static int computePoints(){
+        ArrayList<Card> loserCards = new ArrayList<>();
+        int winnerPoints = 0;
+
+        for (Player p : players) {
+            if(p != checkWinner()) {
+                for (Card card : p.playersHand){
+                    loserCards.add(card);
+                }
+            }
+        }
+
+        for (Card card : loserCards) {
+            winnerPoints = winnerPoints + card.getCardPoints();
+        }
+        return winnerPoints;
+    }
+
+    public static void announceWinner() {
     }
 }
 
