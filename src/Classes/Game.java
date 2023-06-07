@@ -103,7 +103,7 @@ public class Game {
     }
 
     public static void setUpHumanPlayers(int humanPlayers) { //method to collect names for Human Players and add these to player's list
-        Scanner inputName = new Scanner(System.in);
+    Scanner inputName = new Scanner(System.in);
 
         for (int i = 0; i < humanPlayers; i++) {
             String name;
@@ -168,8 +168,9 @@ public class Game {
         } else {
             System.out.println("There will be no bots in this game.");
         }
-        int totalPlayers = 4 - answer;
-        setUpHumanPlayers(totalPlayers);
+
+        int humanPlayers = 4 - answer;
+        setUpHumanPlayers(humanPlayers); // answer is the number of bots
     }
 
     public static void distributeInitialCardsToPlayers() { // each player gets his/her set of cards
