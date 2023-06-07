@@ -41,7 +41,7 @@ public class Human extends Player {
             StringBuilder stringBuilder1 = new StringBuilder();
             StringBuilder stringBuilder2 = new StringBuilder();
 
-            if (!inputMove.equals("EXIT") && !inputMove.equals("HELP")) {
+            if (!inputMove.equals("EXIT") && !inputMove.equals("HELP") && inputMove.length()< 1 && inputMove == null) {
 
                 char[] inputArray = inputMove.toCharArray();
 
@@ -76,7 +76,7 @@ public class Human extends Player {
                 break;
             }
 
-            if (!validCardColorList.contains(cardColor) || !validCardValuesList.contains(cardValue) && (!inputMove.equals("EXIT") || !inputMove.equals("HELP"))) {
+            if (inputMove == null || inputMove.trim().isEmpty() || inputMove.equals("") || inputMove.length()<1 || !validCardColorList.contains(cardColor) || !validCardValuesList.contains(cardValue) && (!inputMove.equals("EXIT") || !inputMove.equals("HELP"))) {
                 System.out.println("There is no such move, please try again!");
             }
         } while (!validCardColorList.contains(cardColor) || !validCardValuesList.contains(cardValue) && (!inputMove.equals("EXIT") || !inputMove.equals("HELP")));
