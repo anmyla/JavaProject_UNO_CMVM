@@ -58,6 +58,9 @@ public class Deck {
         return playerInitialCards;
     }
 
+    public void remove(Card card) {
+        cardDeck.remove(card);
+    }
     public void removeFromCardDeck() {
         cardDeck.remove(0);
     }

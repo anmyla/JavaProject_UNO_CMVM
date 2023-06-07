@@ -191,27 +191,6 @@ public abstract class Player {
             } else {
                 canPlay = true;
             }
-        } else if (!isHasCardToPlay() && cardToCheck.getCardValue().equals("+2")) {
-            System.out.println("You have to take 2 cards.");
-            cardIsTakeTwo();
-            currentPlayer.playersHand.toString();
-            if (!playerHasCardToPlay()) {
-                System.out.println("Yous still do not have cards to play!");
-                canPlay = false;
-            } else {
-                canPlay = true;
-            }
-        } else if (!isHasCardToPlay() && cardToCheck.getCardValue().equals("+4")) {
-            System.out.println("You have to take 4 cards.");
-            cardIsTakeFour();
-            currentPlayer.playersHand.toString();
-            if (!playerHasCardToPlay()) {
-                System.out.println("Yous still do not have cards to play!");
-                addTempCard();
-                canPlay = false;
-            } else {
-                canPlay = true;
-            }
         } else {
             canPlay = true;
         }

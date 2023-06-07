@@ -54,13 +54,13 @@ public class App {
         layFirstCard(); // laying the first card on the discard deck
 
         System.out.println("LET THE GAMES BEGIN!!!");
-        printDiscardDeck(); //printing the discard deck on the console.
         chooseFirstPlayer();
     }
 
     private void readUserInput(Player player) {
         playerToPlay(); // alert the players: whose turn it is to play
-        if (!isCardValid() && isChallengeWon()) {
+        thisPlayerIsBlocked();
+        if (!isCardValid() && !isBlocked()) {
             canPlay();
             currentPlayersTurn();
             if (isPlay()) { //player DO NOT pass
