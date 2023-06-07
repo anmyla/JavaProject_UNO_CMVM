@@ -1,5 +1,6 @@
 package Classes;
 
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,6 +13,7 @@ import static Classes.Game.currentPlayer;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.concurrent.TimeUnit;
 
 
 //Created this temporary Class to test random functions
@@ -65,6 +67,27 @@ public class Temp {
 
 
     }
+/*
+    public static void main(String[] args) throws IOException, InterruptedException {
+        FileReader fr = new FileReader("unoHelp.txt");
+        BufferedReader br = new BufferedReader(fr);
+
+        String line = br.readLine();
+        System.out.print("you called for help");
+
+        for (int i = 0; i <= 3; i++) {
+            TimeUnit.SECONDS.sleep(1);
+            System.out.print(".");
+        }
+        System.out.println();
+        while (line != null) {
+            System.out.println(line);
+            line = br.readLine();
+        }
+
+        br.close();
+    }
+} */
 
 }
 
