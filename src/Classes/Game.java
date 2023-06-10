@@ -176,7 +176,7 @@ public class Game {
             setUpBotPlayers(answer);
 
         } else {
-            System.out.println("There will be no bots in this game.");
+            System.out.println("OK, so there will be NO bots in this game!");
         }
 
         int humanPlayers = 4 - answer;
@@ -206,7 +206,9 @@ public class Game {
         do {
             int index = random.nextInt(cardDeck.getCardDeck().size());
             initialCard = cardDeck.getCardDeck().get(index);
-        } while (initialCard.getCardValue().equals("C+4"));//if this card is randomly chosen, it will put it back to the DECK and choose another one.
+        } while (initialCard.getCardValue().equals("C+4") || initialCard.getCardValue().equals("+2")
+                || initialCard.getCardValue().equals("C") || initialCard.getCardValue().equals("X")
+                || initialCard.getCardValue().equals("<->"));//if an action card is randomly chosen, it will put it back to the DECK and choose another one.
 
         discardDeck.add(initialCard);
         cardDeck.remove(initialCard);
@@ -452,10 +454,18 @@ public class Game {
         Random random = new Random();
 
         if (currentPlayer instanceof Human) {
-            System.out.println("What Color should we play next? (R, G, B, Y) :");
-            setNewColor(colorInput.nextLine().toUpperCase());
-            System.out.println(playedCard.toString() + " NEW COLOR: " + getNewColor());
+            String validColors = "RGBY";
 
+            System.out.println("What Color should we play next? (R, G, B, Y):");
+            String color = colorInput.nextLine().toUpperCase();
+
+            while (!validColors.contains(color)) {
+                System.out.println("Invalid input! Please enter one of the valid colors: R, G, B, Y");
+                color = colorInput.nextLine().toUpperCase();
+            }
+
+            setNewColor(color);
+            System.out.println(playedCard.toString() + " NEW COLOR: " + getNewColor());
         } else {
             String[] colors = {"R", "Y", "B", "G"};
             setNewColor(colors[random.nextInt(colors.length)]);
@@ -586,7 +596,7 @@ public class Game {
                     cardIsTakeFour();
                     setChallengeWon(false);
                     setPenaltyGiven(true);
-                    System.out.println("It's okay but you are also blocked from playing this turn.");
+                    System.out.println("And you are also blocked from playing this turn.");
                 }
             }
         }
