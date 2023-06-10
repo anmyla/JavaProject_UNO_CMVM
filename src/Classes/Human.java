@@ -58,7 +58,7 @@ public class Human extends Player {
 
                     // Extract the remaining characters after the space
 
-                    for (int i = stringBuilder1.length() + 1; i < inputArray.length; i++) {
+                    for (int i = stringBuilder1.length() + 2; i < inputArray.length; i++) {
                         stringBuilder2.append(inputArray[i]);
                     }
                     call = stringBuilder2.toString();
@@ -86,16 +86,18 @@ public class Human extends Player {
         Card cardToPlay = new Card(cardColor, cardValue);
 
         if (call != null) {
-            if (cardToPlay != null && currentPlayer.playersHand.size() == 2 && call.equals("UNO")) {
-                currentPlayer.setUno(true);
-                System.out.println(currentPlayer.getName() + " called UNO!");
-            } else if (cardToPlay != null && currentPlayer.playersHand.size() > 2 && call.equals("UNO")) {
-                System.out.println("That was a foul call. You have to draw a card!");
-                drawOneCard();
+            if (call.equals("UNO")) {
+                if (currentPlayer.playersHand.size() == 2) {
+                    currentPlayer.setUno(true);
+                    System.out.println(currentPlayer.getName() + " called UNO!");
+                } else if (currentPlayer.playersHand.size() > 2) {
+                    System.out.println("That was a foul call! We'll take your move but you have to draw a card!");
+                    drawOneCard();
+                    currentPlayer.setUno(false);
+                }
+            } else {
                 currentPlayer.setUno(false);
             }
-        } else {
-            currentPlayer.setUno(false);
         }
         return cardToPlay;
     }
