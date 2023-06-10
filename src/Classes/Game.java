@@ -2,7 +2,6 @@ package Classes;
 
 import java.util.*;
 
-import static Classes.App.setExit;
 import static Classes.Deck.*;
 import static Classes.Player.*;
 
@@ -59,7 +58,7 @@ public class Game {
     }
 
     public static void setBlocked(boolean blocked) {
-        isBlocked = blocked;
+        Game.isBlocked = blocked;
     }
 
     public static String getNewColor() {
@@ -103,7 +102,7 @@ public class Game {
     }
 
     public static void setUpHumanPlayers(int humanPlayers) { //method to collect names for Human Players and add these to player's list
-    Scanner inputName = new Scanner(System.in);
+        Scanner inputName = new Scanner(System.in);
 
         for (int i = 0; i < humanPlayers; i++) {
             String name;
@@ -568,16 +567,16 @@ public class Game {
                     } else {
                         System.out.println("Sorry " + currentPlayer.getName() + " your challenge backfired!");// game starts with the next player
                         setChallengeWon(false);
+                        setPenaltyGiven(true);
                         System.out.println("And you are also blocked from playing this turn.");
                     }
                 } else {
                     System.out.println("You chose not the challenge " + getPreviousPlayer().getName());
                     cardIsTakeFour();
                     setChallengeWon(false);
+                    setPenaltyGiven(true);
                     System.out.println("It's okay but you are also blocked from playing this turn.");
                 }
-            } else if (cardToCheck.getCardValue().equals("C+4") && discardDeck.size() == 1) {
-                cardIsTakeFour();
             }
         }
     }
@@ -591,45 +590,44 @@ public class Game {
         return winner;
     }
 
-    public static boolean thisPlayerIsBlocked() {
+    public static boolean checkIfThisPlayerIsBlocked() {
         Card cardToCheck = discardDeck.get(0);
         boolean isBlocked = false;
 
-        if (!cardToCheck.getCardValue().equals("Color")) {
-            if (cardToCheck.getCardValue().equals("+2") && isPenaltyGiven() && !isBlocked()) {
+        if (cardToCheck.getCardValue().equals("+2") && isPenaltyGiven() && !isBlocked()) {
                 isBlocked = true;
                 System.out.println("You are also blocked from playing this turn.");
-            } else if (cardToCheck.getCardValue().equals("+2") && isBlocked()) {
-                isBlocked = false;
             }
-        } else if (cardToCheck.getCardValue().equals("Color")) {
-            cardToCheck = discardDeck.get(1);
-            if (cardToCheck.getCardValue().equals("C+4") && !isChallengeWon()) {
-                isBlocked = true;
+        else if (cardToCheck.getCardValue().equals("C+4"))  {
+                if (isPenaltyGiven() && !isChallengeWon()) {
+                    isBlocked = true;
+                }
+            else {
+            isBlocked = false;
             }
         }
-        setBlocked(isBlocked);
-        return isBlocked;
-    }
+            setBlocked(isBlocked);
+            return isBlocked;
+        }
 
-    public static int computePoints(){
-        ArrayList<Card> loserCards = new ArrayList<>();
-        int winnerPoints = 0;
+        public static int computePoints () {
+            ArrayList<Card> loserCards = new ArrayList<>();
+            int winnerPoints = 0;
 
-        for (Player p : players) {
-            if(p != checkWinner()) {
-                for (Card card : p.playersHand){
-                    loserCards.add(card);
+            for (Player p : players) {
+                if (p != checkWinner()) {
+                    for (Card card : p.playersHand) {
+                        loserCards.add(card);
+                    }
                 }
             }
+
+            for (Card card : loserCards) {
+                winnerPoints = winnerPoints + card.getCardPoints();
+            }
+            return winnerPoints;
         }
 
-        for (Card card : loserCards) {
-            winnerPoints = winnerPoints + card.getCardPoints();
-        }
-        return winnerPoints;
     }
-
-}
 
 

@@ -189,6 +189,7 @@ public abstract class Player {
                 System.out.println("Oh no, you STILL do not have a card to play!");
                 canPlay = false;
             } else {
+                System.out.println("You've drawn a card you can play!");
                 canPlay = true;
             }
         } else {

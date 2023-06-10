@@ -41,7 +41,7 @@ public class Human extends Player {
             StringBuilder stringBuilder1 = new StringBuilder();
             StringBuilder stringBuilder2 = new StringBuilder();
 
-            if (!inputMove.equals("EXIT") && !inputMove.equals("HELP") && inputMove.length()< 1 && inputMove == null) {
+            if (!inputMove.equals("EXIT") && !inputMove.equals("HELP") && inputMove.length()> 1 && inputMove != null) {
 
                 char[] inputArray = inputMove.toCharArray();
 

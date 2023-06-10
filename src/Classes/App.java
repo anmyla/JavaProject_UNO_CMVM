@@ -59,7 +59,7 @@ public class App {
 
     private void readUserInput(Player player) {
         playerToPlay(); // alert the players: whose turn it is to play
-        thisPlayerIsBlocked();
+        checkIfThisPlayerIsBlocked();
         if (!isCardValid() && !isBlocked()) {
             canPlay();
             currentPlayersTurn();
