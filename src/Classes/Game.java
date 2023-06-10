@@ -153,12 +153,23 @@ public class Game {
 
     protected static void setPlayers() { // set up players for the round (humans and bots)
         Scanner input = new Scanner(System.in);
-        System.out.println("How many Bots you want to play with? (0-4): ");
-        int answer = input.nextInt();
+        int answer;
 
-        while (answer > 4) {
-            System.out.println("You can only have a maximum of 4 Bots! Enter the number of Bots again (0-4) :  ");
-            answer = input.nextInt();
+        while (true) {
+            System.out.println("How many Bots do you want to play with? (0-4): ");
+            String userInput = input.nextLine();
+
+            try {
+                answer = Integer.parseInt(userInput);
+
+                if (answer >= 0 && answer <= 4) {
+                    break; // Valid input, exit the loop
+                } else {
+                    System.out.println("Invalid input! Please enter a number between 0 and 4.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input! Please enter a number between 0 and 4.");
+            }
         }
 
         if (answer > 0 && answer <= 4) {
@@ -236,7 +247,7 @@ public class Game {
     public static void playerToPlay() { // alerting player that it is their turn to play.
         Player currentPlayer = currentPlayer();
         System.out.println("\n" + currentPlayer.toString() + " it's your turn to play!");
-        takeAdditionalCards(); // before a player can player, this will check if player has take penalty cards.
+        takeAdditionalCards(); // before a player can player, this will check if player has to take penalty cards.
     }
 
     public static Player getPreviousPlayer() {
@@ -531,7 +542,7 @@ public class Game {
         discardDeck.add(0, dummyCard);
     }
 
-    public static void takeAdditionalCards() { //method contains challenge and penalty cards
+    public static void takeAdditionalCards() { //method contains CHALLENGE and penalty cards
         Player currentPlayer = currentPlayer();
         Player previousPlayer = getPreviousPlayer();
         Card cardToCheck = discardDeck.get(0);

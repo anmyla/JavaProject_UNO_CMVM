@@ -58,14 +58,18 @@ public class App {
     }
 
     private void readUserInput(Player player) {
-        playerToPlay(); // alert the players: whose turn it is to play
-        checkIfThisPlayerIsBlocked();
+        playerToPlay(); // alert the players: whose turn it is to play,
+                        // check if players has to take penalty cards or do a challenge
+                        // before moving on with the game
+        checkIfThisPlayerIsBlocked(); // check if the players are blocked from moving on with the game
         if (!isCardValid() && !isBlocked()) {
-            canPlay();
-            currentPlayersTurn();
-            if (isPlay()) { //player DO NOT pass
-                if (isPlayedCardValid()) {
-                    acceptPlayersInput();
+            canPlay(); // check if player has valid card in his hand that he can play
+            currentPlayersTurn(); // player can enter his move
+            if (isPlay()) { //player has card in his hand that he can play
+                if (isPlayedCardValid()) { // player's move is validated
+                    acceptPlayersInput(); // finally remove played card from player's hand
+                                            // and add it to the top of the discard deck
+                                            // resets values that must be reset
                 }
             }
         }
