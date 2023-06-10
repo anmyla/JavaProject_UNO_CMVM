@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import static Classes.Deck.drawOneCard;
+import static Classes.Game.callHelp;
 import static Classes.Game.currentPlayer;
 
 public class Human extends Player {
@@ -30,7 +31,6 @@ public class Human extends Player {
         String inputMove;
         String cardColor = null;
         String cardValue = null;
-        String move = null;
         String call = null;
 
 
@@ -68,17 +68,19 @@ public class Human extends Player {
                 }
             } else if (inputMove.equals("EXIT")) {
                 System.exit(0); // we still have to make this part
-                move = "EXIT";
                 break;
 
             } else if (inputMove.equals("HELP")) {
-                move = "HELP"; // we still have to make this part
-                break;
+                callHelp();
             }
 
-            if (inputMove == null || inputMove.trim().isEmpty() || inputMove.equals("") || inputMove.length()<1 || !validCardColorList.contains(cardColor) || !validCardValuesList.contains(cardValue) && (!inputMove.equals("EXIT") || !inputMove.equals("HELP"))) {
+            if(inputMove.equals("HELP")) {
+                System.out.println();
+            }
+            else  if (inputMove == null || inputMove.trim().isEmpty() || inputMove.equals("") || inputMove.length()<1 || !validCardColorList.contains(cardColor) || !validCardValuesList.contains(cardValue) && (!inputMove.equals("EXIT") || !inputMove.equals("HELP"))) {
                 System.out.println("There is no such move, please try again!");
             }
+
         } while (!validCardColorList.contains(cardColor) || !validCardValuesList.contains(cardValue) && (!inputMove.equals("EXIT") || !inputMove.equals("HELP")));
 
         Card cardToPlay = new Card(cardColor, cardValue);

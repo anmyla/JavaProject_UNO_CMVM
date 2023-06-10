@@ -1,6 +1,10 @@
 package Classes;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 import static Classes.Deck.*;
 import static Classes.Player.*;
@@ -109,7 +113,7 @@ public class Game {
             boolean nameExists;
             do {
                 System.out.println("Please enter a name for PLAYER " + (players.size() + 1) + ": ");
-                name = inputName.nextLine();
+                name = inputName.nextLine().toUpperCase();
                 nameExists = false;
 
                 for (Player player : players) {
@@ -123,7 +127,13 @@ public class Game {
                     System.out.println("This field cannot be empty and name must be unique!");
                 }
             } while (nameExists || name.isEmpty());
-            players.add(new Human(name));
+
+            if (!name.equals("HELP")) {
+                players.add(new Human(name));
+            }
+            else {
+                    callHelp();
+            }
         }
     }
 
@@ -157,8 +167,9 @@ public class Game {
 
         while (true) {
             System.out.println("How many Bots do you want to play with? (0-4): ");
-            String userInput = input.nextLine();
+            String userInput = input.nextLine().toUpperCase();
 
+            if (!userInput.equals("HELP")) {
             try {
                 answer = Integer.parseInt(userInput);
 
@@ -170,11 +181,12 @@ public class Game {
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input! Please enter a number between 0 and 4.");
             }
+        } else {
+            callHelp();}
         }
 
         if (answer > 0 && answer <= 4) {
             setUpBotPlayers(answer);
-
         } else {
             System.out.println("OK, so there will be NO bots in this game!");
         }
@@ -648,6 +660,34 @@ public class Game {
             }
             return winnerPoints;
         }
+
+    public static void callHelp() {
+        try {
+            FileReader fr = new FileReader("unoHelp.txt");
+            BufferedReader br = new BufferedReader(fr);
+
+            String line = br.readLine();
+            System.out.print("You called for help");
+
+            for (int i = 0; i <= 3; i++) {
+                TimeUnit.SECONDS.sleep(1);
+                System.out.print(".");
+            }
+            System.out.println();
+            while (line != null) {
+                System.out.println(line);
+                line = br.readLine();
+            }
+
+            br.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred while reading the help file.");
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            System.out.println("Sleep interrupted.");
+            e.printStackTrace();
+        }
+    }
 
     }
 

@@ -4,9 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a9a0c1b5-b595-41b5-8ca2-320975b7d5f4" name="Changes" comment="players can now scream &quot;uno&quot;">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="a9a0c1b5-b595-41b5-8ca2-320975b7d5f4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Classes/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Classes/Human.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Human.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Classes/Temp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Temp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/unoHelp.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,6 +18,19 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="07a63c10-b92a-4450-8515-a7a3de82beee" />
+        <option name="url" value="https://github.com/anmyla/Projekt1_CMVM.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -91,7 +107,42 @@
       <option name="project" value="LOCAL" />
       <updated>1685904175574</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="players can now scream &quot;uno&quot;">
+      <created>1686005357177</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1686005357177</updated>
+    </task>
+    <task id="LOCAL-00007" summary="fixed known errors, NPE when players input just 1 char during &quot;what's your move:&quot;, players still being able to play a card when they are supposedly blocked (when they've taken penalty cards +2, +4)">
+      <created>1686387450656</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1686387450656</updated>
+    </task>
+    <task id="LOCAL-00008" summary="fixed NPE at setUpPlayers(): entering the number of bots">
+      <created>1686388917592</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1686388917592</updated>
+    </task>
+    <task id="LOCAL-00009" summary="fixed NPE at setUpPlayers(): entering the number of bots">
+      <created>1686389163355</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1686389163355</updated>
+    </task>
+    <task id="LOCAL-00010" summary="fixed NPE at setUpPlayers(): entering the number of bots">
+      <created>1686390997858</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1686390997858</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -111,6 +162,37 @@
     <MESSAGE value="polishing some methods" />
     <MESSAGE value="bots can play with no errors till one has an empty hand" />
     <MESSAGE value="players can now scream &quot;uno&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="players can now scream &quot;uno&quot;" />
+    <MESSAGE value="fixed known errors, NPE when players input just 1 char during &quot;what's your move:&quot;, players still being able to play a card when they are supposedly blocked (when they've taken penalty cards +2, +4)" />
+    <MESSAGE value="fixed NPE at setUpPlayers(): entering the number of bots" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed NPE at setUpPlayers(): entering the number of bots" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Classes/Human.java</url>
+          <line>36</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/Classes/Human.java</url>
+          <line>20</line>
+          <properties class="Classes.Human" method="humanMakesAMove">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/Classes/Game.java</url>
+          <line>625</line>
+          <properties class="Classes.Game" method="checkIfThisPlayerIsBlocked">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
