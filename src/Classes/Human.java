@@ -6,8 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import static Classes.Deck.drawOneCard;
-import static Classes.Game.callHelp;
-import static Classes.Game.currentPlayer;
+import static Classes.Game.*;
 
 public class Human extends Player {
     public Human(String name, List<Card> playerInitialCards) {
@@ -72,6 +71,8 @@ public class Human extends Player {
 
             } else if (inputMove.equals("HELP")) {
                 callHelp();
+                printDiscardDeck();
+                System.out.println("\n" + currentPlayer.toString());
             }
 
             if(inputMove.equals("HELP")) {
