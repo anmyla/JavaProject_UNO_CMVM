@@ -123,10 +123,10 @@ public class Game {
                     }
                 }
 
-                if (nameExists || name.isEmpty()) {
+                if (nameExists || name.isEmpty() || name.equals(" ")) {
                     System.out.println("This field cannot be empty and name must be unique!");
                 }
-            } while (nameExists || name.isEmpty());
+            } while (nameExists || name.isEmpty() || name.equals(" "));
 
             if (!name.equals("HELP")) {
                 players.add(new Human(name));
