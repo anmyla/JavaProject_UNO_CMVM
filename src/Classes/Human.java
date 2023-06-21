@@ -33,7 +33,7 @@ public class Human extends Player {
         String call = null;
 
 
-        do {
+            do {
             System.out.println("WHAT'S YOUR MOVE?:"); // Player enters both color and value
             inputMove = input.nextLine().toUpperCase();
 
@@ -78,7 +78,15 @@ public class Human extends Player {
             if(inputMove.equals("HELP")) {
                 System.out.println();
             }
-            else  if (inputMove == null || inputMove.trim().isEmpty() || inputMove.equals("") || inputMove.length()<1 || !validCardColorList.contains(cardColor) || !validCardValuesList.contains(cardValue) && (!inputMove.equals("EXIT") || !inputMove.equals("HELP"))) {
+
+            if(cardColor.equals("J") && call.equals("+4")) {
+                call = null;
+                cardValue = "C+4";
+            }
+
+            else  if (inputMove == null || inputMove.trim().isEmpty() || inputMove.equals("")
+                    || inputMove.length()<1 || !validCardColorList.contains(cardColor)
+                    || !validCardValuesList.contains(cardValue) && (!inputMove.equals("EXIT") || !inputMove.equals("HELP"))) {
                 System.out.println("There is no such move, please try again!");
             }
 
@@ -91,6 +99,7 @@ public class Human extends Player {
                 if (currentPlayer.playersHand.size() == 2) {
                     currentPlayer.setUno(true);
                     System.out.println(currentPlayer.getName() + " called UNO!");
+                    currentPlayer.setUno(true);
                 } else if (currentPlayer.playersHand.size() > 2) {
                     System.out.println("That was a foul call! We'll take your move but you have to draw a card!");
                     drawOneCard();
@@ -99,6 +108,13 @@ public class Human extends Player {
             } else {
                 currentPlayer.setUno(false);
             }
+        } else if (!currentPlayer.isUno() && currentPlayer.playersHand.size() == 1) {
+                System.out.println("Oh no, you forgot to call UNO!");
+                System.out.println("Now you have to get a penalty card!");
+                drawOneCard();
+                System.out.println("\n" + currentPlayer.toString());
+            }
+        else{
         }
         return cardToPlay;
     }

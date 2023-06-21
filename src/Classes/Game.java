@@ -54,6 +54,8 @@ public class Game {
         cardValid = cardValid;
     }
 
+
+
     public static boolean isCardValid() {
         return cardValid;
     }
@@ -341,7 +343,7 @@ public class Game {
         } else if (!card.getCardValue().equals("Color")) {
             System.out.print(ROSE + discardDeck.get(0) + RESET);
         } else {
-            System.out.print(ROSE + discardDeck.get(1) + " New Color: " + getNewColor() + RESET);
+            System.out.print(ROSE + discardDeck.get(0) + " New Color: " + getNewColor() + RESET);
         }
     }
 
@@ -692,7 +694,7 @@ public class Game {
                 System.out.println("An error occurred while reading the help file.");
             }
         } catch (InterruptedException e) {
-            System.out.println("Sleep interrupted.");
+            System.out.println("Sorry, something went wrong. Please try again.");
         }
     }
 

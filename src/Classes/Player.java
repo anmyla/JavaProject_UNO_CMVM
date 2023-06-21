@@ -158,9 +158,11 @@ public abstract class Player {
         if (cardToPlay.getCardColor().equals("J")) {
             setJoker(true);
             setColorIfCardIsJoker();
-        } else {
+        } else if (isCardValid()){
             setNewColor(null);
         }
+
+
         if (cardToPlay.getCardValue().equals("C+4") || cardToPlay.getCardValue().equals("+2")) {
             setPenaltyGiven(false);
         }
