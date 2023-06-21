@@ -1,6 +1,7 @@
 package Classes;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
@@ -108,7 +109,7 @@ public class Game {
     public static void setUpHumanPlayers(int humanPlayers) { //method to collect names for Human Players and add these to player's list
         Scanner inputName = new Scanner(System.in);
 
-        for (int i = 0; i < humanPlayers; i++) {
+        for (int i = 0; i < humanPlayers;) {
             String name;
             boolean nameExists;
             do {
@@ -117,6 +118,9 @@ public class Game {
                 nameExists = false;
 
                 for (Player player : players) {
+                    if (player.getName().equals("HELP")) {
+                        break;
+                    }
                     if (player.getName().equals(name)) {
                         nameExists = true;
                         break;
@@ -130,9 +134,10 @@ public class Game {
 
             if (!name.equals("HELP")) {
                 players.add(new Human(name));
+                i++;
             }
             else {
-                    callHelp();
+                callHelp();
             }
         }
     }
@@ -681,11 +686,13 @@ public class Game {
 
             br.close();
         } catch (IOException e) {
-            System.out.println("An error occurred while reading the help file.");
-            e.printStackTrace();
+            if (e instanceof FileNotFoundException) {
+                System.out.println("Oops, the HELP file is missing, please call Admin.");
+            } else {
+                System.out.println("An error occurred while reading the help file.");
+            }
         } catch (InterruptedException e) {
             System.out.println("Sleep interrupted.");
-            e.printStackTrace();
         }
     }
 
