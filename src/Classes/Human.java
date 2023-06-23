@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+import static Classes.App.setExit;
 import static Classes.Deck.drawOneCard;
 import static Classes.Game.*;
 
@@ -33,14 +34,14 @@ public class Human extends Player {
         String call = null;
 
 
-            do {
+        do {
             System.out.println("WHAT'S YOUR MOVE?:"); // Player enters both color and value
             inputMove = input.nextLine().toUpperCase();
 
             StringBuilder stringBuilder1 = new StringBuilder();
             StringBuilder stringBuilder2 = new StringBuilder();
 
-            if (!inputMove.equals("EXIT") && !inputMove.equals("HELP") && inputMove.length()> 1 && inputMove != null) {
+            if (!inputMove.equals("EXIT") && !inputMove.equals("HELP") && inputMove.length() > 1 && inputMove != null) {
 
                 char[] inputArray = inputMove.toCharArray();
 
@@ -66,7 +67,7 @@ public class Human extends Player {
                     cardValue = String.valueOf(inputArray[1]);
                 }
             } else if (inputMove.equals("EXIT")) {
-                System.exit(0); // we still have to make this part
+                setExit(true); // we still have to make this part
                 break;
 
             } else if (inputMove.equals("HELP")) {
@@ -75,48 +76,42 @@ public class Human extends Player {
                 System.out.println("\n" + currentPlayer.toString());
             }
 
-            if(inputMove.equals("HELP")) {
-                System.out.println();
+            if (!inputMove.equals("HELP") && !inputMove.equals("EXIT")) {
+                if (cardColor.equals("J") && call.equals("+4")) {
+                    call = null;
+                    cardValue = "C+4";
+                } else if (inputMove == null || inputMove.trim().isEmpty() || inputMove.equals("")
+                        || inputMove.length() < 1 || !validCardColorList.contains(cardColor)
+                        || !validCardValuesList.contains(cardValue) && (!inputMove.equals("EXIT") || !inputMove.equals("HELP"))) {
+                    System.out.println("There is no such move, please try again!");
+                }
             }
+        } while (!validCardColorList.contains(cardColor) || !validCardValuesList.contains(cardValue));
 
-            if(cardColor.equals("J") && call.equals("+4")) {
-                call = null;
-                cardValue = "C+4";
-            }
+            Card cardToPlay = new Card(cardColor, cardValue);
 
-            else  if (inputMove == null || inputMove.trim().isEmpty() || inputMove.equals("")
-                    || inputMove.length()<1 || !validCardColorList.contains(cardColor)
-                    || !validCardValuesList.contains(cardValue) && (!inputMove.equals("EXIT") || !inputMove.equals("HELP"))) {
-                System.out.println("There is no such move, please try again!");
-            }
 
-        } while (!validCardColorList.contains(cardColor) || !validCardValuesList.contains(cardValue) && (!inputMove.equals("EXIT") || !inputMove.equals("HELP")));
-
-        Card cardToPlay = new Card(cardColor, cardValue);
-
-        if (call != null) {
-            if (call.equals("UNO")) {
-                if (currentPlayer.playersHand.size() == 2) {
-                    currentPlayer.setUno(true);
-                    System.out.println(currentPlayer.getName() + " called UNO!");
-                    currentPlayer.setUno(true);
-                } else if (currentPlayer.playersHand.size() > 2) {
-                    System.out.println("That was a foul call! We'll take your move but you have to draw a card!");
-                    drawOneCard();
+            if (call != null) {
+                if (call.equals("UNO")) {
+                    if (currentPlayer.playersHand.size() == 2) {
+                        currentPlayer.setUno(true);
+                        System.out.println(currentPlayer.getName() + " called UNO!");
+                        currentPlayer.setUno(true);
+                    } else if (currentPlayer.playersHand.size() > 2) {
+                        System.out.println("That was a foul call! We'll take your move but you have to draw a card!");
+                        drawOneCard();
+                        currentPlayer.setUno(false);
+                    }
+                } else {
                     currentPlayer.setUno(false);
                 }
-            } else {
-                currentPlayer.setUno(false);
-            }
-        } else if (!currentPlayer.isUno() && currentPlayer.playersHand.size() == 1) {
+            } else if (!currentPlayer.isUno() && currentPlayer.playersHand.size() == 1) {
                 System.out.println("Oh no, you forgot to call UNO!");
                 System.out.println("Now you have to get a penalty card!");
                 drawOneCard();
                 System.out.println("\n" + currentPlayer.toString());
             }
-        else{
+            return cardToPlay;
         }
-        return cardToPlay;
-    }
 }
 

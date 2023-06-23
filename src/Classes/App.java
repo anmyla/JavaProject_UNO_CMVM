@@ -10,7 +10,7 @@ import static Classes.Player.*;
 public class App {
     private final Scanner input;
     private final PrintStream output;
-    private static boolean exit = false;
+    public static boolean exit = false;
     public int size;
 
     public static void setExit(boolean exit) {
@@ -39,6 +39,7 @@ public class App {
     }
 
     private void initialize() {
+
         Deck theCardDeck = new Deck(108);
         theCardDeck.initialDeck(); // filled up a new card deck
         theCardDeck.shuffleDeck(); // shuffle the cards;
@@ -52,33 +53,37 @@ public class App {
         List<Card> discardDeck = firstGame.getDiscardDeck(); //creating a discard deck
 
         layFirstCard(); // laying the first card on the discard deck
-
-        System.out.println("LET THE GAMES BEGIN!!!");
-        chooseFirstPlayer();
+        if (!exit) {
+            System.out.println("LET THE GAMES BEGIN!!!");
+            chooseFirstPlayer();
+        }
     }
 
     private void readUserInput(Player player) {
         playerToPlay(); // alert the players: whose turn it is to play,
-                        // check if players has to take penalty cards or do a challenge
-                        // before moving on with the game
+        // check if players has to take penalty cards or do a challenge
+        // before moving on with the game
         checkIfThisPlayerIsBlocked(); // check if the players are blocked from moving on with the game
+
         if (!isCardValid() && !isBlocked()) {
             canPlay(); // check if player has valid card in his hand that he can play
             currentPlayersTurn(); // player can enter his move
             if (isPlay()) { //player has card in his hand that he can play
-                if (isPlayedCardValid()) { // player's move is validated
-                    acceptPlayersInput(); // finally remove played card from player's hand
-                                            // and add it to the top of the discard deck
-                                            // resets values that must be reset
+                if (!exit) {
+                    if (isPlayedCardValid()) { // player's move is validated
+                        acceptPlayersInput(); // finally remove played card from player's hand
+                        // and add it to the top of the discard deck
+                        // resets values that must be reset
+                    }
                 }
             }
         }
     }
 
     private void updateState() {
-        if(checkWinner().isWinner()) {
+        if (checkWinner().isWinner()) {
             System.out.println("Congratulations " + getWinnerOfThisRound().getName() + " you won this round!");
-            System.out.println("You get a total of " + computePoints() + " points this round" );
+            System.out.println("You get a total of " + computePoints() + " points this round");
             setExit(true);
         } else {
             checkNextTurn();
@@ -88,6 +93,8 @@ public class App {
     private void printState() {
         if (!exit) {
             printDiscardDeck();
+        } else {
+            System.out.println("Goodbye!");
         }
     }
 }

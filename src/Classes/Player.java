@@ -2,6 +2,7 @@ package Classes;
 
 import java.util.List;
 
+import static Classes.App.exit;
 import static Classes.Bot.botMakesAMove;
 import static Classes.Deck.drawOneCard;
 import static Classes.Game.*;
@@ -155,16 +156,20 @@ public abstract class Player {
 
         currentPlayer.setPlayedCard(cardToPlay);
 
-        if (cardToPlay.getCardColor().equals("J")) {
-            setJoker(true);
-            setColorIfCardIsJoker();
-        } else if (isCardValid()){
-            setNewColor(null);
-        }
+        try {
+            if (cardToPlay.getCardColor().equals("J")) {
+                setJoker(true);
+                setColorIfCardIsJoker();
+            } else if (isCardValid()) {
+                setNewColor(null);
+            }
 
 
-        if (cardToPlay.getCardValue().equals("C+4") || cardToPlay.getCardValue().equals("+2")) {
-            setPenaltyGiven(false);
+            if (cardToPlay.getCardValue().equals("C+4") || cardToPlay.getCardValue().equals("+2")) {
+                setPenaltyGiven(false);
+            }
+        } catch (NullPointerException e) {
+            System.out.println("Player decided to exit game.....");
         }
         return cardToPlay;
     }
@@ -174,32 +179,32 @@ public abstract class Player {
         Player currentPlayer = currentPlayer();
         Card cardToCheck = discardDeck.get(0);
         boolean canPlay = false;
+        {
+            if (cardToCheck.getCardColor().equals("J")) {
+                addTempCard();
+            }
 
-        if (cardToCheck.getCardColor().equals("J")) {
-            addTempCard();
-        }
+            cardToCheck = discardDeck.get(0);
 
-        cardToCheck = discardDeck.get(0);
-
-        if (!playerHasCardToPlay()) {
-            System.out.println(currentPlayer.getName() + ", it looks like you don't have a card to play this turn.");
-            System.out.println("Sorry but you have to draw a card!");
-            drawOneCard();
-            System.out.println("Here's your updated Cards!");
-            System.out.println(currentPlayer.toString());
             if (!playerHasCardToPlay()) {
-                System.out.println("Oh no, you STILL do not have a card to play!");
-                canPlay = false;
+                System.out.println(currentPlayer.getName() + ", it looks like you don't have a card to play this turn.");
+                System.out.println("Sorry but you have to draw a card!");
+                drawOneCard();
+                System.out.println("Here's your updated Cards!");
+                System.out.println(currentPlayer.toString());
+                if (!playerHasCardToPlay()) {
+                    System.out.println("Oh no, you STILL do not have a card to play!");
+                    canPlay = false;
+                } else {
+                    System.out.println("You've drawn a card you can play!");
+                    canPlay = true;
+                }
             } else {
-                System.out.println("You've drawn a card you can play!");
                 canPlay = true;
             }
-        } else {
-            canPlay = true;
+            setPlay(canPlay);
+            return canPlay;
         }
-        setPlay(canPlay);
-        return canPlay;
     }
-
 }
 

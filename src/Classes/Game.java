@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+import static Classes.App.setExit;
 import static Classes.Deck.*;
 import static Classes.Player.*;
 
@@ -53,7 +54,6 @@ public class Game {
     public static void setCardValid(boolean cardValid) {
         cardValid = cardValid;
     }
-
 
 
     public static boolean isCardValid() {
@@ -111,7 +111,7 @@ public class Game {
     public static void setUpHumanPlayers(int humanPlayers) { //method to collect names for Human Players and add these to player's list
         Scanner inputName = new Scanner(System.in);
 
-        for (int i = 0; i < humanPlayers;) {
+        for (int i = 0; i < humanPlayers; ) {
             String name;
             boolean nameExists;
             do {
@@ -122,8 +122,10 @@ public class Game {
                 for (Player player : players) {
                     if (player.getName().equals("HELP")) {
                         break;
-                    }
-                    if (player.getName().equals(name)) {
+                    } else if (player.getName().equals("EXIT")) {
+                        setExit(true);
+                        break;
+                    } else if (player.getName().equals(name)) {
                         nameExists = true;
                         break;
                     }
@@ -134,12 +136,15 @@ public class Game {
                 }
             } while (nameExists || name.isEmpty() || name.equals(" "));
 
-            if (!name.equals("HELP")) {
+
+            if (name.equals("HELP")) {
+                callHelp();
+            } else if (name.equals("EXIT")) {
+                setExit(true);
+                break;
+            } else {
                 players.add(new Human(name));
                 i++;
-            }
-            else {
-                callHelp();
             }
         }
     }
@@ -170,37 +175,47 @@ public class Game {
 
     protected static void setPlayers() { // set up players for the round (humans and bots)
         Scanner input = new Scanner(System.in);
-        int answer;
+        int answer = 0;
+        String userInput;
 
         while (true) {
             System.out.println("How many Bots do you want to play with? (0-4): ");
-            String userInput = input.nextLine().toUpperCase();
+            userInput = input.nextLine().toUpperCase();
 
-            if (!userInput.equals("HELP")) {
-            try {
-                answer = Integer.parseInt(userInput);
+            if (!userInput.equals("HELP") && !userInput.equals("EXIT")) {
+                try {
+                    answer = Integer.parseInt(userInput);
 
-                if (answer >= 0 && answer <= 4) {
-                    break; // Valid input, exit the loop
-                } else {
+                    if (answer >= 0 && answer <= 4) {
+                        break; // Valid input, exit the loop
+                    } else {
+                        System.out.println("Invalid input! Please enter a number between 0 and 4.");
+                    }
+                } catch (NumberFormatException e) {
                     System.out.println("Invalid input! Please enter a number between 0 and 4.");
                 }
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input! Please enter a number between 0 and 4.");
+
+            } else if (userInput.equals("HELP")) {
+                callHelp();
+            } else if (userInput.equals("EXIT")) {
+                setExit(true);
+                break;
             }
-        } else {
-            callHelp();}
         }
 
-        if (answer > 0 && answer <= 4) {
-            setUpBotPlayers(answer);
-        } else {
-            System.out.println("OK, so there will be NO bots in this game!");
-        }
+            if (answer > 0 && answer <= 4) {
+                setUpBotPlayers(answer);
+            } else {
+                if( !userInput.equals("EXIT")) {
+                    System.out.println("OK, so there will be NO bots in this game!");
+                }
+            }
 
-        int humanPlayers = 4 - answer;
-        setUpHumanPlayers(humanPlayers); // answer is the number of bots
-    }
+            if (!userInput.equals("EXIT")) {
+                int humanPlayers = 4 - answer;
+                setUpHumanPlayers(humanPlayers); // answer is the number of bots
+            }
+        }
 
     public static void distributeInitialCardsToPlayers() { // each player gets his/her set of cards
         cardDeck.initialDeck();
@@ -635,38 +650,36 @@ public class Game {
         boolean isBlocked = false;
 
         if (cardToCheck.getCardValue().equals("+2") && isPenaltyGiven() && !isBlocked()) {
+            isBlocked = true;
+            System.out.println("You are also blocked from playing this turn.");
+        } else if (cardToCheck.getCardValue().equals("C+4")) {
+            if (isPenaltyGiven() && !isChallengeWon()) {
                 isBlocked = true;
-                System.out.println("You are also blocked from playing this turn.");
-            }
-        else if (cardToCheck.getCardValue().equals("C+4"))  {
-                if (isPenaltyGiven() && !isChallengeWon()) {
-                    isBlocked = true;
-                }
-            else {
-            isBlocked = false;
+            } else {
+                isBlocked = false;
             }
         }
-            setBlocked(isBlocked);
-            return isBlocked;
-        }
+        setBlocked(isBlocked);
+        return isBlocked;
+    }
 
-        public static int computePoints () {
-            ArrayList<Card> loserCards = new ArrayList<>();
-            int winnerPoints = 0;
+    public static int computePoints() {
+        ArrayList<Card> loserCards = new ArrayList<>();
+        int winnerPoints = 0;
 
-            for (Player p : players) {
-                if (p != checkWinner()) {
-                    for (Card card : p.playersHand) {
-                        loserCards.add(card);
-                    }
+        for (Player p : players) {
+            if (p != checkWinner()) {
+                for (Card card : p.playersHand) {
+                    loserCards.add(card);
                 }
             }
-
-            for (Card card : loserCards) {
-                winnerPoints = winnerPoints + card.getCardPoints();
-            }
-            return winnerPoints;
         }
+
+        for (Card card : loserCards) {
+            winnerPoints = winnerPoints + card.getCardPoints();
+        }
+        return winnerPoints;
+    }
 
     public static void callHelp() {
         try {
@@ -698,6 +711,6 @@ public class Game {
         }
     }
 
-    }
+}
 
 
