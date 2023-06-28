@@ -8,10 +8,12 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import static Classes.App.setExit;
+import static Classes.Database.createDatabase;
 import static Classes.Deck.*;
 import static Classes.Player.*;
 
 public class Game {
+    public static int round;
     static List<Player> players = new ArrayList<>();
     private static Deck cardDeck = new Deck(108);
     protected static List<Card> discardDeck = new ArrayList<>();
@@ -106,6 +108,19 @@ public class Game {
 
     public static void setWinnerOfThisRound(Player winnerOfThisRound) {
         Game.winnerOfThisRound = winnerOfThisRound;
+    }
+
+    public static int getRound() {
+        return round;
+    }
+
+    public static void setRound(int round) {
+        Game.round = round;
+    }
+
+    public static void database() {
+        Database db1 = new Database();
+        createDatabase();
     }
 
     public static void setUpHumanPlayers(int humanPlayers) { //method to collect names for Human Players and add these to player's list

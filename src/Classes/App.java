@@ -4,6 +4,7 @@ import java.io.PrintStream;
 import java.util.List;
 import java.util.Scanner;
 
+import static Classes.Database.recordWinnerOfRoundInDB;
 import static Classes.Game.*;
 import static Classes.Player.*;
 
@@ -47,6 +48,8 @@ public class App {
         Game firstGame = new Game(); // Creating a new game
         setPlayers(); // setting up human/bot players
 
+        database();
+
         distributeInitialCardsToPlayers(); //distributes initial cards to players
         printPlayer(); // printing each player's 7 cards (initial player's hand) on the console.
 
@@ -84,6 +87,7 @@ public class App {
         if (checkWinner().isWinner()) {
             System.out.println("Congratulations " + getWinnerOfThisRound().getName() + " you won this round!");
             System.out.println("You get a total of " + computePoints() + " points this round");
+            recordWinnerOfRoundInDB();
             setExit(true);
         } else {
             checkNextTurn();
