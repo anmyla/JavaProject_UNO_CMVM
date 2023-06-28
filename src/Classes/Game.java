@@ -651,14 +651,6 @@ public class Game {
         }
     }
 
-    public static Player checkWinner() {
-        Player winner = currentPlayer();
-        if (winner.playersHand.size() == 0) {
-            winner.setWinner(true);
-        }
-        setWinnerOfThisRound(winner);
-        return winner;
-    }
 
     public static boolean checkIfThisPlayerIsBlocked() {
         Card cardToCheck = discardDeck.get(0);
@@ -676,24 +668,6 @@ public class Game {
         }
         setBlocked(isBlocked);
         return isBlocked;
-    }
-
-    public static int computePoints() {
-        ArrayList<Card> loserCards = new ArrayList<>();
-        int winnerPoints = 0;
-
-        for (Player p : players) {
-            if (p != checkWinner()) {
-                for (Card card : p.playersHand) {
-                    loserCards.add(card);
-                }
-            }
-        }
-
-        for (Card card : loserCards) {
-            winnerPoints = winnerPoints + card.getCardPoints();
-        }
-        return winnerPoints;
     }
 
     public static void callHelp() {
@@ -725,6 +699,34 @@ public class Game {
             System.out.println("Sorry, something went wrong. Please try again.");
         }
     }
+
+    public static int computePoints() {
+        ArrayList<Card> loserCards = new ArrayList<>();
+        int winnerPoints = 0;
+
+        for (Player p : players) {
+            if (p != checkWinner()) {
+                for (Card card : p.playersHand) {
+                    loserCards.add(card);
+                }
+            }
+        }
+
+        for (Card card : loserCards) {
+            winnerPoints = winnerPoints + card.getCardPoints();
+        }
+        return winnerPoints;
+    }
+
+    public static Player checkWinner() {
+        Player winner = currentPlayer();
+        if (winner.playersHand.size() == 0) {
+            winner.setWinner(true);
+        }
+        setWinnerOfThisRound(winner);
+        return winner;
+    }
+
 
 }
 
