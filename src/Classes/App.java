@@ -37,16 +37,13 @@ public class App {
     //die Gameloop
     public void Run() {
         initialize();
-
-        while (!tournamentWinner && !exit) {
+        while (!tournamentWinner && !exit) { //this will allow further rounds until there is a tournamentWinner
             printState();
-
             while (!isThereAWinnerOfThisRound && !exit) {
                 readUserInput(Game.currentPlayer());
                 updateState();
                 printState();
             }
-
             checkIfSomeoneReached500Points();
 
             if (!tournamentWinner) {
@@ -62,7 +59,6 @@ public class App {
         System.out.println("LET THE GAMES BEGIN!!!");
         Deck theCardDeck = new Deck(108);
         Game newGame = new Game(); // Creating a new game
-        List<Card> discardDeck = newGame.getDiscardDeck(); //creating a discard deck
         theCardDeck.initialDeck(); // filled up a new card deck
         theCardDeck.shuffleDeck(); // shuffle the cards;
         setPlayers(); // setting up human/bot players
@@ -113,7 +109,7 @@ public class App {
     private void checkIfSomeoneReached500Points() {
         boolean ultimateWinner = false;
         for (Player p : players) {
-            if (p.getPlayerPoints(getRound()) > 500) {
+            if (p.getPlayerPoints() > 500) {
                 System.out.println("We have an ultimate winner!");
                 System.out.println(p.getName() + ", congratulations! you are our UNO MASTER!!!");
                 ultimateWinner = true;

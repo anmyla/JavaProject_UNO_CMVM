@@ -71,7 +71,7 @@ public abstract class Player {
         return (SKY + name + " " + playersHand + RESET);
     }
 
-    public int getPlayerPoints(int round) {
+    public int getPlayerPoints() {
         return playerPoints;
     }
 

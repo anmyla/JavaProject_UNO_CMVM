@@ -1,22 +1,12 @@
 package Classes;
-
 import java.sql.SQLException;
-
 import java.util.ArrayList;
-
 import java.util.HashMap;
-
-import static Classes.Game.getRound;
-
 import static Classes.Game.players;
-
 
 public class Database {
     private static final String DATABASE_NAME = "demodatabase.sqlite";
-    private static final String TABLE_NAME = "Rounds";
-    private static final String SELECT_BYPLAYERANDROUND = "SELECT Player, SUM(Points) AS Points FROM Rounds WHERE Player = '%1s' AND Round = %3d;";
-
-    // ...
+    private static final String TABLE_NAME = "Players";
 
     public static void createDatabase() {
         try {
@@ -40,13 +30,13 @@ public class Database {
                 if (tableExists) {
                     // Update existing row for the player
                     queryBuilder.append("UPDATE ").append(TABLE_NAME);
-                    queryBuilder.append(" SET Points = ").append(player.getPlayerPoints(getRound()));
+                    queryBuilder.append(" SET Points = ").append(player.getPlayerPoints());
                     queryBuilder.append(" WHERE Player = '").append(player.getName()).append("';");
                 } else {
                     // Insert new row for the player
                     queryBuilder.append("INSERT INTO ").append(TABLE_NAME).append(" (Player, Points) VALUES ('");
                     queryBuilder.append(player.getName()).append("', ");
-                    queryBuilder.append(player.getPlayerPoints(getRound()));
+                    queryBuilder.append(player.getPlayerPoints());
                     queryBuilder.append(");");
                 }
 
@@ -56,20 +46,15 @@ public class Database {
             System.out.println("Database table '" + TABLE_NAME + "' has been updated.");
 
             // Retrieve and display the current points for each player
-            for (Player player : players) {
-                ArrayList<HashMap<String, String>> results = client.executeQuery(
-                        String.format(SELECT_BYPLAYERANDROUND, player.getName(), getRound()));
-
-                for (HashMap<String, String> map : results) {
-                    System.out.println(map.get("Player") +
-                            " currently has: " + map.get("Points") +
-                            " points");
-                }
+            ArrayList<HashMap<String, String>> results = client.executeQuery("SELECT Player, Points FROM " + TABLE_NAME);
+            for (HashMap<String, String> map : results) {
+                System.out.println(map.get("Player") + " currently has: " + map.get("Points") + " points");
             }
         } catch (SQLException ex) {
             System.out.println("Oops! Something went wrong: " + ex.getMessage());
         }
     }
+
     public static void recordWinnerOfRoundInDB() {
         Player winner = null;
         for (Player player : players) {
@@ -93,8 +78,8 @@ public class Database {
                     System.out.println("Database table '" + TABLE_NAME + "' has been created.");
                 }
 
-                // Update the winner's points for the current round
-                StringBuilder updateQuery = new StringBuilder("UPDATE " + TABLE_NAME + " SET Points = " + winner.getPlayerPoints(getRound()) + " WHERE Player = '" + winner.getName() + "';");
+                // Update the winner's points
+                StringBuilder updateQuery = new StringBuilder("UPDATE " + TABLE_NAME + " SET Points = " + winner.getPlayerPoints() + " WHERE Player = '" + winner.getName() + "';");
                 client.executeStatement(updateQuery.toString());
 
                 System.out.println("Points for the winner have been updated in the database.");
@@ -103,9 +88,7 @@ public class Database {
             }
         }
     }
-    // ...
 }
-
 
 /*
 

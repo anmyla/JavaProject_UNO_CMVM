@@ -167,7 +167,7 @@ public class Game {
                 name = botNames[temp];
                 nameExists = false;
                 for (Player player : players) {
-                    if (player.getName().equals(name)) {
+                    if (player.getName().equals(name.toUpperCase())) {
                         nameExists = true;
                         break;
                     }
@@ -666,8 +666,8 @@ public class Game {
 
 
         System.out.println(winnerOfThisRound.getName() + ", your total point this round is: " + winnerPoints );
-        getWinnerOfThisRound().setPlayerPoints(winnerOfThisRound.getPlayerPoints(getRound()) + winnerPoints); //we add the points to the points from the previous rounds
-        System.out.println("And your total points so far is: " + winnerOfThisRound.getPlayerPoints(getRound()));
+        getWinnerOfThisRound().setPlayerPoints(winnerOfThisRound.getPlayerPoints() + winnerPoints); //we add the points to the points from the previous rounds
+        System.out.println("And your total points so far is: " + winnerOfThisRound.getPlayerPoints());
         return winnerPoints;
     }
 
