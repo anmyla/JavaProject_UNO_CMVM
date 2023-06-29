@@ -43,13 +43,6 @@ public class Database {
                 client.executeStatement(queryBuilder.toString());
             }
 
-            System.out.println("Database table '" + TABLE_NAME + "' has been updated.");
-
-            // Retrieve and display the current points for each player
-            ArrayList<HashMap<String, String>> results = client.executeQuery("SELECT Player, Points FROM " + TABLE_NAME);
-            for (HashMap<String, String> map : results) {
-                System.out.println(map.get("Player") + " currently has: " + map.get("Points") + " points");
-            }
         } catch (SQLException ex) {
             System.out.println("Oops! Something went wrong: " + ex.getMessage());
         }
