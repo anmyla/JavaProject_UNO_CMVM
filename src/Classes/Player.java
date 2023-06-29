@@ -9,8 +9,6 @@ public abstract class Player {
     private String name;
     private int playerPoints;
     protected List<Card> playersHand; //Player's own set of cards
-
-    private static boolean turn;
     private static Card playedCard;
     protected static boolean canMakeAMove = true;
     protected boolean uno;

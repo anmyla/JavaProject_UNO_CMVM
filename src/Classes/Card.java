@@ -15,63 +15,51 @@ public class Card {
         this.cardColor = cardColor;
         this.cardValue = cardValue;
         this.cardPoints = cardPoints;
-
     }
 
     public Card(String cardColor, String cardValue) {
         this.cardColor = cardColor;
         this.cardValue = cardValue;
-
-
     }
 
     public Card() {
         this.cardColor = "";
         this.cardValue = "";
         this.cardPoints = 0;
-
     }
 
     public static int[] getPointsCollections() {
         return pointsCollections;
-
     }
 
     public static String[] getFaceValueCollections() {
         return faceValueCollections;
-
     }
 
     public static String[] getColorValueCollections() {
         return colorValueCollections;
-
     }
 
     public String getCardValue() {
         return cardValue;
-
     }
 
     public String getCardColor() {
         return cardColor;
-
     }
 
     public int getCardPoints() {
         return cardPoints;
-
     }
 
     public String getCard() {
         return cardColor + cardValue;
-
     }
 
 
     @Override
     public String toString() {
         return getCard();
-
     }
 
 
@@ -85,17 +73,12 @@ public class Card {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Card card = (Card) o;
         return Objects.equals(cardValue, card.cardValue) && Objects.equals(cardColor, card.cardColor);
-
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(cardValue, cardColor);
-
     }
-
-
 }

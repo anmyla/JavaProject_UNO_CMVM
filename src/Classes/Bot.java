@@ -3,7 +3,6 @@ package Classes;
 import java.util.List;
 import java.util.Random;
 
-import static Classes.Deck.drawOneCard;
 import static Classes.Game.*;
 
 public class Bot extends Player {
