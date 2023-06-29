@@ -184,6 +184,7 @@ public abstract class Player {
             System.out.println(currentPlayer.toString());
             if (!checkIfPlayerHasCardToPlay()) {
                 System.out.println("Oh no, you STILL do not have a card to play!");
+                System.out.println("Let's move on to the next player.");
                 canPlay = false;
             } else if (checkIfPlayerHasCardToPlay()) {
                 System.out.println("You've drawn a card you can play!");

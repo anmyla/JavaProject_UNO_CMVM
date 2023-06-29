@@ -167,7 +167,7 @@ public class Game {
                     }
                 }
             } while (nameExists);
-            players.add(new Bot(name));
+            players.add(new Bot(name.toUpperCase()));
             System.out.println(name + " is added.");
         }
     }
