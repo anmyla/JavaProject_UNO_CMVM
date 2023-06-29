@@ -657,6 +657,10 @@ public class Game {
         for (Card card : loserCards) {
             winnerPoints = winnerPoints + card.getCardPoints();
         }
+
+        System.out.println(winnerOfThisRound.getName() + "Your total point this round is: " + winnerPoints );
+        getWinnerOfThisRound().setPlayerPoints(winnerOfThisRound.getPlayerPoints() + winnerPoints); //we add the points to the points from the previous rounds
+
         return winnerPoints;
     }
 

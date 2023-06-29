@@ -13,9 +13,16 @@ public class App {
     public static boolean exit = false;
     public int size;
 
+    protected boolean ultimateWinner = false;
+
     public static void setExit(boolean exit) {
         App.exit = exit;
     }
+
+    public void setUltimateWinner(boolean overAllWinner) {
+        this.ultimateWinner = overAllWinner;
+    }
+
     // Konstruktor
     // input wird verwendet um Daten vom Benutzer einzulesen (verwendet scanner)
     // output wird verwendet um Text auf der Konsole auszugeben (verwendet sysout)
@@ -27,11 +34,14 @@ public class App {
     //die Gameloop
     public void Run() {
         initialize();
-        printState();
-        while (!exit) {
-            readUserInput(Game.currentPlayer());
-            updateState();
+
+        for(int i = 0; !ultimateWinner;  i++ ) {
             printState();
+            while (!exit) {
+                readUserInput(Game.currentPlayer());
+                updateState();
+                printState();
+            }
         }
     }
 
@@ -39,18 +49,8 @@ public class App {
         Deck theCardDeck = new Deck(108);
         theCardDeck.initialDeck(); // filled up a new card deck
         theCardDeck.shuffleDeck(); // shuffle the cards;
-        Game firstGame = new Game(); // Creating a new game
         setPlayers(); // setting up human/bot players
-
-        distributeInitialCardsToPlayers(); //distributes initial cards to players
-        printPlayer(); // printing each player's 7 cards (initial player's hand) on the console.
-
-        List<Card> discardDeck = firstGame.getDiscardDeck(); //creating a discard deck
-        layFirstCard(); // laying the first card on the discard deck
-        if (!exit) {
-            System.out.println("LET THE GAMES BEGIN!!!");
-            chooseFirstPlayer();
-        }
+        startANewRound();
     }
 
     private void readUserInput(Player player) {
@@ -88,8 +88,34 @@ public class App {
     private void printState() {
         if (!exit) {
             printDiscardDeck();
-        } else {
-            System.out.println("Goodbye!");
         }
+    }
+
+    private void checkIfSomeoneReached500Points(){
+        boolean ultimateWinner = false;
+        for (Player p : players) {
+            if (p.getPlayerPoints() >= 500) {
+                System.out.println("We have an ultimate winner!");
+                System.out.println(p.getName() + ", congratulations! you are our UNO MASTER!!!");
+                ultimateWinner = true;
+                break;
+            } else {
+                ultimateWinner = false;
+            }
+        }
+        setUltimateWinner(ultimateWinner);
+    }
+
+    public void startANewRound() {
+        Game newGame = new Game(); // Creating a new game
+        distributeInitialCardsToPlayers(); //distributes initial cards to players
+        printPlayer(); // printing each player's 7 cards (initial player's hand) on the console.
+        List<Card> discardDeck = newGame.getDiscardDeck(); //creating a discard deck
+        layFirstCard(); // laying the first card on the discard deck
+        if (!exit) {
+            System.out.println("LET THE GAMES BEGIN!!!");
+            chooseFirstPlayer();
+        }
+
     }
 }
