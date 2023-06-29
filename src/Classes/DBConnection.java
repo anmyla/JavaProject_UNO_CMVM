@@ -9,7 +9,7 @@ public class DBConnection {
     //Datenbankverbindung herstellen
     private static Connection con = null;
 
-    public DBConnection(String dbName) throws SQLException{
+    public DBConnection(String dbName) throws SQLException {
         con = DriverManager.getConnection("jdbc:sqlite:uno.db");
     }
 

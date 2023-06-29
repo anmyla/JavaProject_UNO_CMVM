@@ -13,6 +13,7 @@ import java.util.HashMap;
 public class SqliteClient {
     private Connection
             connection = null;
+
     public SqliteClient(String dbName)
             throws SQLException {
         connection = DriverManager.getConnection("jdbc:sqlite:"

@@ -2,7 +2,6 @@ package Classes;
 
 import java.util.List;
 
-import static Classes.App.exit;
 import static Classes.Bot.botMakesAMove;
 import static Classes.Deck.drawOneCard;
 import static Classes.Game.*;
@@ -14,9 +13,9 @@ public abstract class Player {
     private int playerPoints;
     protected List<Card> playersHand; //Player's own set of cards
 
-    private boolean turn;
-    private Card playedCard;
-    protected static boolean play = true;
+    private static boolean turn;
+    private static Card playedCard;
+    protected static boolean canMakeAMove = true;
     protected boolean uno;
     protected boolean winner;
 
@@ -24,187 +23,254 @@ public abstract class Player {
         this.name = name;
         this.playersHand = playerInitialCards;
         this.playerPoints = 0;
+
     }
 
     public Player(String name) {
         this.name = name;
         this.playerPoints = 0;
+
     }
 
     public String getName() {
         return name;
+
     }
 
     public void setPlayerPoints(int playerPoints) {
         this.playerPoints = playerPoints;
+
     }
 
     public List<Card> getPlayersHand() {
         return playersHand;
+
     }
 
-    public static boolean isPlay() {
-        return play;
-    }
+    public static void setCanMakeAMove(boolean canPlay) {
 
-    public static void setPlay(boolean play) {
-        Player.play = play;
+        Player.canMakeAMove = canPlay;
+
     }
 
     public void setPlayersHand(List<Card> playersHand) {
         this.playersHand = playersHand;
+
     }
 
     public Card getPlayedCard() {
         return playedCard;
+
     }
 
-    public void setPlayedCard(Card playedCard) {
-        this.playedCard = playedCard;
+    public static void setPlayedCard(Card card) {
+        playedCard = card;
+
     }
 
     public boolean isUno() {
         return uno;
+
     }
 
     public void setUno(boolean uno) {
         this.uno = uno;
+
     }
 
     public boolean isWinner() {
         return winner;
+
     }
 
     public void setWinner(boolean winner) {
         this.winner = winner;
+
     }
 
     @Override
     public String toString() {
-        return (SKY + name + "  " + playersHand + RESET);
+        return (SKY + name + " " + playersHand + RESET);
+
     }
 
     public int getPlayerPoints() {
         return playerPoints;
+
     }
 
     //this method will remove the card that is played from the playersHand
     public void removeFromPlayersHand(Card c) {
         playersHand.remove(c);
+
     }
 
 
-    public static boolean playerHasCardToPlay() { //method to check if the player's hand has a valid card to be played
+    public static boolean checkIfPlayerHasCardToPlay() { //method to check if the player's hand has a valid card to be played
+
         Player currentPlayer = currentPlayer();
+
         String currentDiscardCardColor = discardDeck.get(0).getCardColor();
+
         String currentDiscardCardValue = discardDeck.get(0).getCardValue();
+
         String playerCardColor;
+
         String playerCardValue;
+        boolean hasCardToPlay = false;
 
         for (Card card : currentPlayer.playersHand) {
+
             playerCardColor = card.getCardColor();
+
             playerCardValue = card.getCardValue();
 
             if (playerCardColor.equals("J")) {
-                setHasCardToPlay(true);
+
+                hasCardToPlay = true;
                 break;
+
             } else if (playerCardColor.equals(newColor)) {
-                setHasCardToPlay(true);
+
+                hasCardToPlay = true;
                 break;
+
             } else if (playerCardColor.equals(currentDiscardCardColor)) {
-                setHasCardToPlay(true);
+
+                hasCardToPlay = true;
                 break;
+
             } else if (playerCardValue.equals(currentDiscardCardValue)) {
-                setHasCardToPlay(true);
+
+                hasCardToPlay = true;
                 break;
-            } else {
-                setHasCardToPlay(false);
+
             }
+
         }
-        setHasCardToPlay(hasCardToPlay);
-        return isHasCardToPlay();
+        return hasCardToPlay;
+
     }
 
     public static void currentPlayersTurn() { //this method will decide who's turn it is based on what's on the discard Deck
+
         Card cardToCheck = discardDeck.get(0);
         if (cardToCheck.getCardColor().equals("J")) {
             addTempCard();
+
         }
-        if (isPlay()) {
+
+        if (canMakeAMove) {
             playerEntersCardToPlay();
+
         } else {
+
             System.out.println("You have to pass this turn because you still don't have a card to play!");
+
         }
+
     }
 
 
     public static Card playerEntersCardToPlay() {
+
         Player currentPlayer = currentPlayer();
-        Card cardToPlay = null;
+
+        Card cardToPlay = currentPlayer.getPlayedCard();
 
         if (currentPlayer instanceof Human) {
+
             cardToPlay = humanMakesAMove();
+
         } else {
+
             cardToPlay = botMakesAMove();
             if (currentPlayer.isUno()) {
+
                 System.out.println("Your move: " + cardToPlay + " UNO");
+
             } else {
+
                 System.out.println("Your move: " + cardToPlay);
+
                 currentPlayer.setUno(false);
+
             }
+
         }
 
-        currentPlayer.setPlayedCard(cardToPlay);
+        setPlayedCard(cardToPlay);
 
         try {
             if (cardToPlay.getCardColor().equals("J")) {
                 setJoker(true);
                 setColorIfCardIsJoker();
+
             } else if (isCardValid()) {
                 setNewColor(null);
+
             }
 
 
             if (cardToPlay.getCardValue().equals("C+4") || cardToPlay.getCardValue().equals("+2")) {
                 setPenaltyGiven(false);
+
             }
+
         } catch (NullPointerException e) {
+
             System.out.println("Player decided to exit game.....");
+
         }
+        setPlayedCard(cardToPlay);
         return cardToPlay;
+
     }
 
 
-    public static boolean canPlay() {
+    public static boolean canPlayerMakeAMove() {
+
         Player currentPlayer = currentPlayer();
+
         Card cardToCheck = discardDeck.get(0);
         boolean canPlay = false;
-        {
-            if (cardToCheck.getCardColor().equals("J")) {
-                addTempCard();
-            }
+        if (cardToCheck.getCardColor().equals("J")) {
+            addTempCard();
 
-            cardToCheck = discardDeck.get(0);
-
-            if (!playerHasCardToPlay()) {
-                System.out.println(currentPlayer.getName() + ", it looks like you don't have a card to play this turn.");
-                System.out.println("Sorry but you have to draw a card!");
-                drawOneCard();
-                System.out.println("Here's your updated Cards!");
-                System.out.println(currentPlayer.toString());
-                if (!playerHasCardToPlay()) {
-                    System.out.println("Oh no, you STILL do not have a card to play!");
-                    canPlay = false;
-                } else {
-                    System.out.println("You've drawn a card you can play!");
-                    canPlay = true;
-                }
-            } else {
-                canPlay = true;
-            }
-            setPlay(canPlay);
-            return canPlay;
         }
-    }
-}
 
+        if (checkIfPlayerHasCardToPlay()) {
+
+            canPlay = true;
+
+        } else {
+
+            System.out.println(currentPlayer.getName() + ", it looks like you don't have a card to play this turn.");
+
+            System.out.println("Sorry but you have to draw a card!");
+            drawOneCard();
+
+            System.out.println("Here's your updated hand:");
+
+            System.out.println(currentPlayer.toString());
+            if (!checkIfPlayerHasCardToPlay()) {
+
+                System.out.println("Oh no, you STILL do not have a card to play!");
+
+                canPlay = false;
+
+            } else if (checkIfPlayerHasCardToPlay()) {
+
+                System.out.println("You've drawn a card you can play!");
+
+                canPlay = true;
+
+            }
+
+        }
+        setCanMakeAMove(canPlay);
+        return canPlay;
+
+    }
+
+}
