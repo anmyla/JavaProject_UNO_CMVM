@@ -61,8 +61,8 @@ public class Deck {
         cardDeck.remove(card);
     }
 
-    public void removeFromCardDeck() {
-        cardDeck.remove(0);
+    public void add(Card card) {
+        cardDeck.add(card);
     }
 
     public static void drawOneCard() {

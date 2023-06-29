@@ -1,8 +1,10 @@
 package Classes;
 
 import java.io.PrintStream;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
+
 import static Classes.Database.recordWinnerOfRoundInDB;
 import static Classes.Game.*;
 import static Classes.Player.*;
@@ -13,14 +15,15 @@ public class App {
     public static boolean exit = false;
     public int size;
 
-    protected boolean ultimateWinner = false;
+    protected static boolean tournamentWinner = false;
+
 
     public static void setExit(boolean exit) {
         App.exit = exit;
     }
 
-    public void setUltimateWinner(boolean overAllWinner) {
-        this.ultimateWinner = overAllWinner;
+    public void setTournamentWinner(boolean overAllWinner) {
+        this.tournamentWinner = overAllWinner;
     }
 
     // Konstruktor
@@ -35,21 +38,35 @@ public class App {
     public void Run() {
         initialize();
 
-        for(int i = 0; !ultimateWinner;  i++ ) {
+        while (tournamentWinner == false && !exit) {
             printState();
-            while (!exit) {
+
+            while (!isThereAWinnerOfThisRound && !exit) {
                 readUserInput(Game.currentPlayer());
                 updateState();
                 printState();
             }
+
+            checkIfSomeoneReached500Points();
+
+            if (tournamentWinner == false) {
+                playAnotherRound();
+            } else {
+                setExit(true);
+                return;
+            }
         }
     }
 
+
     private void initialize() {
+        System.out.println("LET THE GAMES BEGIN!!!");
+
         Deck theCardDeck = new Deck(108);
         theCardDeck.initialDeck(); // filled up a new card deck
         theCardDeck.shuffleDeck(); // shuffle the cards;
         setPlayers(); // setting up human/bot players
+        System.out.println("--------------------------------" + " ROUND  1 " + "------------------------------------");
         startANewRound();
     }
 
@@ -74,24 +91,24 @@ public class App {
     }
 
     private void updateState() {
-        if (checkWinner().isWinner()) {
+        if (checkWinnerOfCurrentRound().isWinner()) {
             System.out.println("Congratulations " + getWinnerOfThisRound().getName() + " you won this round!");
-            System.out.println("You get a total of " + computePoints() + " points this round");
-            setExit(true);
+            computePoints();
             recordWinnerOfRoundInDB();
         } else {
             checkNextTurn();
         }
+
         setBlocked(false); //reset to default
     }
 
     private void printState() {
-        if (!exit) {
+        if (!exit && !isThereAWinnerOfThisRound) {
             printDiscardDeck();
         }
     }
 
-    private void checkIfSomeoneReached500Points(){
+    private void checkIfSomeoneReached500Points() {
         boolean ultimateWinner = false;
         for (Player p : players) {
             if (p.getPlayerPoints() >= 500) {
@@ -103,7 +120,7 @@ public class App {
                 ultimateWinner = false;
             }
         }
-        setUltimateWinner(ultimateWinner);
+        setTournamentWinner(ultimateWinner);
     }
 
     public void startANewRound() {
@@ -113,9 +130,32 @@ public class App {
         List<Card> discardDeck = newGame.getDiscardDeck(); //creating a discard deck
         layFirstCard(); // laying the first card on the discard deck
         if (!exit) {
-            System.out.println("LET THE GAMES BEGIN!!!");
             chooseFirstPlayer();
         }
+    }
 
+    public void playAnotherRound() {
+        int round = getRound(); //Counter for Rounds
+        System.out.println("Round " + (round) + " is complete!");
+
+        setRound(round++);
+
+        for (Player player : players) { // all cards left in each player's had will be discarded
+            for (Card card : player.playersHand) {
+                discardDeck.add(card);
+            }
+        }
+
+        Iterator<Card> iterator = discardDeck.iterator(); // this will get all the cards from the discard pile and added it to the cardDeck
+        while (iterator.hasNext()) {
+            Card card = iterator.next();
+            iterator.remove();
+            cardDeck.add(card);
+        }
+        cardDeck.shuffleDeck(); // shuffle the card deck before starting another round
+        winnerOfThisRound = null; // reset this to default value;
+
+        System.out.println("--------------------------------" +  "ROUND " + (round) + "-------------------------------------");
+        startANewRound();
     }
 }

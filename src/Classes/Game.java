@@ -14,7 +14,7 @@ import static Classes.Player.*;
 public class Game {
     protected static int round;
     protected static List<Player> players = new ArrayList<>();
-    private static Deck cardDeck = new Deck(108);
+    protected static Deck cardDeck = new Deck(108);
     protected static List<Card> discardDeck = new ArrayList<>();
     private static int turn;
     private static boolean isClockwise = true;
@@ -28,6 +28,8 @@ public class Game {
     public static final String SKY = "\u001B[38;2;153;205;240m";
     public static final String RESET = "\u001B[0m";
     protected static boolean isBlocked;
+
+    protected static boolean isThereAWinnerOfThisRound;
 
     public List<Card> getDiscardDeck() {
         return this.discardDeck;
@@ -103,6 +105,10 @@ public class Game {
 
     public static void setRound(int round) {
         Game.round = round;
+    }
+
+    public static void setIsThereAWinnerOfThisRound(boolean isThereAWinnerOfThisRound) {
+        Game.isThereAWinnerOfThisRound = isThereAWinnerOfThisRound;
     }
 
     public void database() {
@@ -633,10 +639,11 @@ public class Game {
         }
     }
 
-    public static Player checkWinner() {
+    public static Player checkWinnerOfCurrentRound() {
         Player winner = currentPlayer();
         if (winner.playersHand.size() == 0) {
             winner.setWinner(true);
+            setIsThereAWinnerOfThisRound(true);
         }
         setWinnerOfThisRound(winner);
         return winner;
@@ -647,7 +654,7 @@ public class Game {
         int winnerPoints = 0;
 
         for (Player p : players) {
-            if (p != checkWinner()) {
+            if (p != checkWinnerOfCurrentRound()) {
                 for (Card card : p.playersHand) {
                     loserCards.add(card);
                 }
@@ -658,7 +665,7 @@ public class Game {
             winnerPoints = winnerPoints + card.getCardPoints();
         }
 
-        System.out.println(winnerOfThisRound.getName() + "Your total point this round is: " + winnerPoints );
+        System.out.println(winnerOfThisRound.getName() + ", your total point this round is: " + winnerPoints );
         getWinnerOfThisRound().setPlayerPoints(winnerOfThisRound.getPlayerPoints() + winnerPoints); //we add the points to the points from the previous rounds
 
         return winnerPoints;
