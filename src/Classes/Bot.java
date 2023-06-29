@@ -51,10 +51,9 @@ public class Bot extends Player {
             System.out.println("Now you have to get a penalty card!");
             drawOneCard();
             System.out.println("Here is you updated hand:");
-            System.out.println("\n" + currentPlayer.toString());
+            System.out.print("\n" + currentPlayer.toString());
         } else {
         }
-
         return validCardToPlay;
     }
 }

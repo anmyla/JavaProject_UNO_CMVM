@@ -8,8 +8,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-
 public class SqliteClient {
     private Connection
             connection = null;
@@ -31,7 +29,7 @@ public class SqliteClient {
             throws SQLException {
         Statement statement = connection.createStatement();
         statement.setQueryTimeout(30);
-// set timeout to 30 sec.
+        // set timeout to 30 sec.
         statement.executeUpdate(sqlStatement);
 
     }
@@ -41,7 +39,7 @@ public class SqliteClient {
             throws SQLException {
         Statement statement = connection.createStatement();
         statement.setQueryTimeout(30);
-// set timeout to 30 sec.
+        // set timeout to 30 sec.
 
         ResultSet rs = statement.executeQuery(sqlQuery);
         ResultSetMetaData rsmd = rs.getMetaData();

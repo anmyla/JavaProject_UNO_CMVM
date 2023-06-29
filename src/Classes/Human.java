@@ -4,11 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-
 import static Classes.App.setExit;
 import static Classes.Deck.drawOneCard;
 import static Classes.Game.*;
-
 public class Human extends Player {
     public Human(String name, List<Card> playerInitialCards) {
         super(name, playerInitialCards);

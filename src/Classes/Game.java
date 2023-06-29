@@ -6,16 +6,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-
 import static Classes.Database.createDatabase;
 import static Classes.App.setExit;
 import static Classes.Deck.*;
 import static Classes.Player.*;
 
 public class Game {
-
-    static int round;
-    static List<Player> players = new ArrayList<>();
+    protected static int round;
+    protected static List<Player> players = new ArrayList<>();
     private static Deck cardDeck = new Deck(108);
     protected static List<Card> discardDeck = new ArrayList<>();
     private static int turn;
@@ -26,36 +24,29 @@ public class Game {
     protected static boolean challengeWon = true;
     protected static boolean penaltyGiven;
     protected static Player winnerOfThisRound;
-    public static final String BLUE = "\u001B[38;2;86;119;209m";
     public static final String ROSE = "\u001B[38;2;209;86;108m";
     public static final String SKY = "\u001B[38;2;153;205;240m";
     public static final String RESET = "\u001B[0m";
-
     protected static boolean isBlocked;
 
     public List<Card> getDiscardDeck() {
         return this.discardDeck;
-
     }
 
     public static int getTurn() { //get the current player's index
         return turn;
-
     }
 
     public static void setTurn(int playerIndex) { //set the current player's index
         turn = playerIndex;
-
     }
 
     public static boolean isJoker() { //is the played card a joker
         return isJoker;
-
     }
 
     protected static void setJoker(boolean joker) {
         isJoker = joker;
-
     }
 
     public static void setCardValid(boolean valid) {
@@ -81,7 +72,6 @@ public class Game {
     public static void setNewColor(String newColor) { // if played card isJoker, we can setNewColor
         Game.newColor = newColor;
     }
-
 
     public static boolean isChallengeWon() { // true if current player won a challenge against previous player
         return challengeWon;
@@ -649,28 +639,11 @@ public class Game {
         setWinnerOfThisRound(winner);
         return winner;
     }
-/*
-public static boolean checkIfThisPlayerIsBlocked() {
-Card cardToCheck = discardDeck.get(0);
-boolean isBlocked = false;
-
-if (cardToCheck.getCardValue().equals("+2") && isPenaltyGiven()) {
-isBlocked = true;
-System.out.println("You are also blocked from playing this turn.");
-} else if (cardToCheck.getCardValue().equals("C+4")) {
-if (isPenaltyGiven() && !isChallengeWon()) {
-isBlocked = true;
-} else {
-isBlocked = false;
-}
-}
-setBlocked(isBlocked);
-return isBlocked;
-} */
 
     public static int computePoints() {
         ArrayList<Card> loserCards = new ArrayList<>();
         int winnerPoints = 0;
+
         for (Player p : players) {
             if (p != checkWinner()) {
                 for (Card card : p.playersHand) {

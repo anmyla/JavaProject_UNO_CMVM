@@ -1,13 +1,10 @@
 package Classes;
 
 import java.util.List;
-
 import static Classes.Bot.botMakesAMove;
 import static Classes.Deck.drawOneCard;
 import static Classes.Game.*;
 import static Classes.Human.humanMakesAMove;
-
-
 public abstract class Player {
     private String name;
     private int playerPoints;
