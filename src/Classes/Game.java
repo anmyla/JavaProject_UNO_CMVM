@@ -115,9 +115,11 @@ public class Game {
         for (int i = 0; i < humanPlayers; ) {
             String name;
             boolean nameExists;
+
             do {
                 System.out.println("Please enter a name for PLAYER " + (players.size() + 1) + ": ");
-                name = inputName.nextLine().toUpperCase();
+                name = inputName.nextLine().toUpperCase().trim(); // Trim the input
+
                 nameExists = false;
                 for (Player player : players) {
                     if (player.getName().equals("HELP")) {
@@ -130,11 +132,10 @@ public class Game {
                         break;
                     }
                 }
-
-                if (nameExists || name.isEmpty() || name.equals(" ")) {
+                if (nameExists || name.isEmpty()) {
                     System.out.println("This field cannot be empty and name must be unique!");
                 }
-            } while (nameExists || name.isEmpty() || name.equals(" "));
+            } while (nameExists || name.isEmpty());
 
 
             if (name.equals("HELP")) {
