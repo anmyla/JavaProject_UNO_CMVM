@@ -339,6 +339,7 @@ public class Game {
     }
 
     public static void printDiscardDeck() { // this method will print the cards in the DISCARD DECK
+        System.out.println();
         System.out.print(ROSE + "DISCARD DECK: ");
         Card card = discardDeck.get(0);
         if (card.getCardColor().equals("J") && !getNewColor().isEmpty()) {

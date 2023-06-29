@@ -136,9 +136,16 @@ public abstract class Player {
             cardToPlay = botMakesAMove();
             if (currentPlayer.isUno()) {
                 System.out.println("Your move: " + cardToPlay + " UNO");
-            } else {
+                System.out.println(currentPlayer.getName() + " called UNO!");
+            } else if (!currentPlayer.isUno() && currentPlayer.playersHand.size() == 2) {
                 System.out.println("Your move: " + cardToPlay);
-                currentPlayer.setUno(false);
+                System.out.println("Oh no, you forgot to call UNO!");
+                System.out.println("Now you have to get a penalty card!");
+                drawOneCard();
+                System.out.println("Here is you updated hand:");
+                System.out.println(currentPlayer.toString());
+            }else {
+                System.out.println("Your move: " + cardToPlay );
             }
         }
         setPlayedCard(cardToPlay);

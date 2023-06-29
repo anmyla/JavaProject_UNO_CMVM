@@ -44,16 +44,6 @@ public class Bot extends Player {
             currentPlayer.setUno(false);
         }
 
-        if (currentPlayer.isUno()) {
-            System.out.println(currentPlayer.getName() + " called UNO!");
-        } else if (!currentPlayer.isUno() && currentPlayer.playersHand.size() == 2) {
-            System.out.println("Oh no, you forgot to call UNO!");
-            System.out.println("Now you have to get a penalty card!");
-            drawOneCard();
-            System.out.println("Here is you updated hand:");
-            System.out.print("\n" + currentPlayer.toString());
-        } else {
-        }
         return validCardToPlay;
     }
 }
