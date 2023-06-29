@@ -12,16 +12,9 @@ import static Classes.Game.players;
 
 public class Database {
 
-    private static final String
-            CREATETABLE = "CREATE TABLE Rounds (Player varchar(100) NOT NULL, Round int NOT NULL, Points int NOT NULL, CONSTRAINT PK_Rounds PRIMARY KEY (Player, Round));";
-
-    private static final String
-            INSERT_TEMPLATE =
-            "INSERT INTO Rounds (Player, Round, Points) VALUES ('%1s', %3d, %4d);";
-
-    private static final String
-            SELECT_BYPLAYERANDROUND
-            = "SELECT Player, SUM(Points) AS Points FROM Rounds WHERE Player = '%1s' AND Round = %3d AND Points = %4d;";
+    private static final String CREATETABLE = "CREATE TABLE Rounds (Player varchar(100) NOT NULL, Round int NOT NULL, Points int NOT NULL, CONSTRAINT PK_Rounds PRIMARY KEY (Player, Round));";
+    private static final String INSERT_TEMPLATE = "INSERT INTO Rounds (Player, Round, Points) VALUES ('%1s', %3d, %4d);";
+    private static final String SELECT_BYPLAYERANDROUND = "SELECT Player, SUM(Points) AS Points FROM Rounds WHERE Player = '%1s' AND Round = %3d AND Points = %4d;";
 
 
     public Database() {
