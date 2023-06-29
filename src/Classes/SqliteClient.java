@@ -62,4 +62,3 @@ public class SqliteClient {
         return result;
     }
 }
-

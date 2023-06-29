@@ -38,7 +38,7 @@ public class App {
     public void Run() {
         initialize();
 
-        while (tournamentWinner == false && !exit) {
+        while (!tournamentWinner && !exit) {
             printState();
 
             while (!isThereAWinnerOfThisRound && !exit) {
@@ -49,7 +49,7 @@ public class App {
 
             checkIfSomeoneReached500Points();
 
-            if (tournamentWinner == false) {
+            if (!tournamentWinner) {
                 playAnotherRound();
             } else {
                 setExit(true);
@@ -58,14 +58,15 @@ public class App {
         }
     }
 
-
     private void initialize() {
         System.out.println("LET THE GAMES BEGIN!!!");
-
         Deck theCardDeck = new Deck(108);
+        Game newGame = new Game(); // Creating a new game
+        List<Card> discardDeck = newGame.getDiscardDeck(); //creating a discard deck
         theCardDeck.initialDeck(); // filled up a new card deck
         theCardDeck.shuffleDeck(); // shuffle the cards;
         setPlayers(); // setting up human/bot players
+        newGame.database();
         System.out.println("--------------------------------" + " ROUND  1 " + "------------------------------------");
         startANewRound();
     }
@@ -95,6 +96,7 @@ public class App {
             System.out.println("Congratulations " + getWinnerOfThisRound().getName() + " you won this round!");
             computePoints();
             recordWinnerOfRoundInDB();
+            winnerOfThisRound.setWinner(false); //reset to default value
         } else {
             checkNextTurn();
         }
@@ -111,7 +113,7 @@ public class App {
     private void checkIfSomeoneReached500Points() {
         boolean ultimateWinner = false;
         for (Player p : players) {
-            if (p.getPlayerPoints() >= 500) {
+            if (p.getPlayerPoints(getRound()) > 500) {
                 System.out.println("We have an ultimate winner!");
                 System.out.println(p.getName() + ", congratulations! you are our UNO MASTER!!!");
                 ultimateWinner = true;
@@ -124,10 +126,8 @@ public class App {
     }
 
     public void startANewRound() {
-        Game newGame = new Game(); // Creating a new game
         distributeInitialCardsToPlayers(); //distributes initial cards to players
         printPlayer(); // printing each player's 7 cards (initial player's hand) on the console.
-        List<Card> discardDeck = newGame.getDiscardDeck(); //creating a discard deck
         layFirstCard(); // laying the first card on the discard deck
         if (!exit) {
             chooseFirstPlayer();
@@ -135,10 +135,8 @@ public class App {
     }
 
     public void playAnotherRound() {
-        int round = getRound(); //Counter for Rounds
-        System.out.println("Round " + (round) + " is complete!");
-
-        setRound(round++);
+        int counter = getRound(); //Counter for Rounds
+        System.out.println("Round " + counter + " is complete!");
 
         for (Player player : players) { // all cards left in each player's had will be discarded
             for (Card card : player.playersHand) {
@@ -152,10 +150,15 @@ public class App {
             iterator.remove();
             cardDeck.add(card);
         }
+
         cardDeck.shuffleDeck(); // shuffle the card deck before starting another round
         winnerOfThisRound = null; // reset this to default value;
 
-        System.out.println("--------------------------------" +  "ROUND " + (round) + "-------------------------------------");
+        counter = counter + 1;
+        setRound(counter);
+        System.out.println("--------------------------------" +  "ROUND " + counter  + "-------------------------------------");
+        setIsThereAWinnerOfThisRound(false);
+
         startANewRound();
     }
 }

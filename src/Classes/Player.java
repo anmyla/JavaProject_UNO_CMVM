@@ -71,7 +71,7 @@ public abstract class Player {
         return (SKY + name + " " + playersHand + RESET);
     }
 
-    public int getPlayerPoints() {
+    public int getPlayerPoints(int round) {
         return playerPoints;
     }
 
@@ -163,6 +163,7 @@ public abstract class Player {
             System.out.println("Player decided to exit game.....");
         }
         setPlayedCard(cardToPlay);
+        currentPlayer.setUno(false);
         return cardToPlay;
     }
 

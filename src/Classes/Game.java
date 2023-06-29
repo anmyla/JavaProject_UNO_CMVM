@@ -12,7 +12,7 @@ import static Classes.Deck.*;
 import static Classes.Player.*;
 
 public class Game {
-    protected static int round;
+    protected static int round = 1;
     protected static List<Player> players = new ArrayList<>();
     protected static Deck cardDeck = new Deck(108);
     protected static List<Card> discardDeck = new ArrayList<>();
@@ -106,10 +106,10 @@ public class Game {
     public static void setRound(int round) {
         Game.round = round;
     }
-
     public static void setIsThereAWinnerOfThisRound(boolean isThereAWinnerOfThisRound) {
         Game.isThereAWinnerOfThisRound = isThereAWinnerOfThisRound;
     }
+
 
     public void database() {
         Database db1 = new Database();
@@ -222,7 +222,6 @@ public class Game {
         cardDeck.shuffleDeck();
 
         for (Player player : players) {
-            player.setPlayerPoints(0);
             player.setPlayersHand(cardDeck.distributeInitialCards());
         }
     }
@@ -665,9 +664,10 @@ public class Game {
             winnerPoints = winnerPoints + card.getCardPoints();
         }
 
-        System.out.println(winnerOfThisRound.getName() + ", your total point this round is: " + winnerPoints );
-        getWinnerOfThisRound().setPlayerPoints(winnerOfThisRound.getPlayerPoints() + winnerPoints); //we add the points to the points from the previous rounds
 
+        System.out.println(winnerOfThisRound.getName() + ", your total point this round is: " + winnerPoints );
+        getWinnerOfThisRound().setPlayerPoints(winnerOfThisRound.getPlayerPoints(getRound()) + winnerPoints); //we add the points to the points from the previous rounds
+        System.out.println("And your total points so far is: " + winnerOfThisRound.getPlayerPoints(getRound()));
         return winnerPoints;
     }
 
