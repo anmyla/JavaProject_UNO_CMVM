@@ -10,6 +10,6 @@ public class Main {
         App app = new App(input, System.out);
         app.Run();
         input.close();
-        System.out.println("Das Programm wird beendet ...");
+        System.out.println("Thanks for playing! Goodbye! ...");
     }
 }

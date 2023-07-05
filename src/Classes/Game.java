@@ -250,25 +250,25 @@ public class Game {
     public static void chooseFirstPlayer() {//Randomly choose the player that will play first.
         Card firstCard = discardDeck.get(0);
         Random random = new Random();
-        if (firstCard.getCardValue().equals("<->")) {
-            Random firstPlayer = new Random();
-            turn = firstPlayer.nextInt(3);
-            checkNextTurn();
-        } else if (firstCard.getCardColor().equals("J")) {
-            String[] colorListArray = Card.getColorValueCollections();
-            int randomIndex = random.nextInt(colorListArray.length - 2);
-
-            // Retrieve the random value from the array
-            String randomValue = colorListArray[randomIndex];
-            setNewColor(randomValue);
-            System.out.println("\nThe Next color to be played is : " + randomValue);
-            Random firstPlayer = new Random();
-            turn = firstPlayer.nextInt(3);
-        } else {
+//        if (firstCard.getCardValue().equals("<->")) {
+//            Random firstPlayer = new Random();
+//            turn = firstPlayer.nextInt(3);
+//            checkNextTurn();
+//        } else if (firstCard.getCardColor().equals("J")) {
+//            String[] colorListArray = Card.getColorValueCollections();
+//            int randomIndex = random.nextInt(colorListArray.length - 2);
+//
+//            // Retrieve the random value from the array
+//            String randomValue = colorListArray[randomIndex];
+//            setNewColor(randomValue);
+//            System.out.println("\nThe Next color to be played is : " + randomValue);
+//            Random firstPlayer = new Random();
+//            turn = firstPlayer.nextInt(3);
+//        } else {
             Random firstPlayer = new Random();
             turn = firstPlayer.nextInt(3);
         }
-    }
+//    }
 
     public static Player currentPlayer() {
         Player currentPlayer = players.get(getTurn());
@@ -336,8 +336,9 @@ public class Game {
         Card playedCard = currentPlayer.getPlayedCard();
         discardDeck.add(0, playedCard);
         currentPlayer.removeFromPlayersHand(playedCard);
-        if (discardDeck.get(1).getCardValue().equals("Color")) { //this is to delete the tempCard from the discardDeck.
-            discardDeck.remove(discardDeck.get(1));
+        if (discardDeck.get(1).getCardValue().equals("Color") && !discardDeck.get(0).getCardColor().equals("J")) { //this is to delete the tempCard from the discardDeck.
+            setNewColor(null); //reset the jokerColor value to default(null) after it's been used.
+            discardDeck.remove(discardDeck.get(1)); //delete temp card
         }
         setBlocked(false); //IMPORTANT! Resets this value after every player's turn.
         setCardValid(false); //IMPORTANT! Reset the value after accepting player's played card.
@@ -347,7 +348,7 @@ public class Game {
         System.out.println();
         System.out.print(ROSE + "DISCARD DECK: ");
         Card card = discardDeck.get(0);
-        if (card.getCardColor().equals("J") && !getNewColor().isEmpty()) {
+        if (card.getCardColor().equals("J") && getNewColor() != null) {
             System.out.print(ROSE + discardDeck.get(0) + " New Color: " + getNewColor() + RESET);
         } else if (!card.getCardValue().equals("Color")) {
             System.out.print(ROSE + discardDeck.get(0) + RESET);
@@ -565,6 +566,8 @@ public class Game {
         for (Card card : previousPlayerHand) {
             if (card.getCardColor().equals(cardToCheck.getCardColor()) || card.getCardValue().equals(cardToCheck.getCardValue())) {
                 hasOtherCardsToPlay = true;
+            } else if (card.getCardValue().equals("C")){
+                hasOtherCardsToPlay = true;
             } else {
                 hasOtherCardsToPlay = false;
             }
@@ -653,7 +656,7 @@ public class Game {
         int winnerPoints = 0;
 
         for (Player p : players) {
-            if (p != checkWinnerOfCurrentRound()) {
+            if (p !=  getWinnerOfThisRound()) {
                 for (Card card : p.playersHand) {
                     loserCards.add(card);
                 }
