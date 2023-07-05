@@ -22,11 +22,6 @@ public class Card {
         this.cardValue = cardValue;
     }
 
-    public Card() {
-        this.cardColor = "";
-        this.cardValue = "";
-        this.cardPoints = 0;
-    }
 
     public static int[] getPointsCollections() {
         return pointsCollections;

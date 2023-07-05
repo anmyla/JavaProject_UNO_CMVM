@@ -13,7 +13,6 @@ public class App {
     private final Scanner input;
     private final PrintStream output;
     public static boolean exit = false;
-    public int size;
 
     protected static boolean tournamentWinner = false;
 
