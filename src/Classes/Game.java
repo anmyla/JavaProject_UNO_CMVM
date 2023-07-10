@@ -250,25 +250,10 @@ public class Game {
     public static void chooseFirstPlayer() {//Randomly choose the player that will play first.
         Card firstCard = discardDeck.get(0);
         Random random = new Random();
-//        if (firstCard.getCardValue().equals("<->")) {
-//            Random firstPlayer = new Random();
-//            turn = firstPlayer.nextInt(3);
-//            checkNextTurn();
-//        } else if (firstCard.getCardColor().equals("J")) {
-//            String[] colorListArray = Card.getColorValueCollections();
-//            int randomIndex = random.nextInt(colorListArray.length - 2);
-//
-//            // Retrieve the random value from the array
-//            String randomValue = colorListArray[randomIndex];
-//            setNewColor(randomValue);
-//            System.out.println("\nThe Next color to be played is : " + randomValue);
-//            Random firstPlayer = new Random();
-//            turn = firstPlayer.nextInt(3);
-//        } else {
             Random firstPlayer = new Random();
             turn = firstPlayer.nextInt(3);
         }
-//    }
+
 
     public static Player currentPlayer() {
         Player currentPlayer = players.get(getTurn());
