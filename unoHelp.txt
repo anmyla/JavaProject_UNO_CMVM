@@ -1,0 +1,81 @@
+----♥ UNO FIRST AID SPACE ♥----
+
+!!WELCOME TO UNO!!
+Here are the rules, to get you to victory!
+
+GOAL OF THE GAME:
+- The player that earns 500 points in total is the winner.
+- The player who wins a round, gets the points of the left over cards from the other players.
+- The points get summed up per round for each player.
+
+START OF THE GAME:
+- The card deck gets mixed by the programm.
+- Every player gets 7 cards in the beginning.
+- The rest of the cards get faced-down.
+- The top card gets turned around as the start card on the DISCARD DECK, to start the game.
+
+GAME RULES:
+- The player who plays at the moment has to put a card on the DISCARD DECK.
+- The player can only play a card that matches the COLOR or the VALUE.
+- The JC and JC+4 have special rules.
+- If the player does not have a matching card to play, they have to draw 1 card form the faced-down deck. If they still don't have a matching card to play, they get skipped.
+- A person who playes the next to last card, has to call "UNO". If the player forgets to call "UNO", they have to draw a card.
+- The winner the round is the player, who has no cards left on their hand.
+
+
+HOW TO ENTER A MOVE:
+For example type Y1 for yellow one.
+All letters are not case sensitive!
+
+--Colors--
+A color always needs a value afterwards.
+
+Y	yellow
+R	red
+B	blue
+G	green
+
+
+--Values--
+A value always has a color in front.
+
+0 to 9		equals the numbers
+X			Passer (skips the next player)
+<->			Inversion (changes the play direction)
++2			The next player has draw 2 extra cards.
+
+
+--Jokers--
+Jokers a stand alones. They dont need a color nor a value. They can be played on any other card.
+
+JC 		Joker Color(current player can choose a color)
+JC+4 	Super Joker ( current player chooses a color and the next player has draw 4 extra cards)
+		The +4 can only be played when the player has no other available card to play. The players bluff is caught the rules form the panelties apply.
+
+
+HOW TO CALL UNO:
+When you play your next-to-last card the you have to call "UNO" to let everyone know, that you only have one mor card left.
+If you want to call UNO you have to enter your next to last card, a space and the word uno.
+Example: Y3 uno
+
+
+PANELTIES:
+- If you forget to call uno, you have to draw 1 extra card.
+- The +4 can only be played when the player has no other available card to play. If the next player thinks the current player bluffs, they can challenge them.
+  If the current player was able to play other cards instead of the +4, the current player has to draw the 4 cards.
+  If the next player is in the wrong, they have to draw +6 cards instead of +4.
+
+
+--POINTS--
+
+0-9			Equals number
++2			20 Points
+<->			20 Points
+X			20 Points
+JC			40 Points
+JC+4		40 Points
+
+
+We hope you understood everything correctly.
+We wish you a lot o fun and GOOD LUCK ♥
+(you will need it)
