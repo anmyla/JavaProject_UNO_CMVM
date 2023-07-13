@@ -88,7 +88,7 @@ public class App {
 
     private void updateState() {
         if (checkWinnerOfCurrentRound().isWinner()) {
-            System.out.println("Congratulations " + getWinnerOfThisRound().getName() + " you won this round!");
+            System.out.println(SUNNY + "Congratulations " + getWinnerOfThisRound().getName() + " you won this round!" + RESET);
             computePoints();
             recordWinnerOfRoundInDB();
             winnerOfThisRound.setWinner(false); //reset to default value
@@ -151,9 +151,18 @@ public class App {
 
         counter = counter + 1;
         setRound(counter);
-        System.out.println("--------------------------------" +  "ROUND " + counter  + "-------------------------------------");
+
         setIsThereAWinnerOfThisRound(false);
 
-        startANewRound();
+        System.out.println("Would you like to play another round? Y/N: ");
+        String anotherRound = input.nextLine().toUpperCase();
+
+        if(anotherRound.equals("Y")) {
+            System.out.println("--------------------------------" + "ROUND " + counter + "-------------------------------------");
+            startANewRound();
+        }else {
+            System.out.println(SUNNY + playerPoints().getName()  + " has the most points so she's the overall winner!" + RESET);
+            setExit(true);
+        }
     }
 }

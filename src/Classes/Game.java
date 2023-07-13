@@ -26,6 +26,7 @@ public class Game {
     protected static Player winnerOfThisRound;
     public static final String ROSE = "\u001B[38;2;209;86;108m";
     public static final String SKY = "\u001B[38;2;153;205;240m";
+    public static final String SUNNY = "\u001B[38;2;204;204;102m";
     public static final String RESET = "\u001B[0m";
     protected static boolean isBlocked;
 
@@ -653,9 +654,14 @@ public class Game {
         }
 
 
-        System.out.println(winnerOfThisRound.getName() + ", your total point this round is: " + winnerPoints );
+        System.out.println(winnerOfThisRound.getName() + ", you got " + winnerPoints + " for this round!" );
         getWinnerOfThisRound().setPlayerPoints(winnerOfThisRound.getPlayerPoints() + winnerPoints); //we add the points to the points from the previous rounds
-        System.out.println("And your total points so far is: " + winnerOfThisRound.getPlayerPoints());
+
+        System.out.println();
+        System.out.println("Players standing: ");
+        System.out.println("The leading player is: " + playerPoints().getName());
+        System.out.println();
+
         return winnerPoints;
     }
 
@@ -686,5 +692,19 @@ public class Game {
             System.out.println("Sorry, something went wrong. Please try again.");
         }
     }
+    public static Player playerPoints() {
+        Player withHighestPoint = null;
+        int highestPoints = 0;
+        int temp = 0;
+        for (Player p : players) {
+            System.out.println(p.getName()+ ": " + p.getPlayerPoints());
+            temp = p.getPlayerPoints();
+            if (temp > highestPoints) {
+                highestPoints = temp;
+                withHighestPoint = p;
+            }
+        }
+        return withHighestPoint;
+        }
 }
 
