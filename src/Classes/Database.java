@@ -1,7 +1,5 @@
 package Classes;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import static Classes.Game.players;
 
 public class Database {
