@@ -154,8 +154,11 @@ public class App {
 
         setIsThereAWinnerOfThisRound(false);
 
+        String anotherRound;
+        do {
         System.out.println("Would you like to play another round? Y/N: ");
-        String anotherRound = input.nextLine().toUpperCase();
+        anotherRound = input.nextLine().toUpperCase();
+        }while(!anotherRound.equals("N") && !anotherRound.equals("Y"));
 
         if(anotherRound.equals("Y")) {
             System.out.println("--------------------------------" + "ROUND " + counter + "-------------------------------------");
