@@ -2,7 +2,6 @@ package Classes;
 
 import java.io.PrintStream;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Scanner;
 
 import static Classes.Database.recordWinnerOfRoundInDB;
@@ -131,8 +130,10 @@ public class App {
 
     public void playAnotherRound() {
         int counter = getRound(); //Counter for Rounds
-        System.out.println("Round " + counter + " is complete!");
 
+        if (!exit) {
+            System.out.println("Round " + counter + " is complete!");
+        }
         for (Player player : players) { // all cards left in each player's had will be discarded
             for (Card card : player.playersHand) {
                 discardDeck.add(card);
@@ -155,17 +156,30 @@ public class App {
         setIsThereAWinnerOfThisRound(false);
 
         String anotherRound;
-        do {
-        System.out.println("Would you like to play another round? Y/N: ");
-        anotherRound = input.nextLine().toUpperCase();
-        }while(!anotherRound.equals("N") && !anotherRound.equals("Y"));
+        if (!exit) {
+            do {
+                System.out.println("Would you like to play another round? Y/N: ");
+                anotherRound = input.nextLine().toUpperCase();
 
-        if(anotherRound.equals("Y")) {
-            System.out.println("--------------------------------" + "ROUND " + counter + "-------------------------------------");
-            startANewRound();
-        }else {
-            System.out.println(SUNNY + playerPoints().getName()  + " has the most points so she's the overall winner!" + RESET);
-            setExit(true);
+                if (anotherRound.equals("HELP")) {
+                    callHelp();
+                }
+            } while (!anotherRound.equals("N") && !anotherRound.equals("Y")
+                    && !anotherRound.equals("EXIT"));
+
+            if (anotherRound.equals("Y")) {
+                System.out.println("--------------------------------" + "ROUND " + counter + "-------------------------------------");
+                startANewRound();
+            } else if (anotherRound.equals("N")) {
+                System.out.println(SUNNY + playerPoints().getName() + " has the most points so she's the overall winner!" + RESET);
+                setExit(true);
+                System.out.println("You decided to end the tournament here...");
+            }else if (anotherRound.equals("EXIT")){
+
+                System.out.println(SUNNY + playerPoints().getName() + " has the most points so she's the overall winner!" + RESET);
+                setExit(true);
+                System.out.println("Exiting the game....");
+            }
         }
     }
 }

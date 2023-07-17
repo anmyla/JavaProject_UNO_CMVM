@@ -141,7 +141,7 @@ public abstract class Player {
                 System.out.println("Now you have to get a penalty card!");
                 drawOneCard();
                 System.out.println("Here is you updated hand:");
-                System.out.println(currentPlayer.toString());
+                System.out.println(currentPlayer.getPlayersHand().toString());
             }else {
                 System.out.println("Your move: " + cardToPlay );
             }
