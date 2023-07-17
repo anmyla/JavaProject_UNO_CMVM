@@ -589,11 +589,9 @@ public class Game {
                 setBlocked(true);
             } else if (cardToCheck.getCardValue().equals("C+4") && discardDeck.size() > 1) {
                 if (currentPlayer instanceof Human) {
+                    do {
                     System.out.println("Do you like to challenge the previous player? (Y/N)");
                     answer = input.nextLine().toUpperCase();
-
-
-                    while (!(answer.equals("Y") || answer.equals("N"))) {
                         if(answer.equals("HELP")) {
                             callHelp();
                         } else if (answer.equals("EXIT")){
@@ -603,11 +601,12 @@ public class Game {
                             System.out.println("Your input is invalid. Please put in Y or N: ");
                         }
                         answer = input.nextLine().toUpperCase();
-                    }
+                    } while (!(answer.equals("Y") || answer.equals("N")) && !answer.equals("EXIT"));
                 } else { // Player is a bot
                     // Randomly generate an answer for the bot
                     answer = random.nextBoolean() ? "Y" : "N";
                 }
+
                 if (answer.equals("Y")) {
                     System.out.println("You chose to challenge " + previousPlayer.getName());
                     if (isChallenged()) {
