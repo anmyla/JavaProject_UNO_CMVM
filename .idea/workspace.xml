@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a9a0c1b5-b595-41b5-8ca2-320975b7d5f4" name="Changes" comment="">
+    <list default="true" id="a9a0c1b5-b595-41b5-8ca2-320975b7d5f4" name="Changes" comment="completed all the requirements for this game. and everything seems to be working fine.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Database.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Classes/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/SqliteClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/SqliteClient.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,6 +15,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -44,15 +41,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
@@ -146,7 +144,105 @@
       <option name="project" value="LOCAL" />
       <updated>1686390997858</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="succeeding rounds now possible. but just automatically starting rounds until someone got &gt; 500points. this is working with bots. databse is working too.">
+      <created>1688062065414</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1688062065414</updated>
+    </task>
+    <task id="LOCAL-00012" summary="succeeding rounds now possible. but just automatically starting rounds until someone got &gt; 500points. this is working with bots. databse is working too.">
+      <created>1688064245434</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1688064245434</updated>
+    </task>
+    <task id="LOCAL-00013" summary="completed all the requirements for this game. and everything seems to be working fine.">
+      <created>1688064669966</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1688064669966</updated>
+    </task>
+    <task id="LOCAL-00014" summary="polishing....">
+      <created>1688585639849</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1688585639850</updated>
+    </task>
+    <task id="LOCAL-00015" summary="completed all the requirements for this game. and everything seems to be working fine.">
+      <created>1688594764909</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1688594764909</updated>
+    </task>
+    <task id="LOCAL-00016" summary="still cleaning up">
+      <created>1688990703806</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1688990703806</updated>
+    </task>
+    <task id="LOCAL-00017" summary="completed all the requirements for this game. and everything seems to be working fine.">
+      <created>1689059334146</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1689059334146</updated>
+    </task>
+    <task id="LOCAL-00018" summary="completed all the requirements for this game. and everything seems to be working fine.">
+      <created>1689251868830</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1689251868830</updated>
+    </task>
+    <task id="LOCAL-00019" summary="finalizing.....">
+      <created>1689251975760</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1689251975760</updated>
+    </task>
+    <task id="LOCAL-00020" summary="completed all the requirements for this game. and everything seems to be working fine.">
+      <created>1689278218605</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1689278218605</updated>
+    </task>
+    <task id="LOCAL-00021" summary="cleaning up">
+      <created>1689599621639</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1689599621639</updated>
+    </task>
+    <task id="LOCAL-00022" summary="cleaning up">
+      <created>1689618958712</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1689618958713</updated>
+    </task>
+    <task id="LOCAL-00023" summary="clean up">
+      <created>1689619182715</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1689619182718</updated>
+    </task>
+    <task id="LOCAL-00024" summary="completed all the requirements for this game. and everything seems to be working fine.">
+      <created>1689620372935</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1689620372935</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -168,7 +264,14 @@
     <MESSAGE value="players can now scream &quot;uno&quot;" />
     <MESSAGE value="fixed known errors, NPE when players input just 1 char during &quot;what's your move:&quot;, players still being able to play a card when they are supposedly blocked (when they've taken penalty cards +2, +4)" />
     <MESSAGE value="fixed NPE at setUpPlayers(): entering the number of bots" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed NPE at setUpPlayers(): entering the number of bots" />
+    <MESSAGE value="succeeding rounds now possible. but just automatically starting rounds until someone got &gt; 500points. this is working with bots. databse is working too." />
+    <MESSAGE value="polishing...." />
+    <MESSAGE value="still cleaning up" />
+    <MESSAGE value="finalizing....." />
+    <MESSAGE value="cleaning up" />
+    <MESSAGE value="clean up" />
+    <MESSAGE value="completed all the requirements for this game. and everything seems to be working fine." />
+    <option name="LAST_COMMIT_MESSAGE" value="completed all the requirements for this game. and everything seems to be working fine." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -186,15 +289,6 @@
             <option name="WATCH_EXIT" value="false" />
           </properties>
           <option name="timeStamp" value="9" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/Classes/Game.java</url>
-          <line>608</line>
-          <properties class="Classes.Game">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="10" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -544,10 +544,12 @@ public class Game {
         boolean hasOtherCardsToPlay = false;
 
         for (Card card : previousPlayerHand) {
-            if (card.getCardColor().equals(cardToCheck.getCardColor()) || card.getCardValue().equals(cardToCheck.getCardValue())) {
+            if ((card.getCardColor().equals(cardToCheck.getCardColor()) || card.getCardValue().equals(cardToCheck.getCardValue()))) {
                 hasOtherCardsToPlay = true;
+                break;
             } else if (card.getCardValue().equals("C")){
                 hasOtherCardsToPlay = true;
+                break;
             } else {
                 hasOtherCardsToPlay = false;
             }
