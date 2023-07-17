@@ -659,11 +659,12 @@ public class Game {
     }
 
     public static void callHelp() {
+
         try {
             FileReader fr = new FileReader("unoHelp.txt");
             BufferedReader br = new BufferedReader(fr);
             String line = br.readLine();
-            System.out.print("You called for help");
+            System.out.print("\nYou called for help");
             for (int i = 0; i <= 3; i++) {
                 TimeUnit.SECONDS.sleep(1);
                 System.out.print(".");
@@ -684,6 +685,8 @@ public class Game {
         } catch (InterruptedException e) {
             System.out.println("Sorry, something went wrong. Please try again.");
         }
+        System.out.println("---------------------------------------------------------");
+        System.out.println();
     }
     public static Player playerPoints() {
         Player withHighestPoint = null;
