@@ -334,6 +334,9 @@ public class Game {
             System.out.print(ROSE + discardDeck.get(0) + " New Color: " + getNewColor() + RESET);
         } else if (!card.getCardValue().equals("Color")) {
             System.out.print(ROSE + discardDeck.get(0) + RESET);
+
+        } else if(card.getCardValue().equals("Color")) {
+            System.out.print(ROSE + discardDeck.get(1) + " New Color: " + getNewColor() +RESET);
         } else {
             System.out.print(ROSE + discardDeck.get(0) + " New Color: " + getNewColor() + RESET);
         }
@@ -594,13 +597,15 @@ public class Game {
                     answer = input.nextLine().toUpperCase();
                         if(answer.equals("HELP")) {
                             callHelp();
+                            System.out.println("Do you like to challenge the previous player? (Y/N)");
+                            answer = input.nextLine().toUpperCase();
                         } else if (answer.equals("EXIT")){
                             setExit(true);
                             break;
                         } else {
                             System.out.println("Your input is invalid. Please put in Y or N: ");
+                            answer = input.nextLine().toUpperCase();
                         }
-                        answer = input.nextLine().toUpperCase();
                     } while (!(answer.equals("Y") || answer.equals("N")) && !answer.equals("EXIT"));
                 } else { // Player is a bot
                     // Randomly generate an answer for the bot

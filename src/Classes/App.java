@@ -75,13 +75,11 @@ public class App {
             }
             if (canMakeAMove && !exit) { //player has card to play in his hand, player made a move, and it did not exit
                 if (isPlayedCardValid()) { // player's move is validated
-                    acceptPlayersInput(); // finally remove played card from player's hand
-                    // and add it to the top of the discard deck
-                    // resets values that must be reset
+                        acceptPlayersInput(); // finally remove played card from player's hand
+                        // and add it to the top of the discard deck
+                        // resets values that must be reset
                 }
             }
-        } else {
-            System.out.println("Let's move on to the next player.");
         }
     }
 

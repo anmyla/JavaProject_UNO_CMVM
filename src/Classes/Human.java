@@ -96,7 +96,7 @@ public class Human extends Player {
                     System.out.println("That was a foul call! We'll accept your move but you have to draw a penalty card!");
                     drawOneCard();
                     System.out.println("Here's your updated hand:");
-                    System.out.println("\n" + currentPlayer.toString());
+                    System.out.println("\n" + currentPlayer.getPlayersHand().toString());
                     currentPlayer.setUno(false);
                 }
 
@@ -106,7 +106,7 @@ public class Human extends Player {
                 System.out.println("Sorry, but you have to draw a penalty card!");
                 drawOneCard();
                 System.out.println("Here's your updated hand:");
-                System.out.println("\n" + currentPlayer.toString());
+                System.out.println("\n" + currentPlayer.getPlayersHand().toString());
                 currentPlayer.setUno(false);
             }
 
@@ -114,7 +114,7 @@ public class Human extends Player {
             System.out.println("Oh no, you forgot to call UNO!");
             System.out.println("Now you have to get a penalty card!");
             drawOneCard();
-            System.out.println("\n" + currentPlayer.toString());
+            System.out.println("\n" + currentPlayer.getPlayersHand().toString());
         }
         return cardToPlay;
     }
