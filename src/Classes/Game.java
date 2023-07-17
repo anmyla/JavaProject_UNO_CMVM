@@ -316,8 +316,10 @@ public class Game {
         Card playedCard = currentPlayer.getPlayedCard();
         discardDeck.add(0, playedCard);
         currentPlayer.removeFromPlayersHand(playedCard);
-        if (discardDeck.get(1).getCardValue().equals("Color") && !discardDeck.get(0).getCardColor().equals("J")) { //this is to delete the tempCard from the discardDeck.
-            setNewColor(null); //reset the jokerColor value to default(null) after it's been used.
+        if (discardDeck.get(1).getCardValue().equals("Color")) { //this is to delete the tempCard from the discardDeck.
+            if (!discardDeck.get(0).getCardColor().equals("J")) {
+                setNewColor(null); //reset the jokerColor value to default(null) after it's been used.
+            }
             discardDeck.remove(discardDeck.get(1)); //delete temp card
         }
         setBlocked(false); //IMPORTANT! Resets this value after every player's turn.
@@ -589,8 +591,17 @@ public class Game {
                 if (currentPlayer instanceof Human) {
                     System.out.println("Do you like to challenge the previous player? (Y/N)");
                     answer = input.nextLine().toUpperCase();
+
+
                     while (!(answer.equals("Y") || answer.equals("N"))) {
-                        System.out.println("Your input is invalid. Please put in Y or N: ");
+                        if(answer.equals("HELP")) {
+                            callHelp();
+                        } else if (answer.equals("EXIT")){
+                            setExit(true);
+                            break;
+                        } else {
+                            System.out.println("Your input is invalid. Please put in Y or N: ");
+                        }
                         answer = input.nextLine().toUpperCase();
                     }
                 } else { // Player is a bot
@@ -611,7 +622,9 @@ public class Game {
                         setBlocked(true);
                         System.out.println("And you are also blocked from playing this turn.");
                     }
-                } else {
+                }else if (answer.equals("EXIT")) {
+                    setExit(true);
+                }else {
                     System.out.println("You chose not to challenge " + getPreviousPlayer().getName());
                     cardIsTakeFour();
                     setChallengeWon(false);
