@@ -4,7 +4,7 @@ import static Classes.Game.players;
 
 public class Database {
     private static final String DATABASE_NAME = "demodatabase.sqlite";
-    private static final String TABLE_NAME = "Players";
+    private static final String TABLE_NAME = "ScoreBoard";
 
     public static void createDatabase() {
         try {
@@ -17,19 +17,6 @@ public class Database {
                 // Create the table with two columns
                 String createTableQuery = "CREATE TABLE " + TABLE_NAME + " (Player varchar(100) PRIMARY KEY NOT NULL, Points int DEFAULT 0);";
                 client.executeStatement(createTableQuery);
-
-                System.out.println("Database table '" + TABLE_NAME + "' has been created.");
-            }else {
-                // Delete the existing table containing previous tournament results
-                String deleteTableQuery = "DROP TABLE " + TABLE_NAME + ";";
-                client.executeStatement(deleteTableQuery);
-
-                System.out.println("Database table '" + TABLE_NAME + "' has been deleted.");
-
-                // Create a new empty table with two columns for the (new) tournament
-                String createTableQuery = "CREATE TABLE " + TABLE_NAME + " (Player varchar(100) PRIMARY KEY NOT NULL, Points int DEFAULT 0);";
-                client.executeStatement(createTableQuery);
-
                 System.out.println("Database table '" + TABLE_NAME + "' has been created.");
             }
 
