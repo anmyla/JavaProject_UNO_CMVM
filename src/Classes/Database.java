@@ -17,6 +17,7 @@ public class Database {
                 // Create the table with two columns
                 String createTableQuery = "CREATE TABLE " + TABLE_NAME + " (Player varchar(100) PRIMARY KEY NOT NULL, Points int DEFAULT 0);";
                 client.executeStatement(createTableQuery);
+
                 System.out.println("Database table '" + TABLE_NAME + "' has been created.");
             }
 
@@ -58,6 +59,16 @@ public class Database {
             try {
                 SqliteClient client = new SqliteClient(DATABASE_NAME);
 
+                // Check if the table already exists
+                boolean tableExists = client.tableExists(TABLE_NAME);
+
+                if (!tableExists) {
+                    // Create the table with two columns
+                    String createTableQuery = "CREATE TABLE " + TABLE_NAME + " (Player varchar(100) PRIMARY KEY NOT NULL, Points int DEFAULT 0);";
+                    client.executeStatement(createTableQuery);
+                    System.out.println("Database table '" + TABLE_NAME + "' has been created.");
+                }
+
                 // Update the winner's points
                 StringBuilder updateQuery = new StringBuilder("UPDATE " + TABLE_NAME + " SET Points = " + winner.getPlayerPoints() + " WHERE Player = '" + winner.getName() + "';");
                 client.executeStatement(updateQuery.toString());
@@ -69,6 +80,7 @@ public class Database {
         }
     }
 }
+
 
 /*
 

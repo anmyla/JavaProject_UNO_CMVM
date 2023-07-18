@@ -37,7 +37,7 @@ public class Human extends Player {
             StringBuilder stringBuilder1 = new StringBuilder();
             StringBuilder stringBuilder2 = new StringBuilder();
 
-            if (!inputMove.equals("EXIT") && !inputMove.equals("HELP") && inputMove.length() > 1 && inputMove != null) {
+            if (!inputMove.equals("EXIT") && !inputMove.equals("HELP") && inputMove.length() > 1 && inputMove != null && !input.equals(' ')) {
                 char[] inputArray = inputMove.toCharArray();
 
                 if (inputArray.length > 1 && inputArray.length < 9) {
@@ -72,7 +72,7 @@ public class Human extends Player {
                 System.out.println("\n" + currentPlayer.toString());
             }
 
-            if (!inputMove.equals("HELP") && !inputMove.equals("EXIT")) {
+            if (!inputMove.equals("HELP") && !inputMove.equals("EXIT") && inputMove.length() > 1 && inputMove != null && !input.equals(' ')) {
                 if (cardColor.equals("J") && call.equals("+4")) {
                     call = null;
                     cardValue = "C+4";
@@ -82,7 +82,7 @@ public class Human extends Player {
                     System.out.println("There is no such move, please try again!");
                 }
             }
-        } while (!validCardColorList.contains(cardColor) || !validCardValuesList.contains(cardValue));
+        } while (!validCardColorList.contains(cardColor) || !validCardValuesList.contains(cardValue) || inputMove.equals(" "));
 
 
         Card cardToPlay = new Card(cardColor, cardValue);

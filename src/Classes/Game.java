@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+
+import static Classes.DB.createDB;
 import static Classes.Database.createDatabase;
 import static Classes.App.setExit;
 import static Classes.Deck.*;
@@ -100,14 +102,33 @@ public class Game {
     public static void setRound(int round) {
         Game.round = round;
     }
+
     public static void setIsThereAWinnerOfThisRound(boolean isThereAWinnerOfThisRound) {
         Game.isThereAWinnerOfThisRound = isThereAWinnerOfThisRound;
     }
 
+    protected static int session;
+
+    protected static int roundWinnerPoints;
+
+    public static int getRoundWinnerPoints() {
+        return roundWinnerPoints;
+    }
+
+    public static void setRoundWinnerPoints(int roundWinnerPoints) {
+        Game.roundWinnerPoints = roundWinnerPoints;
+    }
+
+    public static int getSession() {
+        return session;
+    }
+
+
+
 
     public void database() {
-        Database db1 = new Database();
-        createDatabase();
+        createDatabase(); // the first database we created. save player name and update their scores. (2 columns name & score)
+        createDB(); //the DB from Projekt 1;
     }
 
     public static void setUpHumanPlayers(int humanPlayers) { //method to collect names for Human Players and add these to player's list
@@ -244,9 +265,9 @@ public class Game {
     public static void chooseFirstPlayer() {//Randomly choose the player that will play first.
         Card firstCard = discardDeck.get(0);
         Random random = new Random();
-            Random firstPlayer = new Random();
-            turn = firstPlayer.nextInt(3);
-        }
+        Random firstPlayer = new Random();
+        turn = firstPlayer.nextInt(3);
+    }
 
 
     public static Player currentPlayer() {
@@ -335,8 +356,8 @@ public class Game {
         } else if (!card.getCardValue().equals("Color")) {
             System.out.print(ROSE + discardDeck.get(0) + RESET);
 
-        } else if(card.getCardValue().equals("Color")) {
-            System.out.print(ROSE + discardDeck.get(1) + " New Color: " + getNewColor() +RESET);
+        } else if (card.getCardValue().equals("Color")) {
+            System.out.print(ROSE + discardDeck.get(1) + " New Color: " + getNewColor() + RESET);
         } else {
             System.out.print(ROSE + discardDeck.get(0) + " New Color: " + getNewColor() + RESET);
         }
@@ -552,7 +573,7 @@ public class Game {
             if ((card.getCardColor().equals(cardToCheck.getCardColor()) || card.getCardValue().equals(cardToCheck.getCardValue()))) {
                 hasOtherCardsToPlay = true;
                 break;
-            } else if (card.getCardValue().equals("C")){
+            } else if (card.getCardValue().equals("C")) {
                 hasOtherCardsToPlay = true;
                 break;
             } else {
@@ -593,13 +614,13 @@ public class Game {
             } else if (cardToCheck.getCardValue().equals("C+4") && discardDeck.size() > 1) {
                 if (currentPlayer instanceof Human) {
                     do {
-                    System.out.println("Do you like to challenge the previous player? (Y/N)");
-                    answer = input.nextLine().toUpperCase();
-                        if(answer.equals("HELP")) {
+                        System.out.println("Do you like to challenge the previous player? (Y/N)");
+                        answer = input.nextLine().toUpperCase();
+                        if (answer.equals("HELP")) {
                             callHelp();
                             System.out.println("Do you like to challenge the previous player? (Y/N)");
                             answer = input.nextLine().toUpperCase();
-                        } else if (answer.equals("EXIT")){
+                        } else if (answer.equals("EXIT")) {
                             setExit(true);
                             break;
                         } else {
@@ -626,9 +647,9 @@ public class Game {
                         setBlocked(true);
                         System.out.println("And you are also blocked from playing this turn.");
                     }
-                }else if (answer.equals("EXIT")) {
+                } else if (answer.equals("EXIT")) {
                     setExit(true);
-                }else {
+                } else {
                     System.out.println("You chose not to challenge " + getPreviousPlayer().getName());
                     cardIsTakeFour();
                     setChallengeWon(false);
@@ -655,7 +676,7 @@ public class Game {
         int winnerPoints = 0;
 
         for (Player p : players) {
-            if (p !=  getWinnerOfThisRound()) {
+            if (p != getWinnerOfThisRound()) {
                 for (Card card : p.playersHand) {
                     loserCards.add(card);
                 }
@@ -666,7 +687,7 @@ public class Game {
             winnerPoints = winnerPoints + card.getCardPoints();
         }
 
-        System.out.println(winnerOfThisRound.getName() + ", you got " + winnerPoints + " for this round!" );
+        System.out.println(winnerOfThisRound.getName() + ", you got " + winnerPoints + " for this round!");
         getWinnerOfThisRound().setPlayerPoints(winnerOfThisRound.getPlayerPoints() + winnerPoints); //we add the points to the points from the previous rounds
 
         System.out.println();
@@ -674,6 +695,7 @@ public class Game {
         System.out.println("The leading player is: " + playerPoints().getName());
         System.out.println();
 
+        setRoundWinnerPoints(winnerPoints);
         return winnerPoints;
     }
 
@@ -707,12 +729,13 @@ public class Game {
         System.out.println("---------------------------------------------------------");
         System.out.println();
     }
+
     public static Player playerPoints() {
         Player withHighestPoint = null;
         int highestPoints = 0;
         int temp = 0;
         for (Player p : players) {
-            System.out.println(p.getName()+ ": " + p.getPlayerPoints());
+            System.out.println(p.getName() + ": " + p.getPlayerPoints());
             temp = p.getPlayerPoints();
             if (temp > highestPoints) {
                 highestPoints = temp;
@@ -720,6 +743,12 @@ public class Game {
             }
         }
         return withHighestPoint;
-        }
+    }
+    public static int sessionID() {
+        Random random = new Random();// Generates a random number between 1000 and 9999 (inclusive)
+        int randomID = 1000 + random.nextInt(9000);
+        session = randomID;
+        return randomID;
+    }
 }
 

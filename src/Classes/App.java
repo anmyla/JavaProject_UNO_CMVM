@@ -4,6 +4,7 @@ import java.io.PrintStream;
 import java.util.Iterator;
 import java.util.Scanner;
 
+import static Classes.DB.recordWinnerOfRoundInDB1;
 import static Classes.Database.recordWinnerOfRoundInDB;
 import static Classes.Game.*;
 import static Classes.Player.*;
@@ -60,6 +61,7 @@ public class App {
         theCardDeck.initialDeck(); // filled up a new card deck
         theCardDeck.shuffleDeck(); // shuffle the cards;
         setPlayers(); // setting up human/bot players
+        sessionID();
         newGame.database();
         System.out.println("--------------------------------" + " ROUND  1 " + "------------------------------------");
         startANewRound();
@@ -88,6 +90,7 @@ public class App {
             System.out.println(SUNNY + "Congratulations " + getWinnerOfThisRound().getName() + " you won this round!" + RESET);
             computePoints();
             recordWinnerOfRoundInDB();
+            recordWinnerOfRoundInDB1();
             winnerOfThisRound.setWinner(false); //reset to default value
         } else {
             checkNextTurn();
@@ -124,6 +127,7 @@ public class App {
         if (!exit) {
             chooseFirstPlayer();
         }
+        setRoundWinnerPoints(0);
     }
 
     public void playAnotherRound() {
